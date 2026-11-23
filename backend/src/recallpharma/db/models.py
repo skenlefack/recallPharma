@@ -6,6 +6,7 @@ le statut est toujours calculé par le moteur de règles (RG-03).
 
 from __future__ import annotations
 
+import uuid
 from datetime import date, datetime
 from decimal import Decimal
 from typing import Any
@@ -24,8 +25,9 @@ from sqlalchemy import (
     Text,
     UniqueConstraint,
     func,
+    text,
 )
-from sqlalchemy.dialects.postgresql import ARRAY, JSONB
+from sqlalchemy.dialects.postgresql import ARRAY, JSONB, UUID
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
 
 NAMING = {
@@ -368,3 +370,111 @@ class AuditEvent(Base):
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True))
     prev_hash: Mapped[str] = mapped_column(String(64))
     hash: Mapped[str] = mapped_column(String(64), unique=True)
+
+
+# --- Copilot (D5, D6) : journal des échanges, conservé 12 mois et effaçable par l'utilisateur ----------------------
+
+COPILOT = {"schema": "copilot"}
+
+
+class CopilotConversation(Base):
+    __tablename__ = "conversation"
+    __table_args__ = (COPILOT,)
+
+    id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), primary_key=True, server_default=func.gen_random_uuid())
+    account_id: Mapped[str] = mapped_column(ForeignKey("core.account.id"), index=True)
+    jurisdiction_code: Mapped[str] = mapped_column(ForeignKey("reg.jurisdiction.code"))
+    started_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+
+    messages: Mapped[list[CopilotMessage]] = relationship(
+        order_by="CopilotMessage.known_at", cascade="all, delete-orphan", passive_deletes=True
+    )
+
+
+class CopilotMessage(Base):
+    __tablename__ = "message"
+    __table_args__ = (CheckConstraint("role IN ('utilisateur', 'copilot')", name="role"), COPILOT)
+
+    id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), primary_key=True, server_default=func.gen_random_uuid())
+    conversation_id: Mapped[uuid.UUID] = mapped_column(
+        ForeignKey("copilot.conversation.id", ondelete="CASCADE"), index=True
+    )
+    role: Mapped[str] = mapped_column(Text)
+    content: Mapped[str] = mapped_column(Text)  # question après masquage, ou texte de la réponse affichée
+    payload: Mapped[dict[str, Any] | None] = mapped_column(JSONB)  # réponse composée (bandeaux, tableau, contexte)
+    known_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+    jurisdiction_code: Mapped[str | None] = mapped_column(Text)
+    model_id: Mapped[str | None] = mapped_column(Text)
+    prompt_version: Mapped[str | None] = mapped_column(Text)
+    tools_version: Mapped[str | None] = mapped_column(Text)
+    rules_version: Mapped[str | None] = mapped_column(Text)
+    tokens_in: Mapped[int | None] = mapped_column(Integer)
+    tokens_out: Mapped[int | None] = mapped_column(Integer)
+    duration_ms: Mapped[int | None] = mapped_column(Integer)
+    injection_suspected: Mapped[bool] = mapped_column(Boolean, server_default="false")
+
+    tool_calls: Mapped[list[CopilotToolCall]] = relationship(
+        order_by="CopilotToolCall.position", cascade="all, delete-orphan", passive_deletes=True
+    )
+    check: Mapped[CopilotCheck | None] = relationship(cascade="all, delete-orphan", passive_deletes=True)
+
+
+class CopilotToolCall(Base):
+    __tablename__ = "tool_call"
+    __table_args__ = (COPILOT,)
+
+    id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), primary_key=True, server_default=func.gen_random_uuid())
+    message_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("copilot.message.id", ondelete="CASCADE"), index=True)
+    position: Mapped[int] = mapped_column(Integer)
+    tool: Mapped[str] = mapped_column(Text)
+    arguments: Mapped[dict[str, Any]] = mapped_column(JSONB)
+    result: Mapped[dict[str, Any] | None] = mapped_column(JSONB)
+    duration_ms: Mapped[int | None] = mapped_column(Integer)
+
+
+class CopilotCheck(Base):
+    """Résultat du contrôle après génération (RG-23)."""
+
+    __tablename__ = "check"
+    __table_args__ = (COPILOT,)
+
+    message_id: Mapped[uuid.UUID] = mapped_column(
+        ForeignKey("copilot.message.id", ondelete="CASCADE"), primary_key=True
+    )
+    passed: Mapped[bool] = mapped_column(Boolean)
+    attempts: Mapped[int] = mapped_column(Integer, server_default="1")
+    details: Mapped[dict[str, Any] | None] = mapped_column(JSONB)
+
+
+class CopilotFeedback(Base):
+    __tablename__ = "feedback"
+    __table_args__ = (
+        CheckConstraint("rating IN ('utile', 'erreur signalée', 'autre')", name="rating"),
+        COPILOT,
+    )
+
+    message_id: Mapped[uuid.UUID] = mapped_column(
+        ForeignKey("copilot.message.id", ondelete="CASCADE"), primary_key=True
+    )
+    rating: Mapped[str] = mapped_column(Text)
+    comment: Mapped[str | None] = mapped_column(Text)
+    given_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+
+
+class ResultSet(Base):
+    """Jeu de résultats d'une conversation, base des affinages (durée de vie de 24 heures)."""
+
+    __tablename__ = "result_set"
+    __table_args__ = (COPILOT,)
+
+    id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), primary_key=True, server_default=func.gen_random_uuid())
+    conversation_id: Mapped[uuid.UUID | None] = mapped_column(
+        ForeignKey("copilot.conversation.id", ondelete="CASCADE"), index=True
+    )
+    jurisdiction_code: Mapped[str] = mapped_column(Text)
+    query: Mapped[dict[str, Any]] = mapped_column(JSONB)
+    record_ids: Mapped[list[str]] = mapped_column(ARRAY(Text))
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+    expires_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=text("now() + interval '24 hours'")
+    )

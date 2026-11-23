@@ -326,6 +326,228 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/copilot/conversations": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List Conversations */
+        get: operations["list_conversations_v1_copilot_conversations_get"];
+        put?: never;
+        /** Create Conversation */
+        post: operations["create_conversation_v1_copilot_conversations_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/copilot/conversations/{conversation_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get Conversation */
+        get: operations["get_conversation_v1_copilot_conversations__conversation_id__get"];
+        /** Change Jurisdiction */
+        put: operations["change_jurisdiction_v1_copilot_conversations__conversation_id__put"];
+        post?: never;
+        /**
+         * Delete Conversation
+         * @description Effacement par l'utilisateur (D7) : messages, outils, contrôles et jeux de résultats disparaissent avec elle.
+         */
+        delete: operations["delete_conversation_v1_copilot_conversations__conversation_id__delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/copilot/conversations/{conversation_id}/journal": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Journal
+         * @description Reconstitution d'un échange (CT-COP-06) : question, outils, résultats, versions, contrôle et réponse.
+         */
+        get: operations["journal_v1_copilot_conversations__conversation_id__journal_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/copilot/messages/{message_id}/feedback": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Feedback
+         * @description Signalement d'une réponse (CT-COP-07) : ticket de qualité dans le journal d'audit, accusé de réception.
+         */
+        post: operations["feedback_v1_copilot_messages__message_id__feedback_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/copilot/conversations/{conversation_id}/messages": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Ask
+         * @description Flux text/event-stream : `status`, `records` (bandeaux et tableau), `answer` (après contrôle), `done`.
+         */
+        post: operations["ask_v1_copilot_conversations__conversation_id__messages_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/copilot/tools/vocabulary": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Vocabulary
+         * @description Listes fermées du contrôle après génération (D6) : aucun de ces termes ne peut figurer hors référence.
+         */
+        get: operations["vocabulary_v1_copilot_tools_vocabulary_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/copilot/tools/substances": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Resolve Substance */
+        get: operations["resolve_substance_v1_copilot_tools_substances_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/copilot/tools/search": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Search Authorisations */
+        post: operations["search_authorisations_v1_copilot_tools_search_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/copilot/tools/result-sets/{result_set_id}/refine": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Refine Result Set */
+        post: operations["refine_result_set_v1_copilot_tools_result_sets__result_set_id__refine_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/copilot/tools/authorisations/{authorisation_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get Authorisation */
+        get: operations["get_authorisation_v1_copilot_tools_authorisations__authorisation_id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/copilot/tools/authorisations/{authorisation_id}/withdrawal-end": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Compute Withdrawal End */
+        post: operations["compute_withdrawal_end_v1_copilot_tools_authorisations__authorisation_id__withdrawal_end_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/copilot/tools/alerts": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List Alerts */
+        get: operations["list_alerts_v1_copilot_tools_alerts_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/health": {
         parameters: {
             query?: never;
@@ -496,6 +718,80 @@ export interface components {
             /** Woah Category */
             woah_category: string | null;
         };
+        /** ConversationIn */
+        ConversationIn: {
+            /** Jurisdiction */
+            jurisdiction: string;
+        };
+        /** ConversationOut */
+        ConversationOut: {
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Jurisdiction */
+            jurisdiction: string;
+            /** Jurisdiction Name */
+            jurisdiction_name: string;
+            /**
+             * Started At
+             * Format: date-time
+             */
+            started_at: string;
+            /** Turns */
+            turns: number;
+            /**
+             * Messages
+             * @default []
+             */
+            messages: components["schemas"]["MessageOut"][];
+        };
+        /** CopilotRow */
+        CopilotRow: {
+            /** Id */
+            id: string;
+            /** Ma Number */
+            ma_number: string;
+            /** Name */
+            name: string;
+            /** Designation */
+            designation: string;
+            /** Form */
+            form: string;
+            /** Routes */
+            routes: string[];
+            /** Species */
+            species: string[];
+            /** Substances */
+            substances: string[];
+            /** Strengths */
+            strengths: string[];
+            /** Holder */
+            holder: string;
+            /** Jurisdiction */
+            jurisdiction: string;
+            /** Applies To Requested */
+            applies_to_requested: boolean;
+            /** Status */
+            status: string;
+            /** Expiry Date */
+            expiry_date: string | null;
+            /** Banners */
+            banners: components["schemas"]["BannerOut"][];
+            /** Evidence Level */
+            evidence_level: string;
+            /** Evidence Label */
+            evidence_label: string;
+            /** Verified At */
+            verified_at: string | null;
+            /** Source Title */
+            source_title: string | null;
+            /** Source Date */
+            source_date: string | null;
+            /** Withdrawal */
+            withdrawal: components["schemas"]["WithdrawalOut"][];
+        };
         /** DocumentOut */
         DocumentOut: {
             /** Id */
@@ -570,6 +866,16 @@ export interface components {
             /** Missing For A */
             missing_for_a: string | null;
         };
+        /** FeedbackIn */
+        FeedbackIn: {
+            /**
+             * Rating
+             * @enum {string}
+             */
+            rating: "utile" | "erreur signalée" | "autre";
+            /** Comment */
+            comment?: string | null;
+        };
         /** FirstValidationIn */
         FirstValidationIn: {
             /** Approve */
@@ -596,6 +902,51 @@ export interface components {
             /** Message */
             message: string;
         };
+        /** JournalEntry */
+        JournalEntry: {
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Role */
+            role: string;
+            /** Content */
+            content: string;
+            /** Payload */
+            payload: {
+                [key: string]: unknown;
+            } | null;
+            /**
+             * Known At
+             * Format: date-time
+             */
+            known_at: string;
+            /** Jurisdiction */
+            jurisdiction: string | null;
+            /** Model Id */
+            model_id: string | null;
+            /** Prompt Version */
+            prompt_version: string | null;
+            /** Tools Version */
+            tools_version: string | null;
+            /** Rules Version */
+            rules_version: string | null;
+            /** Tokens In */
+            tokens_in: number | null;
+            /** Tokens Out */
+            tokens_out: number | null;
+            /** Duration Ms */
+            duration_ms: number | null;
+            /** Injection Suspected */
+            injection_suspected: boolean;
+            /** Tool Calls */
+            tool_calls: components["schemas"]["ToolCallOut"][];
+            /** Check */
+            check: {
+                [key: string]: unknown;
+            } | null;
+        };
         /** JurisdictionOut */
         JurisdictionOut: {
             /** Code */
@@ -619,6 +970,32 @@ export interface components {
             roles: string[];
             /** Can Curate */
             can_curate: boolean;
+        };
+        /** MessageIn */
+        MessageIn: {
+            /** Content */
+            content: string;
+        };
+        /** MessageOut */
+        MessageOut: {
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Role */
+            role: string;
+            /** Content */
+            content: string;
+            /** Payload */
+            payload: {
+                [key: string]: unknown;
+            } | null;
+            /**
+             * Known At
+             * Format: date-time
+             */
+            known_at: string;
         };
         /** PayloadIn */
         PayloadIn: {
@@ -797,6 +1174,18 @@ export interface components {
              */
             updated_at: string;
         };
+        /** RefineIn */
+        RefineIn: {
+            /** Form */
+            form?: string | null;
+            /** Route */
+            route?: string | null;
+            /** Species */
+            species?: string | null;
+            /** Status */
+            status?: string | null;
+            withdrawal?: components["schemas"]["WithdrawalFilterIn"] | null;
+        };
         /** SearchHit */
         SearchHit: {
             /** Authorisation Id */
@@ -819,6 +1208,23 @@ export interface components {
             substances: string[];
             assessment: components["schemas"]["AssessmentOut"];
         };
+        /** SearchIn */
+        SearchIn: {
+            /** Jurisdiction */
+            jurisdiction: string;
+            /** Substance Id */
+            substance_id?: string | null;
+            /** Product Name */
+            product_name?: string | null;
+            /** Species */
+            species?: string | null;
+            /** Form */
+            form?: string | null;
+            /** Route */
+            route?: string | null;
+            /** Status */
+            status?: string | null;
+        };
         /** SearchResult */
         SearchResult: {
             /** Query */
@@ -834,6 +1240,13 @@ export interface components {
             hits: components["schemas"]["SearchHit"][];
             /** Notice */
             notice?: string | null;
+        };
+        /** SetApartOut */
+        SetApartOut: {
+            /** Id */
+            id: string;
+            /** Label */
+            label: string;
         };
         /** SourceOut */
         SourceOut: {
@@ -902,6 +1315,15 @@ export interface components {
                 [key: string]: string | null;
             }[];
         };
+        /** SubstanceCandidate */
+        SubstanceCandidate: {
+            /** Id */
+            id: string;
+            /** Inn Name */
+            inn_name: string;
+            /** Score */
+            score: number;
+        };
         /** SubstanceOut */
         SubstanceOut: {
             /** Id */
@@ -915,6 +1337,65 @@ export interface components {
             /** Woah Category */
             woah_category: string | null;
         };
+        /** ToolCallOut */
+        ToolCallOut: {
+            /** Tool */
+            tool: string;
+            /** Arguments */
+            arguments: {
+                [key: string]: unknown;
+            };
+            /** Result */
+            result: {
+                [key: string]: unknown;
+            } | null;
+            /** Duration Ms */
+            duration_ms: number | null;
+        };
+        /** ToolRows */
+        ToolRows: {
+            /** Result Set Id */
+            result_set_id: string | null;
+            /** Jurisdiction */
+            jurisdiction: string;
+            /** Total */
+            total: number;
+            /** Rows */
+            rows: components["schemas"]["CopilotRow"][];
+            /** Truncated */
+            truncated: boolean;
+            /**
+             * Apart
+             * @default []
+             */
+            apart: components["schemas"]["SetApartOut"][];
+            /**
+             * Excluded
+             * @default 0
+             */
+            excluded: number;
+            /**
+             * Elsewhere
+             * @default []
+             */
+            elsewhere: components["schemas"]["CopilotRow"][];
+            /** Notice */
+            notice?: string | null;
+            /**
+             * As Of
+             * Format: date
+             */
+            as_of: string;
+            /**
+             * Rules Version
+             * @default A2-v3
+             */
+            rules_version: string;
+            /** Query */
+            query: {
+                [key: string]: unknown;
+            };
+        };
         /** ValidationError */
         ValidationError: {
             /** Location */
@@ -927,6 +1408,39 @@ export interface components {
             input?: unknown;
             /** Context */
             ctx?: Record<string, never>;
+        };
+        /** Vocabulary */
+        Vocabulary: {
+            /** Jurisdictions */
+            jurisdictions: {
+                [key: string]: string;
+            };
+            /** Substances */
+            substances: string[];
+            /** Species */
+            species: string[];
+            /** Statuses */
+            statuses: string[];
+            /** Forms */
+            forms: string[];
+            /** Routes */
+            routes: string[];
+            /**
+             * Rules Version
+             * @default A2-v3
+             */
+            rules_version: string;
+        };
+        /** WithdrawalFilterIn */
+        WithdrawalFilterIn: {
+            /** Species */
+            species: string;
+            /** Commodity */
+            commodity: string;
+            /** Max Value */
+            max_value: number | string;
+            /** @default jour */
+            unit: components["schemas"]["WithdrawalUnit"];
         };
         /** WithdrawalIn */
         WithdrawalIn: {
@@ -998,6 +1512,11 @@ export interface components {
             timezone: string;
             period: components["schemas"]["WithdrawalOut"];
         };
+        /**
+         * WithdrawalUnit
+         * @enum {string}
+         */
+        WithdrawalUnit: "heure" | "jour" | "degré-jour" | "traite";
     };
     responses: never;
     parameters: never;
@@ -1743,6 +2262,529 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["MeOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_conversations_v1_copilot_conversations_get: {
+        parameters: {
+            query?: never;
+            header?: {
+                authorization?: string | null;
+                "x-recallpharma-user"?: string | null;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ConversationOut"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_conversation_v1_copilot_conversations_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                authorization?: string | null;
+                "x-recallpharma-user"?: string | null;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ConversationIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ConversationOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_conversation_v1_copilot_conversations__conversation_id__get: {
+        parameters: {
+            query?: never;
+            header?: {
+                authorization?: string | null;
+                "x-recallpharma-user"?: string | null;
+            };
+            path: {
+                conversation_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ConversationOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    change_jurisdiction_v1_copilot_conversations__conversation_id__put: {
+        parameters: {
+            query?: never;
+            header?: {
+                authorization?: string | null;
+                "x-recallpharma-user"?: string | null;
+            };
+            path: {
+                conversation_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ConversationIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ConversationOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    delete_conversation_v1_copilot_conversations__conversation_id__delete: {
+        parameters: {
+            query?: never;
+            header?: {
+                authorization?: string | null;
+                "x-recallpharma-user"?: string | null;
+            };
+            path: {
+                conversation_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    journal_v1_copilot_conversations__conversation_id__journal_get: {
+        parameters: {
+            query?: never;
+            header?: {
+                authorization?: string | null;
+                "x-recallpharma-user"?: string | null;
+            };
+            path: {
+                conversation_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["JournalEntry"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    feedback_v1_copilot_messages__message_id__feedback_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                authorization?: string | null;
+                "x-recallpharma-user"?: string | null;
+            };
+            path: {
+                message_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["FeedbackIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: string;
+                    };
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    ask_v1_copilot_conversations__conversation_id__messages_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                authorization?: string | null;
+                "x-recallpharma-user"?: string | null;
+            };
+            path: {
+                conversation_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MessageIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    vocabulary_v1_copilot_tools_vocabulary_get: {
+        parameters: {
+            query?: never;
+            header?: {
+                authorization?: string | null;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Vocabulary"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    resolve_substance_v1_copilot_tools_substances_get: {
+        parameters: {
+            query: {
+                q: string;
+            };
+            header?: {
+                authorization?: string | null;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SubstanceCandidate"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    search_authorisations_v1_copilot_tools_search_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                authorization?: string | null;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["SearchIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ToolRows"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    refine_result_set_v1_copilot_tools_result_sets__result_set_id__refine_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                authorization?: string | null;
+            };
+            path: {
+                result_set_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RefineIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ToolRows"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_authorisation_v1_copilot_tools_authorisations__authorisation_id__get: {
+        parameters: {
+            query?: never;
+            header?: {
+                authorization?: string | null;
+            };
+            path: {
+                authorisation_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProductSheet"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    compute_withdrawal_end_v1_copilot_tools_authorisations__authorisation_id__withdrawal_end_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                authorization?: string | null;
+            };
+            path: {
+                authorisation_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["WithdrawalRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["WithdrawalResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_alerts_v1_copilot_tools_alerts_get: {
+        parameters: {
+            query: {
+                jurisdiction: string;
+            };
+            header?: {
+                authorization?: string | null;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AlertOut"][];
                 };
             };
             /** @description Validation Error */

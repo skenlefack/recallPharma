@@ -23,6 +23,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             <nav aria-label="Navigation principale">
               <Link href="/">Recherche</Link>
               <Link href="/alertes">Alertes</Link>
+              <Link href="/copilote">Copilot</Link>
               <Link href="/validation">Validation</Link>
             </nav>
             <span className="who">

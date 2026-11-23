@@ -22,6 +22,20 @@ class Settings(BaseSettings):
     # Vide = <issuer>/protocol/openid-connect/certs.
     oidc_jwks_url: str | None = None
 
+    # Copilot (D6). Jeton délégué : émis par l'API pour la passerelle, accepté sur les seuls outils de lecture (ADR-08).
+    copilot_token_secret: str = "dev-only-copilot-delegation-secret"
+    copilot_token_audience: str = "api-copilot-lecture"
+    copilot_quota_hour: int = 30
+    copilot_quota_day: int = 200
+    copilot_max_turns: int = 20
+    gateway_url: str = "http://127.0.0.1:8001"  # passerelle d'IA, vue de l'API
+    api_url: str = "http://127.0.0.1:8000"  # API, vue de la passerelle (outils)
+    # Modèle open source servi par une interface compatible OpenAI : vLLM en production, Ollama en développement.
+    llm_base_url: str = "http://localhost:11434/v1"
+    llm_model: str = "qwen2.5:7b-instruct"
+    llm_api_key: str | None = None
+    llm_timeout_s: float = 120.0
+
 
 @lru_cache
 def get_settings() -> Settings:

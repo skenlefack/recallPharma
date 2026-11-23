@@ -12,6 +12,7 @@ Next.js (App Router, TypeScript), rendu côté serveur. Le serveur Next.js sert 
 | `/` | Recherche (nom, substance, n° d'AMM, titulaire), filtre par juridiction et par date |
 | `/amm/[id]` | Fiche en cinq vues : identité, réglementation, RCP et délais (avec calculateur), preuves, alertes et vérification de lot |
 | `/alertes` | Alertes publiées, filtrables par juridiction |
+| `/copilote` | Copilot : questions sur le registre, réponse en flux (bandeaux et tableau d'abord, texte contrôlé ensuite), signalement d'erreur, effacement |
 | `/connexion` | Connexion par Keycloak, déconnexion, liste des comptes fictifs du jeu A10 |
 | `/validation` | Propositions classées par état, avec l'étape à faire selon le compte connecté |
 | `/validation/documents` | Dépôt des documents sources (empreinte, versions) |

@@ -31,10 +31,18 @@ async function proxy(req: NextRequest, ctx: { params: Promise<{ path: string[] }
     body: req.method === "GET" ? undefined : await req.arrayBuffer(),
     cache: "no-store",
   });
-  return new NextResponse(await res.arrayBuffer(), {
+  const type = res.headers.get("content-type") ?? "application/json";
+  if (type.startsWith("text/event-stream")) {
+    // Flux du Copilot : relayé au fil de l'eau, sans mise en mémoire tampon.
+    return new NextResponse(res.body, {
+      status: res.status,
+      headers: { "content-type": type, "cache-control": "no-cache, no-transform", "x-accel-buffering": "no" },
+    });
+  }
+  return new NextResponse(res.status === 204 ? null : await res.arrayBuffer(), {
     status: res.status,
-    headers: { "content-type": res.headers.get("content-type") ?? "application/json" },
+    headers: { "content-type": type },
   });
 }
 
-export { proxy as GET, proxy as POST, proxy as PUT };
+export { proxy as DELETE, proxy as GET, proxy as POST, proxy as PUT };

@@ -134,3 +134,31 @@ test("circuit A → B → C : une nouvelle AMM est publiée après double valida
   await page.getByText(`Produit-E${stamp}`).click();
   await expect(page.getByText("Preuve A · Confirmé")).toBeVisible();
 });
+
+test("copilot : tableau du registre, réponse contrôlée, affinage, abstention, signalement", async ({ page }) => {
+  // Prérequis : passerelle sur :8001 ; le faux modèle (backend/tests/fake_llm.py) suffit pour ce parcours.
+  await login(page, "cpt-03");
+  await page.goto("/copilote");
+  const ask = async (q: string) => {
+    await page.getByLabel(/Votre question/).fill(q);
+    await page.getByRole("button", { name: "Envoyer" }).click();
+    await expect(page.getByRole("button", { name: "Envoyer" })).toBeVisible({ timeout: 60_000 });
+  };
+
+  await ask("Quels produits à base d'ivermectine sont autorisés pour les bovins ?");
+  const turn = page.locator(".copilot-turn").nth(0);
+  await expect(turn.locator("tbody tr")).toHaveCount(2);
+  await expect(turn).toContainText("2 enregistrements du registre");
+  await expect(turn).toContainText("Le registre compte 2 produits pour cette recherche.");
+  await expect(turn).toContainText("Juridiction : Pays A · vérification la plus ancienne : 2027-07-13 · niveau de preuve le plus faible : A");
+  await expect(turn).toContainText("Ne remplace pas le jugement clinique du vétérinaire.");
+
+  await ask("Lesquels sont injectables ?");
+  await expect(page.locator(".copilot-turn").nth(1).locator("tbody tr")).toHaveCount(2);
+
+  await ask("Quel traitement choisir pour une vache qui tousse ?");
+  await expect(page.locator(".copilot-turn").nth(2)).toContainText("ne dispose pas de données vérifiées");
+
+  await turn.getByRole("button", { name: "Signaler une erreur" }).click();
+  await expect(turn).toContainText(/Signalement reçu \(ticket QUAL-\d+\)/);
+});

@@ -358,3 +358,14 @@ dl.kv dd {
 .error {
   color: var(--red-fg);
 }
+
+.copilot-turn {
+  border-top: 1px solid var(--border);
+  padding-top: 12px;
+}
+.copilot-question {
+  margin: 0;
+  background: var(--surface-2);
+  border-radius: 6px;
+  padding: 8px 12px;
+}

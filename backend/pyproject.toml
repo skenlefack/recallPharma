@@ -47,6 +47,7 @@ ignore = ["RUF001", "RUF002", "RUF003"]  # textes français : apostrophes et esp
 
 [tool.ruff.lint.per-file-ignores]
 "migrations/versions/*.py" = ["E501"]
+"src/recallpharma/gateway/prompts.py" = ["E501"]  # invites : lignes de texte, non coupées
 
 [tool.mypy]
 strict = true
@@ -63,3 +64,15 @@ name = "Le domaine ne dépend d'aucun cadre (règles pures, D4)"
 type = "forbidden"
 source_modules = ["recallpharma.domain"]
 forbidden_modules = ["fastapi", "sqlalchemy", "pydantic", "recallpharma.api", "recallpharma.db"]
+
+[[tool.importlinter.contracts]]
+name = "La passerelle d'IA n'a aucun accès à la base ni au code de l'API : outils par HTTP seulement (ADR-07, ADR-08)"
+type = "forbidden"
+source_modules = ["recallpharma.gateway"]
+forbidden_modules = ["sqlalchemy", "psycopg", "recallpharma.db", "recallpharma.api", "recallpharma.curation"]
+
+[[tool.importlinter.contracts]]
+name = "L'API ne parle jamais au modèle : elle passe par la passerelle (ADR-07)"
+type = "forbidden"
+source_modules = ["recallpharma.api", "recallpharma.curation", "recallpharma.db"]
+forbidden_modules = ["recallpharma.gateway"]

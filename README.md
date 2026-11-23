@@ -8,7 +8,7 @@ Référentiel du médicament vétérinaire intégré à RecallVET. Pour un produ
 
 Chaque réponse est accompagnée de sa preuve. Le dossier de conception unifié fait référence : https://claude.ai/artifact/MJVeJRHVBkE5VxFat8uxkb
 
-## État : incréments 1 à 4 (phase 1, lots 2 et 3)
+## État : incréments 1 à 5 (phase 1, lots 2 et 3)
 
 | Brique | Contenu | Règles |
 |---|---|---|
@@ -18,6 +18,7 @@ Chaque réponse est accompagnée de sa preuve. Le dossier de conception unifié 
 | Circuit de validation (`domain/curation.py`, `curation/`, `/v1/curation/*`) | Dépôt de documents sources (SHA-256, doublon refusé, versions chaînées) ; proposition → première validation champ par champ (page source affichée obligatoire) → ressaisie à l'aveugle → publication atomique, ou litige → arbitrage motivé ; toute modification après signature remet la revue à zéro ; historique et audit en ajout seul | RG-01, RG-07, RG-09 à RG-12, RG-32, RG-33 |
 | Interface web (`web/`) | Next.js, qui sert aussi de BFF : recherche, fiche en cinq vues avec calcul du délai d'attente et vérification de lot, alertes ; back-office de validation (documents, saisie, première validation, ressaisie à l'aveugle, arbitrage) ; parcours Playwright de bout en bout | Toutes celles ci-dessus, à l'écran |
 | Comptes et rôles (`keycloak/`, `api/auth.py`, `web/src/lib/oidc.ts`) | Keycloak 26 : royaume `recallpharma` (13 rôles, 15 comptes fictifs) ; le BFF se connecte en code d'autorisation avec PKCE et garde les jetons dans un cookie chiffré (AES-GCM), renouvelés par le middleware ; l'API vérifie chaque jeton (signature, émetteur, audience, expiration) et applique les rôles du jeton, recopiés et audités dans le compte ; double authentification TOTP imposable aux comptes du back-office | RG-32, RG-33 |
+| Copilot (`domain/copilot.py`, `domain/selection.py`, `gateway/`, `api/copilot*.py`, `web/…/copilote`) | Passerelle d'IA séparée, sans accès à la base : le modèle open source choisit les outils, puis rédige des phrases de liaison faites de références `[[enregistrement:champ]]` ; la passerelle insère les valeurs, compose les bandeaux et le tableau, puis contrôle la réponse (aucun chiffre ni terme réservé hors référence), avec repli sur le tableau seul en cas d'échec. Les outils sont des points d'accès de lecture servis à un jeton délégué de 5 minutes, refusé partout ailleurs. Flux d'événements (le tableau arrive avant le texte), quotas, journal reconstituable, masquage, signalement d'erreur, effacement | RG-15, RG-16, RG-23 à RG-27 |
 | Jeu de démonstration | Annexe A10 : 60 AMM fictives et leurs résultats attendus, rejoués par les tests | — |
 
 Les données sont **entièrement fictives** (annexe A10). Aucune AMM réelle n'est chargée tant que la convention avec le MINEPIA n'est pas signée.
@@ -74,7 +75,7 @@ On se connecte par Keycloak. L'API attend un jeton `Authorization: Bearer` émis
 ## Contrôles
 
 ```sh
-uv run pytest            # 131 tests ; ceux de l'API créent une base recallpharma_test par module
+uv run pytest            # 167 tests ; ceux de l'API créent une base recallpharma_test par module
 uv run ruff check . && uv run ruff format --check .
 uv run mypy              # typage strict
 uv run lint-imports      # le domaine ne dépend ni de FastAPI, ni de SQLAlchemy, ni de Pydantic
@@ -99,7 +100,37 @@ sh keycloak/enforce-mfa.sh   # chaque compte configure son TOTP à la connexion 
 
 Le royaume est généré à partir du jeu A10 par `keycloak/generate_realm.py`. Il n'est destiné qu'au développement : mot de passe commun, secret client connu, administrateur `admin`. En production, le secret client (`RECALLPHARMA_OIDC_CLIENT_SECRET`) et la clé de session (`RECALLPHARMA_SESSION_SECRET`) sont obligatoires.
 
+## Copilot
+
+Le modèle est un modèle open source (licence Apache 2.0) servi par une interface compatible OpenAI : vLLM en production, Ollama sur le poste de développement. Par défaut, c'est Qwen2.5 7B Instruct, en attendant le modèle affiné sur nos données.
+
+```sh
+docker compose --profile ia up -d ollama
+docker compose exec ollama ollama pull qwen2.5:7b-instruct           # 4,7 Go
+cd backend
+RECALLPHARMA_REFERENCE_DATE=2027-09-07 uv run uvicorn recallpharma.gateway.app:app --port 8001   # passerelle d'IA
+uv run python -m recallpharma.evaluation.copilot_eval                # jeu de référence, métriques CT-IA-01
+```
+
+Variables : `RECALLPHARMA_LLM_BASE_URL` (défaut `http://localhost:11434/v1`), `RECALLPHARMA_LLM_MODEL`, `RECALLPHARMA_LLM_API_KEY`, `RECALLPHARMA_GATEWAY_URL` (vu de l'API), `RECALLPHARMA_API_URL` (vu de la passerelle), `RECALLPHARMA_COPILOT_TOKEN_SECRET` (obligatoire hors développement).
+
+Ce qui est garanti par construction, et testé sans modèle (modèle scénarisé, `tests/api/test_copilot_api.py`) :
+- **Valeurs :** toute valeur affichée vient d'un résultat d'outil du tour. Une rédaction qui écrit elle-même un chiffre, une substance, une espèce ou un statut est refusée ; après deux refus, seul le tableau s'affiche.
+- **Décomptes :** ils viennent du registre. Un affinage est un appel d'outil sur le jeu de résultats précédent, et les délais non comparables sont listés à part.
+- **Abstentions :** le Copilot s'abstient sans appeler le modèle pour un diagnostic, un choix de traitement ou un médicament humain. Il s'abstient aussi pour un produit absent, une juridiction non couverte ou des données de niveau D uniquement.
+- **Bandeaux :** ils sont composés sans le modèle et envoyés avant le texte (RG-15). Une AMM autorisée seulement ailleurs est étiquetée comme telle (RG-16).
+- **Mentions :** chaque réponse porte la juridiction, la date de vérification la plus ancienne, le niveau de preuve le plus faible et la mention de non-substitution (RG-26).
+- **Écriture :** aucun outil n'écrit. Le jeton délégué reçoit une erreur 403 hors des outils, et les tentatives d'injection sont notées au journal.
+
+Ce que les tests ne garantissent pas : que le modèle désigne le bon enregistrement pour la question posée. Ce risque se mesure avec le jeu de référence (`evaluation/copilot-reference.json`, 10 questions ; le jeu de recette en prévoit 300, puis 600).
+
+Écarts assumés du prototype :
+- **Jeton délégué :** l'API l'émet elle-même. L'échange de jeton RFC 8693 de Keycloak, prévu par l'ADR-08, le remplacera sans changer les points d'accès.
+- **Recherche dans les RCP :** les outils `search_spc_passages` (recherche hybride, pgvector) et `compare_jurisdictions` restent à faire.
+- **Masquage :** les noms de personnes ne sont pas encore masqués dans les questions enregistrées.
+- **Durée de réponse :** sur un processeur sans carte graphique, le modèle 7B dépasse le délai cible de 15 s.
+
 ## Suite prévue
 
-1. Copilote : passerelle IA, modèle open source servi par vLLM, recherche hybride, contrôle après génération (RG-23 à RG-27).
+1. Affinage du modèle (LoRA/QLoRA puis DPO) sur les échanges relus, et recherche dans les RCP (pgvector).
 2. Affichage de la page source (PDF) dans l'écran de première validation.

@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+import time
+import uuid
 from functools import lru_cache
 from typing import Annotated, Any
 
@@ -77,14 +79,83 @@ def current_identity(
     authorization: Annotated[str | None, Header()] = None,
     x_recallpharma_user: Annotated[str | None, Header()] = None,
 ) -> Identity:
+    scheme, _, token = (authorization or "").partition(" ")
+    bearer = token if scheme.lower() == "bearer" and token else None
+    if bearer and _is_delegated(bearer):
+        raise delegated_forbidden()  # le jeton de la passerelle ne sert qu'aux outils de lecture, dans tous les modes
     if get_settings().auth_mode == "dev":
         if not x_recallpharma_user:
             raise _unauthorized("En-tête X-RecallPharma-User manquant (mode dev)")
         return Identity(account_id=x_recallpharma_user)
-    scheme, _, token = (authorization or "").partition(" ")
-    if scheme.lower() != "bearer" or not token:
+    if not bearer:
         raise _unauthorized("Jeton Bearer manquant")
-    return identity_from_claims(verify_token(token))
+    return identity_from_claims(verify_token(bearer))
 
 
 IdentityDep = Annotated[Identity, Depends(current_identity)]
+
+
+# --- Jeton délégué du Copilot (ADR-08) -----------------------------------------------------------
+# Sujet : l'utilisateur ; acteur : passerelle-ia ; audience : api-copilot-lecture ; portée : registre:lire ; 5 minutes.
+# La passerelle ne reçoit jamais le jeton de l'utilisateur. Prototype : émis et signé par l'API (HS256) ; l'échange de
+# jeton RFC 8693 de Keycloak le remplacera sans changer les points d'accès.
+
+DELEGATED_TTL_S = 300
+
+
+def delegated_forbidden() -> Problem:
+    return Problem(403, "delegated_token_forbidden", "Jeton délégué refusé hors des outils du Copilot")
+
+
+class Delegation:
+    def __init__(self, account_id: str, conversation_id: str | None) -> None:
+        self.account_id, self.conversation_id = account_id, conversation_id
+
+
+def mint_delegated(account_id: str, conversation_id: str | None) -> str:
+    s = get_settings()
+    now = int(time.time())
+    claims = {
+        "iss": "recallpharma-api",
+        "sub": account_id,
+        "act": {"sub": "passerelle-ia"},
+        "aud": s.copilot_token_audience,
+        "scope": "registre:lire",
+        "cid": conversation_id,
+        "iat": now,
+        "exp": now + DELEGATED_TTL_S,
+        "jti": uuid.uuid4().hex,
+    }
+    return jwt.encode(claims, s.copilot_token_secret, algorithm="HS256")
+
+
+def _is_delegated(token: str) -> bool:
+    try:
+        return bool(jwt.get_unverified_header(token).get("alg") == "HS256")
+    except jwt.PyJWTError:
+        return False
+
+
+def delegated_reader(authorization: Annotated[str | None, Header()] = None) -> Delegation:
+    """Seule identité acceptée par les outils du Copilot : le jeton délégué, en lecture."""
+    s = get_settings()
+    scheme, _, token = (authorization or "").partition(" ")
+    if scheme.lower() != "bearer" or not token:
+        raise _unauthorized("Jeton délégué manquant")
+    try:
+        claims = jwt.decode(
+            token,
+            s.copilot_token_secret,
+            algorithms=["HS256"],
+            audience=s.copilot_token_audience,
+            issuer="recallpharma-api",
+            options={"require": ["exp", "sub", "aud", "act"]},
+        )
+    except jwt.PyJWTError as exc:
+        raise _unauthorized("Jeton délégué expiré ou invalide") from exc
+    if claims.get("scope") != "registre:lire" or claims.get("act", {}).get("sub") != "passerelle-ia":
+        raise Problem(403, "insufficient_scope", "Portée insuffisante")
+    return Delegation(str(claims["sub"]), claims.get("cid"))
+
+
+DelegationDep = Annotated[Delegation, Depends(delegated_reader)]

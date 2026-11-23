@@ -36,5 +36,16 @@ services:
       timeout: 5s
       retries: 40
 
+  # Modèle open source local pour le Copilot (profil « ia ») : même interface OpenAI que vLLM en production.
+  # docker compose --profile ia up -d ollama && docker compose exec ollama ollama pull qwen2.5:7b-instruct
+  ollama:
+    image: ollama/ollama:0.5.7
+    profiles: ["ia"]
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama:/root/.ollama
+
 volumes:
   pgdata:
+  ollama:
