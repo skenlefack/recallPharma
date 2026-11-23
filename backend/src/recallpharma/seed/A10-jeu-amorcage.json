@@ -1,0 +1,5395 @@
+{
+ "meta": {
+  "titre": "RecallPharma — jeu d'amorçage fictif (annexe A10)",
+  "reference_date": "2027-09-07",
+  "avertissement": "Données entièrement fictives, à l'exception des dénominations communes. Les codes ATCvet et les catégories OMS et OMSA sont donnés pour la démonstration et sont à vérifier contre les listes en vigueur. Aucun produit, aucune AMM et aucune organisation n'existent.",
+  "decomptes": {
+   "juridictions": 3,
+   "etats_membres": 2,
+   "substances": 20,
+   "produits": 40,
+   "amm": 60,
+   "rcp": 30,
+   "alertes": 10,
+   "documents": 15,
+   "comptes": 15
+  }
+ },
+ "jurisdictions": [
+  {
+   "code": "PA",
+   "type": "pays",
+   "name": "Pays A",
+   "timezone": "Africa/Douala",
+   "validity_years": 5,
+   "banned_list_status": "liste nationale non communiquée",
+   "banned_substances": []
+  },
+  {
+   "code": "PB",
+   "type": "pays",
+   "name": "Pays B",
+   "timezone": "Africa/Abidjan",
+   "validity_years": 5,
+   "banned_list_status": "liste nationale communiquée (fictive)",
+   "banned_substances": [
+    "chloramphénicol"
+   ]
+  },
+  {
+   "code": "CC",
+   "type": "communauté",
+   "name": "Communauté C",
+   "timezone": "Africa/Dakar",
+   "validity_years": 5,
+   "members": [
+    "C1",
+    "C2"
+   ],
+   "banned_list_status": "liste communautaire communiquée (fictive)",
+   "banned_substances": [
+    "chloramphénicol"
+   ]
+  },
+  {
+   "code": "C1",
+   "type": "pays",
+   "name": "État C1",
+   "timezone": "Africa/Dakar",
+   "validity_years": 5
+  },
+  {
+   "code": "C2",
+   "type": "pays",
+   "name": "État C2",
+   "timezone": "Africa/Bamako",
+   "validity_years": 5
+  }
+ ],
+ "substances": [
+  {
+   "id": "sub-01",
+   "inn_name": "oxytétracycline",
+   "atcvet_code": "QJ01AA06",
+   "is_antimicrobial": true,
+   "who_category": "importance élevée",
+   "woah_category": "AICV",
+   "codex_rmr": false
+  },
+  {
+   "id": "sub-02",
+   "inn_name": "doxycycline",
+   "atcvet_code": "QJ01AA02",
+   "is_antimicrobial": true,
+   "who_category": "importance élevée",
+   "woah_category": "AICV",
+   "codex_rmr": false
+  },
+  {
+   "id": "sub-03",
+   "inn_name": "amoxicilline",
+   "atcvet_code": "QJ01CA04",
+   "is_antimicrobial": true,
+   "who_category": "importance élevée",
+   "woah_category": "AICV",
+   "codex_rmr": false
+  },
+  {
+   "id": "sub-04",
+   "inn_name": "benzylpénicilline",
+   "atcvet_code": "QJ01CE01",
+   "is_antimicrobial": true,
+   "who_category": "importance élevée",
+   "woah_category": "AICV",
+   "codex_rmr": false
+  },
+  {
+   "id": "sub-05",
+   "inn_name": "ceftiofur",
+   "atcvet_code": "QJ01DD90",
+   "is_antimicrobial": true,
+   "who_category": "importance critique, priorité la plus élevée",
+   "woah_category": "AICV",
+   "codex_rmr": false
+  },
+  {
+   "id": "sub-06",
+   "inn_name": "enrofloxacine",
+   "atcvet_code": "QJ01MA90",
+   "is_antimicrobial": true,
+   "who_category": "importance critique, priorité la plus élevée",
+   "woah_category": "AICV",
+   "codex_rmr": false
+  },
+  {
+   "id": "sub-07",
+   "inn_name": "colistine",
+   "atcvet_code": "QJ01XB01",
+   "is_antimicrobial": true,
+   "who_category": "importance critique, priorité la plus élevée",
+   "woah_category": "ATIV",
+   "codex_rmr": false
+  },
+  {
+   "id": "sub-08",
+   "inn_name": "tylosine",
+   "atcvet_code": "QJ01FA90",
+   "is_antimicrobial": true,
+   "who_category": "importance critique",
+   "woah_category": "AICV",
+   "codex_rmr": false
+  },
+  {
+   "id": "sub-09",
+   "inn_name": "gentamicine",
+   "atcvet_code": "QJ01GB03",
+   "is_antimicrobial": true,
+   "who_category": "importance critique",
+   "woah_category": "AICV",
+   "codex_rmr": false
+  },
+  {
+   "id": "sub-10",
+   "inn_name": "florfénicol",
+   "atcvet_code": "QJ01BA90",
+   "is_antimicrobial": true,
+   "who_category": "importance élevée",
+   "woah_category": "AICV",
+   "codex_rmr": false
+  },
+  {
+   "id": "sub-11",
+   "inn_name": "sulfadimidine",
+   "atcvet_code": "QJ01EQ03",
+   "is_antimicrobial": true,
+   "who_category": "importance élevée",
+   "woah_category": "AICV",
+   "codex_rmr": false
+  },
+  {
+   "id": "sub-12",
+   "inn_name": "chloramphénicol",
+   "atcvet_code": "QJ01BA01",
+   "is_antimicrobial": true,
+   "who_category": "importance élevée",
+   "woah_category": null,
+   "codex_rmr": true
+  },
+  {
+   "id": "sub-13",
+   "inn_name": "ivermectine",
+   "atcvet_code": "QP54AA01",
+   "is_antimicrobial": false,
+   "who_category": null,
+   "woah_category": null,
+   "codex_rmr": false
+  },
+  {
+   "id": "sub-14",
+   "inn_name": "albendazole",
+   "atcvet_code": "QP52AC11",
+   "is_antimicrobial": false,
+   "who_category": null,
+   "woah_category": null,
+   "codex_rmr": false
+  },
+  {
+   "id": "sub-15",
+   "inn_name": "lévamisole",
+   "atcvet_code": "QP52AE01",
+   "is_antimicrobial": false,
+   "who_category": null,
+   "woah_category": null,
+   "codex_rmr": false
+  },
+  {
+   "id": "sub-16",
+   "inn_name": "fenbendazole",
+   "atcvet_code": "QP52AC13",
+   "is_antimicrobial": false,
+   "who_category": null,
+   "woah_category": null,
+   "codex_rmr": false
+  },
+  {
+   "id": "sub-17",
+   "inn_name": "praziquantel",
+   "atcvet_code": "QP52AA01",
+   "is_antimicrobial": false,
+   "who_category": null,
+   "woah_category": null,
+   "codex_rmr": false
+  },
+  {
+   "id": "sub-18",
+   "inn_name": "toltrazuril",
+   "atcvet_code": "QP51AJ01",
+   "is_antimicrobial": false,
+   "who_category": null,
+   "woah_category": null,
+   "codex_rmr": false
+  },
+  {
+   "id": "sub-19",
+   "inn_name": "méloxicam",
+   "atcvet_code": "QM01AC06",
+   "is_antimicrobial": false,
+   "who_category": null,
+   "woah_category": null,
+   "codex_rmr": false
+  },
+  {
+   "id": "sub-20",
+   "inn_name": "flunixine",
+   "atcvet_code": "QM01AG90",
+   "is_antimicrobial": false,
+   "who_category": null,
+   "woah_category": null,
+   "codex_rmr": false
+  }
+ ],
+ "organisations": [
+  {
+   "id": "org-01",
+   "name": "Laboratoires Alpha (fictif)",
+   "country": "fictif"
+  },
+  {
+   "id": "org-02",
+   "name": "Beta Santé Animale (fictif)",
+   "country": "fictif"
+  },
+  {
+   "id": "org-03",
+   "name": "Gamma Vet (fictif)",
+   "country": "fictif"
+  },
+  {
+   "id": "org-04",
+   "name": "Delta Pharma (fictif)",
+   "country": "fictif"
+  },
+  {
+   "id": "org-05",
+   "name": "Epsilon Animal Health (fictif)",
+   "country": "fictif"
+  },
+  {
+   "id": "org-06",
+   "name": "Zêta Biologiques (fictif)",
+   "country": "fictif"
+  },
+  {
+   "id": "org-aut-PA",
+   "name": "Autorité vétérinaire du Pays A (fictive)",
+   "country": "PA"
+  },
+  {
+   "id": "org-aut-PB",
+   "name": "Autorité vétérinaire du Pays B (fictive)",
+   "country": "PB"
+  },
+  {
+   "id": "org-aut-CC",
+   "name": "Commission de la Communauté C (fictive)",
+   "country": "CC"
+  }
+ ],
+ "products": [
+  {
+   "id": "prd-001",
+   "name": "Produit-001",
+   "pharmaceutical_form": "solution injectable",
+   "routes": [
+    "IM"
+   ],
+   "product_type": "pharmaceutique",
+   "target_species": [
+    "bovins",
+    "ovins",
+    "caprins",
+    "porcins"
+   ],
+   "ingredients": [
+    {
+     "substance_id": "sub-01",
+     "inn_name": "oxytétracycline",
+     "strength_as_stated": "100 mg/mL",
+     "strength_value": 100,
+     "strength_unit": "mg",
+     "strength_basis": "par mL",
+     "is_ambiguous": false
+    }
+   ],
+   "designation": "oxytétracycline 100 mg/mL, solution injectable"
+  },
+  {
+   "id": "prd-002",
+   "name": "Produit-002",
+   "pharmaceutical_form": "suspension injectable",
+   "routes": [
+    "IM",
+    "SC"
+   ],
+   "product_type": "pharmaceutique",
+   "target_species": [
+    "bovins",
+    "porcins"
+   ],
+   "ingredients": [
+    {
+     "substance_id": "sub-03",
+     "inn_name": "amoxicilline",
+     "strength_as_stated": "150 mg/mL",
+     "strength_value": 150,
+     "strength_unit": "mg",
+     "strength_basis": "par mL",
+     "is_ambiguous": false
+    }
+   ],
+   "designation": "amoxicilline 150 mg/mL, suspension injectable"
+  },
+  {
+   "id": "prd-003",
+   "name": "Produit-003",
+   "pharmaceutical_form": "suspension injectable",
+   "routes": [
+    "SC"
+   ],
+   "product_type": "pharmaceutique",
+   "target_species": [
+    "bovins",
+    "porcins"
+   ],
+   "ingredients": [
+    {
+     "substance_id": "sub-05",
+     "inn_name": "ceftiofur",
+     "strength_as_stated": "50 mg/mL",
+     "strength_value": 50,
+     "strength_unit": "mg",
+     "strength_basis": "par mL",
+     "is_ambiguous": false
+    }
+   ],
+   "designation": "ceftiofur 50 mg/mL, suspension injectable"
+  },
+  {
+   "id": "prd-004",
+   "name": "Produit-004",
+   "pharmaceutical_form": "solution buvable",
+   "routes": [
+    "orale"
+   ],
+   "product_type": "pharmaceutique",
+   "target_species": [
+    "poulets",
+    "dindes"
+   ],
+   "ingredients": [
+    {
+     "substance_id": "sub-06",
+     "inn_name": "enrofloxacine",
+     "strength_as_stated": "100 mg/mL",
+     "strength_value": 100,
+     "strength_unit": "mg",
+     "strength_basis": "par mL",
+     "is_ambiguous": false
+    }
+   ],
+   "designation": "enrofloxacine 100 mg/mL, solution buvable"
+  },
+  {
+   "id": "prd-005",
+   "name": "Produit-005",
+   "pharmaceutical_form": "poudre pour solution buvable",
+   "routes": [
+    "orale"
+   ],
+   "product_type": "pharmaceutique",
+   "target_species": [
+    "poulets",
+    "porcins"
+   ],
+   "ingredients": [
+    {
+     "substance_id": "sub-07",
+     "inn_name": "colistine",
+     "strength_as_stated": "2 000 000 UI/g",
+     "strength_value": 2000000,
+     "strength_unit": "UI",
+     "strength_basis": "par g",
+     "is_ambiguous": false
+    }
+   ],
+   "designation": "colistine 2 000 000 UI/g, poudre pour solution buvable"
+  },
+  {
+   "id": "prd-006",
+   "name": "Produit-006",
+   "pharmaceutical_form": "solution injectable",
+   "routes": [
+    "IM",
+    "SC"
+   ],
+   "product_type": "pharmaceutique",
+   "target_species": [
+    "bovins"
+   ],
+   "ingredients": [
+    {
+     "substance_id": "sub-10",
+     "inn_name": "florfénicol",
+     "strength_as_stated": "300 mg/mL",
+     "strength_value": 300,
+     "strength_unit": "mg",
+     "strength_basis": "par mL",
+     "is_ambiguous": false
+    }
+   ],
+   "designation": "florfénicol 300 mg/mL, solution injectable"
+  },
+  {
+   "id": "prd-007",
+   "name": "Produit-007",
+   "pharmaceutical_form": "solution injectable",
+   "routes": [
+    "SC"
+   ],
+   "product_type": "pharmaceutique",
+   "target_species": [
+    "bovins",
+    "ovins"
+   ],
+   "ingredients": [
+    {
+     "substance_id": "sub-13",
+     "inn_name": "ivermectine",
+     "strength_as_stated": "10 mg/mL",
+     "strength_value": 10,
+     "strength_unit": "mg",
+     "strength_basis": "par mL",
+     "is_ambiguous": false
+    }
+   ],
+   "designation": "ivermectine 10 mg/mL, solution injectable"
+  },
+  {
+   "id": "prd-008",
+   "name": "Produit-008",
+   "pharmaceutical_form": "suspension buvable",
+   "routes": [
+    "orale"
+   ],
+   "product_type": "pharmaceutique",
+   "target_species": [
+    "bovins",
+    "ovins"
+   ],
+   "ingredients": [
+    {
+     "substance_id": "sub-14",
+     "inn_name": "albendazole",
+     "strength_as_stated": "100 mg/mL",
+     "strength_value": 100,
+     "strength_unit": "mg",
+     "strength_basis": "par mL",
+     "is_ambiguous": false
+    }
+   ],
+   "designation": "albendazole 100 mg/mL, suspension buvable"
+  },
+  {
+   "id": "prd-009",
+   "name": "Produit-009",
+   "pharmaceutical_form": "solution injectable",
+   "routes": [
+    "IM"
+   ],
+   "product_type": "pharmaceutique",
+   "target_species": [
+    "bovins",
+    "porcins"
+   ],
+   "ingredients": [
+    {
+     "substance_id": "sub-08",
+     "inn_name": "tylosine",
+     "strength_as_stated": "200 mg/mL",
+     "strength_value": 200,
+     "strength_unit": "mg",
+     "strength_basis": "par mL",
+     "is_ambiguous": false
+    }
+   ],
+   "designation": "tylosine 200 mg/mL, solution injectable"
+  },
+  {
+   "id": "prd-010",
+   "name": "Produit-010",
+   "pharmaceutical_form": "solution injectable",
+   "routes": [
+    "SC",
+    "IV"
+   ],
+   "product_type": "pharmaceutique",
+   "target_species": [
+    "bovins",
+    "porcins"
+   ],
+   "ingredients": [
+    {
+     "substance_id": "sub-19",
+     "inn_name": "méloxicam",
+     "strength_as_stated": "20 mg/mL",
+     "strength_value": 20,
+     "strength_unit": "mg",
+     "strength_basis": "par mL",
+     "is_ambiguous": false
+    }
+   ],
+   "designation": "méloxicam 20 mg/mL, solution injectable"
+  },
+  {
+   "id": "prd-011",
+   "name": "Produit-011",
+   "pharmaceutical_form": "solution buvable",
+   "routes": [
+    "orale"
+   ],
+   "product_type": "pharmaceutique",
+   "target_species": [
+    "poulets"
+   ],
+   "ingredients": [
+    {
+     "substance_id": "sub-18",
+     "inn_name": "toltrazuril",
+     "strength_as_stated": "25 mg/mL",
+     "strength_value": 25,
+     "strength_unit": "mg",
+     "strength_basis": "par mL",
+     "is_ambiguous": false
+    }
+   ],
+   "designation": "toltrazuril 25 mg/mL, solution buvable"
+  },
+  {
+   "id": "prd-012",
+   "name": "Produit-012",
+   "pharmaceutical_form": "poudre pour solution buvable",
+   "routes": [
+    "orale"
+   ],
+   "product_type": "pharmaceutique",
+   "target_species": [
+    "poulets",
+    "porcins"
+   ],
+   "ingredients": [
+    {
+     "substance_id": "sub-03",
+     "inn_name": "amoxicilline",
+     "strength_as_stated": "100 mg/g",
+     "strength_value": 100,
+     "strength_unit": "mg",
+     "strength_basis": "par g",
+     "is_ambiguous": false
+    },
+    {
+     "substance_id": "sub-07",
+     "inn_name": "colistine",
+     "strength_as_stated": "250 000 UI/g",
+     "strength_value": 250000,
+     "strength_unit": "UI",
+     "strength_basis": "par g",
+     "is_ambiguous": false
+    }
+   ],
+   "designation": "amoxicilline 100 mg/g + colistine 250 000 UI/g, poudre pour solution buvable"
+  },
+  {
+   "id": "prd-013",
+   "name": "Produit-013",
+   "pharmaceutical_form": "comprimé",
+   "routes": [
+    "orale"
+   ],
+   "product_type": "pharmaceutique",
+   "target_species": [
+    "chiens",
+    "chats"
+   ],
+   "ingredients": [
+    {
+     "substance_id": "sub-17",
+     "inn_name": "praziquantel",
+     "strength_as_stated": "50 mg par comprimé",
+     "strength_value": 50,
+     "strength_unit": "mg",
+     "strength_basis": "par comprimé",
+     "is_ambiguous": false
+    }
+   ],
+   "designation": "praziquantel 50 mg par comprimé, comprimé"
+  },
+  {
+   "id": "prd-014",
+   "name": "Produit-014",
+   "pharmaceutical_form": "solution injectable",
+   "routes": [
+    "IM"
+   ],
+   "product_type": "pharmaceutique",
+   "target_species": [
+    "chiens",
+    "chats"
+   ],
+   "ingredients": [
+    {
+     "substance_id": "sub-12",
+     "inn_name": "chloramphénicol",
+     "strength_as_stated": "150 mg/mL",
+     "strength_value": 150,
+     "strength_unit": "mg",
+     "strength_basis": "par mL",
+     "is_ambiguous": false
+    }
+   ],
+   "designation": "chloramphénicol 150 mg/mL, solution injectable"
+  },
+  {
+   "id": "prd-015",
+   "name": "Produit-015",
+   "pharmaceutical_form": "prémélange médicamenteux",
+   "routes": [
+    "orale"
+   ],
+   "product_type": "prémélange médicamenteux",
+   "target_species": [
+    "poissons"
+   ],
+   "ingredients": [
+    {
+     "substance_id": "sub-01",
+     "inn_name": "oxytétracycline",
+     "strength_as_stated": "500 mg/g",
+     "strength_value": 500,
+     "strength_unit": "mg",
+     "strength_basis": "par g",
+     "is_ambiguous": false
+    }
+   ],
+   "designation": "oxytétracycline 500 mg/g, prémélange médicamenteux"
+  },
+  {
+   "id": "prd-016",
+   "name": "Produit-016",
+   "pharmaceutical_form": "solution injectable",
+   "routes": [
+    "IM"
+   ],
+   "product_type": "pharmaceutique",
+   "target_species": [
+    "bovins"
+   ],
+   "ingredients": [
+    {
+     "substance_id": "sub-09",
+     "inn_name": "gentamicine",
+     "strength_as_stated": "50 mg/mL",
+     "strength_value": 50,
+     "strength_unit": "mg",
+     "strength_basis": "par mL",
+     "is_ambiguous": false
+    }
+   ],
+   "designation": "gentamicine 50 mg/mL, solution injectable"
+  },
+  {
+   "id": "prd-017",
+   "name": "Produit-017",
+   "pharmaceutical_form": "solution injectable",
+   "routes": [
+    "IM"
+   ],
+   "product_type": "pharmaceutique",
+   "target_species": [
+    "bovins",
+    "ovins",
+    "caprins",
+    "porcins"
+   ],
+   "ingredients": [
+    {
+     "substance_id": "sub-01",
+     "inn_name": "oxytétracycline",
+     "strength_as_stated": "100 mg/mL",
+     "strength_value": 100,
+     "strength_unit": "mg",
+     "strength_basis": "par mL",
+     "is_ambiguous": false
+    }
+   ],
+   "designation": "oxytétracycline 100 mg/mL, solution injectable"
+  },
+  {
+   "id": "prd-018",
+   "name": "Produit-018",
+   "pharmaceutical_form": "suspension injectable",
+   "routes": [
+    "IM",
+    "SC"
+   ],
+   "product_type": "pharmaceutique",
+   "target_species": [
+    "bovins",
+    "porcins"
+   ],
+   "ingredients": [
+    {
+     "substance_id": "sub-03",
+     "inn_name": "amoxicilline",
+     "strength_as_stated": "150 mg/mL",
+     "strength_value": 150,
+     "strength_unit": "mg",
+     "strength_basis": "par mL",
+     "is_ambiguous": false
+    }
+   ],
+   "designation": "amoxicilline 150 mg/mL, suspension injectable"
+  },
+  {
+   "id": "prd-019",
+   "name": "Produit-019",
+   "pharmaceutical_form": "suspension injectable",
+   "routes": [
+    "SC"
+   ],
+   "product_type": "pharmaceutique",
+   "target_species": [
+    "bovins",
+    "porcins"
+   ],
+   "ingredients": [
+    {
+     "substance_id": "sub-05",
+     "inn_name": "ceftiofur",
+     "strength_as_stated": "50 mg/mL",
+     "strength_value": 50,
+     "strength_unit": "mg",
+     "strength_basis": "par mL",
+     "is_ambiguous": false
+    }
+   ],
+   "designation": "ceftiofur 50 mg/mL, suspension injectable"
+  },
+  {
+   "id": "prd-020",
+   "name": "Produit-020",
+   "pharmaceutical_form": "solution buvable",
+   "routes": [
+    "orale"
+   ],
+   "product_type": "pharmaceutique",
+   "target_species": [
+    "poulets",
+    "dindes"
+   ],
+   "ingredients": [
+    {
+     "substance_id": "sub-06",
+     "inn_name": "enrofloxacine",
+     "strength_as_stated": "100 mg/mL",
+     "strength_value": 100,
+     "strength_unit": "mg",
+     "strength_basis": "par mL",
+     "is_ambiguous": false
+    }
+   ],
+   "designation": "enrofloxacine 100 mg/mL, solution buvable"
+  },
+  {
+   "id": "prd-021",
+   "name": "Produit-021",
+   "pharmaceutical_form": "poudre pour solution buvable",
+   "routes": [
+    "orale"
+   ],
+   "product_type": "pharmaceutique",
+   "target_species": [
+    "poulets",
+    "porcins"
+   ],
+   "ingredients": [
+    {
+     "substance_id": "sub-07",
+     "inn_name": "colistine",
+     "strength_as_stated": "2 000 000 UI/g",
+     "strength_value": 2000000,
+     "strength_unit": "UI",
+     "strength_basis": "par g",
+     "is_ambiguous": false
+    }
+   ],
+   "designation": "colistine 2 000 000 UI/g, poudre pour solution buvable"
+  },
+  {
+   "id": "prd-022",
+   "name": "Produit-022",
+   "pharmaceutical_form": "solution injectable",
+   "routes": [
+    "IM",
+    "SC"
+   ],
+   "product_type": "pharmaceutique",
+   "target_species": [
+    "bovins"
+   ],
+   "ingredients": [
+    {
+     "substance_id": "sub-10",
+     "inn_name": "florfénicol",
+     "strength_as_stated": "300 mg/mL",
+     "strength_value": 300,
+     "strength_unit": "mg",
+     "strength_basis": "par mL",
+     "is_ambiguous": false
+    }
+   ],
+   "designation": "florfénicol 300 mg/mL, solution injectable"
+  },
+  {
+   "id": "prd-023",
+   "name": "Produit-023",
+   "pharmaceutical_form": "solution injectable",
+   "routes": [
+    "SC"
+   ],
+   "product_type": "pharmaceutique",
+   "target_species": [
+    "bovins",
+    "ovins"
+   ],
+   "ingredients": [
+    {
+     "substance_id": "sub-13",
+     "inn_name": "ivermectine",
+     "strength_as_stated": "10 mg/mL",
+     "strength_value": 10,
+     "strength_unit": "mg",
+     "strength_basis": "par mL",
+     "is_ambiguous": false
+    }
+   ],
+   "designation": "ivermectine 10 mg/mL, solution injectable"
+  },
+  {
+   "id": "prd-024",
+   "name": "Produit-024",
+   "pharmaceutical_form": "suspension buvable",
+   "routes": [
+    "orale"
+   ],
+   "product_type": "pharmaceutique",
+   "target_species": [
+    "bovins",
+    "ovins"
+   ],
+   "ingredients": [
+    {
+     "substance_id": "sub-14",
+     "inn_name": "albendazole",
+     "strength_as_stated": "10 %",
+     "strength_value": null,
+     "strength_unit": null,
+     "strength_basis": null,
+     "is_ambiguous": true
+    }
+   ],
+   "designation": "albendazole 10 %, suspension buvable"
+  },
+  {
+   "id": "prd-025",
+   "name": "Produit-025",
+   "pharmaceutical_form": "solution injectable",
+   "routes": [
+    "IM"
+   ],
+   "product_type": "pharmaceutique",
+   "target_species": [
+    "bovins",
+    "porcins"
+   ],
+   "ingredients": [
+    {
+     "substance_id": "sub-08",
+     "inn_name": "tylosine",
+     "strength_as_stated": "200 mg/mL",
+     "strength_value": 200,
+     "strength_unit": "mg",
+     "strength_basis": "par mL",
+     "is_ambiguous": false
+    }
+   ],
+   "designation": "tylosine 200 mg/mL, solution injectable"
+  },
+  {
+   "id": "prd-026",
+   "name": "Produit-026",
+   "pharmaceutical_form": "solution injectable",
+   "routes": [
+    "SC",
+    "IV"
+   ],
+   "product_type": "pharmaceutique",
+   "target_species": [
+    "bovins",
+    "porcins"
+   ],
+   "ingredients": [
+    {
+     "substance_id": "sub-19",
+     "inn_name": "méloxicam",
+     "strength_as_stated": "20 mg/mL",
+     "strength_value": 20,
+     "strength_unit": "mg",
+     "strength_basis": "par mL",
+     "is_ambiguous": false
+    }
+   ],
+   "designation": "méloxicam 20 mg/mL, solution injectable"
+  },
+  {
+   "id": "prd-027",
+   "name": "Produit-027",
+   "pharmaceutical_form": "solution buvable",
+   "routes": [
+    "orale"
+   ],
+   "product_type": "pharmaceutique",
+   "target_species": [
+    "poulets"
+   ],
+   "ingredients": [
+    {
+     "substance_id": "sub-18",
+     "inn_name": "toltrazuril",
+     "strength_as_stated": "25 mg/mL",
+     "strength_value": 25,
+     "strength_unit": "mg",
+     "strength_basis": "par mL",
+     "is_ambiguous": false
+    }
+   ],
+   "designation": "toltrazuril 25 mg/mL, solution buvable"
+  },
+  {
+   "id": "prd-028",
+   "name": "Produit-028",
+   "pharmaceutical_form": "poudre pour solution buvable",
+   "routes": [
+    "orale"
+   ],
+   "product_type": "pharmaceutique",
+   "target_species": [
+    "poulets",
+    "porcins"
+   ],
+   "ingredients": [
+    {
+     "substance_id": "sub-03",
+     "inn_name": "amoxicilline",
+     "strength_as_stated": "100 mg/g",
+     "strength_value": 100,
+     "strength_unit": "mg",
+     "strength_basis": "par g",
+     "is_ambiguous": false
+    },
+    {
+     "substance_id": "sub-07",
+     "inn_name": "colistine",
+     "strength_as_stated": "250 000 UI/g",
+     "strength_value": 250000,
+     "strength_unit": "UI",
+     "strength_basis": "par g",
+     "is_ambiguous": false
+    }
+   ],
+   "designation": "amoxicilline 100 mg/g + colistine 250 000 UI/g, poudre pour solution buvable"
+  },
+  {
+   "id": "prd-029",
+   "name": "Produit-029",
+   "pharmaceutical_form": "comprimé",
+   "routes": [
+    "orale"
+   ],
+   "product_type": "pharmaceutique",
+   "target_species": [
+    "chiens",
+    "chats"
+   ],
+   "ingredients": [
+    {
+     "substance_id": "sub-17",
+     "inn_name": "praziquantel",
+     "strength_as_stated": "50 mg par comprimé",
+     "strength_value": 50,
+     "strength_unit": "mg",
+     "strength_basis": "par comprimé",
+     "is_ambiguous": false
+    }
+   ],
+   "designation": "praziquantel 50 mg par comprimé, comprimé"
+  },
+  {
+   "id": "prd-030",
+   "name": "Produit-030",
+   "pharmaceutical_form": "solution injectable",
+   "routes": [
+    "IM"
+   ],
+   "product_type": "pharmaceutique",
+   "target_species": [
+    "chiens",
+    "chats"
+   ],
+   "ingredients": [
+    {
+     "substance_id": "sub-12",
+     "inn_name": "chloramphénicol",
+     "strength_as_stated": "150 mg/mL",
+     "strength_value": 150,
+     "strength_unit": "mg",
+     "strength_basis": "par mL",
+     "is_ambiguous": false
+    }
+   ],
+   "designation": "chloramphénicol 150 mg/mL, solution injectable"
+  },
+  {
+   "id": "prd-031",
+   "name": "Produit-031",
+   "pharmaceutical_form": "prémélange médicamenteux",
+   "routes": [
+    "orale"
+   ],
+   "product_type": "prémélange médicamenteux",
+   "target_species": [
+    "poissons"
+   ],
+   "ingredients": [
+    {
+     "substance_id": "sub-01",
+     "inn_name": "oxytétracycline",
+     "strength_as_stated": "500 mg/g",
+     "strength_value": 500,
+     "strength_unit": "mg",
+     "strength_basis": "par g",
+     "is_ambiguous": false
+    }
+   ],
+   "designation": "oxytétracycline 500 mg/g, prémélange médicamenteux"
+  },
+  {
+   "id": "prd-032",
+   "name": "Produit-032",
+   "pharmaceutical_form": "solution injectable",
+   "routes": [
+    "IM"
+   ],
+   "product_type": "pharmaceutique",
+   "target_species": [
+    "bovins"
+   ],
+   "ingredients": [
+    {
+     "substance_id": "sub-09",
+     "inn_name": "gentamicine",
+     "strength_as_stated": "50 mg/mL",
+     "strength_value": 50,
+     "strength_unit": "mg",
+     "strength_basis": "par mL",
+     "is_ambiguous": false
+    }
+   ],
+   "designation": "gentamicine 50 mg/mL, solution injectable"
+  },
+  {
+   "id": "prd-033",
+   "name": "Produit-033",
+   "pharmaceutical_form": "solution injectable",
+   "routes": [
+    "IM"
+   ],
+   "product_type": "pharmaceutique",
+   "target_species": [
+    "bovins",
+    "ovins",
+    "caprins",
+    "porcins"
+   ],
+   "ingredients": [
+    {
+     "substance_id": "sub-01",
+     "inn_name": "oxytétracycline",
+     "strength_as_stated": "100 mg/mL",
+     "strength_value": 100,
+     "strength_unit": "mg",
+     "strength_basis": "par mL",
+     "is_ambiguous": false
+    }
+   ],
+   "designation": "oxytétracycline 100 mg/mL, solution injectable"
+  },
+  {
+   "id": "prd-034",
+   "name": "Produit-034",
+   "pharmaceutical_form": "suspension injectable",
+   "routes": [
+    "IM",
+    "SC"
+   ],
+   "product_type": "pharmaceutique",
+   "target_species": [
+    "bovins",
+    "porcins"
+   ],
+   "ingredients": [
+    {
+     "substance_id": "sub-03",
+     "inn_name": "amoxicilline",
+     "strength_as_stated": "150 mg/mL",
+     "strength_value": 150,
+     "strength_unit": "mg",
+     "strength_basis": "par mL",
+     "is_ambiguous": false
+    }
+   ],
+   "designation": "amoxicilline 150 mg/mL, suspension injectable"
+  },
+  {
+   "id": "prd-035",
+   "name": "Produit-035",
+   "pharmaceutical_form": "suspension injectable",
+   "routes": [
+    "SC"
+   ],
+   "product_type": "pharmaceutique",
+   "target_species": [
+    "bovins",
+    "porcins"
+   ],
+   "ingredients": [
+    {
+     "substance_id": "sub-05",
+     "inn_name": "ceftiofur",
+     "strength_as_stated": "50 mg/mL",
+     "strength_value": 50,
+     "strength_unit": "mg",
+     "strength_basis": "par mL",
+     "is_ambiguous": false
+    }
+   ],
+   "designation": "ceftiofur 50 mg/mL, suspension injectable"
+  },
+  {
+   "id": "prd-036",
+   "name": "Produit-036",
+   "pharmaceutical_form": "solution buvable",
+   "routes": [
+    "orale"
+   ],
+   "product_type": "pharmaceutique",
+   "target_species": [
+    "poulets",
+    "dindes"
+   ],
+   "ingredients": [
+    {
+     "substance_id": "sub-06",
+     "inn_name": "enrofloxacine",
+     "strength_as_stated": "100 mg/mL",
+     "strength_value": 100,
+     "strength_unit": "mg",
+     "strength_basis": "par mL",
+     "is_ambiguous": false
+    }
+   ],
+   "designation": "enrofloxacine 100 mg/mL, solution buvable"
+  },
+  {
+   "id": "prd-037",
+   "name": "Produit-037",
+   "pharmaceutical_form": "suspension injectable",
+   "routes": [
+    "SC"
+   ],
+   "product_type": "immunologique",
+   "target_species": [
+    "poulets"
+   ],
+   "ingredients": [],
+   "designation": "vaccin inactivé contre la maladie de Newcastle, suspension injectable",
+   "type_data": {
+    "valences": [
+     "virus de la maladie de Newcastle, inactivé (souche fictive)"
+    ],
+    "doses_par_presentation": 1000,
+    "adjuvant": "huileux"
+   },
+   "storage": {
+    "temperature": "entre 2 °C et 8 °C",
+    "apres_ouverture": "2 heures"
+   }
+  },
+  {
+   "id": "prd-038",
+   "name": "Produit-038",
+   "pharmaceutical_form": "suspension injectable",
+   "routes": [
+    "SC"
+   ],
+   "product_type": "immunologique",
+   "target_species": [
+    "poulets"
+   ],
+   "ingredients": [],
+   "designation": "vaccin inactivé contre la maladie de Newcastle, suspension injectable",
+   "type_data": {
+    "valences": [
+     "virus de la maladie de Newcastle, inactivé (souche fictive)"
+    ],
+    "doses_par_presentation": 1000,
+    "adjuvant": "huileux"
+   },
+   "storage": {
+    "temperature": "entre 2 °C et 8 °C",
+    "apres_ouverture": "2 heures"
+   }
+  },
+  {
+   "id": "prd-039",
+   "name": "Produit-039",
+   "pharmaceutical_form": "solution injectable",
+   "routes": [
+    "SC"
+   ],
+   "product_type": "pharmaceutique",
+   "target_species": [
+    "bovins",
+    "ovins"
+   ],
+   "ingredients": [
+    {
+     "substance_id": "sub-13",
+     "inn_name": "ivermectine",
+     "strength_as_stated": "10 mg/mL",
+     "strength_value": 10,
+     "strength_unit": "mg",
+     "strength_basis": "par mL",
+     "is_ambiguous": false
+    }
+   ],
+   "designation": "ivermectine 10 mg/mL, solution injectable"
+  },
+  {
+   "id": "prd-040",
+   "name": "Produit-040",
+   "pharmaceutical_form": "suspension buvable",
+   "routes": [
+    "orale"
+   ],
+   "product_type": "pharmaceutique",
+   "target_species": [
+    "bovins",
+    "ovins"
+   ],
+   "ingredients": [
+    {
+     "substance_id": "sub-14",
+     "inn_name": "albendazole",
+     "strength_as_stated": "100 mg/mL",
+     "strength_value": 100,
+     "strength_unit": "mg",
+     "strength_basis": "par mL",
+     "is_ambiguous": false
+    }
+   ],
+   "designation": "albendazole 100 mg/mL, suspension buvable"
+  }
+ ],
+ "authorisations": [
+  {
+   "id": "amm-001",
+   "jurisdiction": "PA",
+   "ma_number": "PA-V-2023-0001",
+   "product_id": "prd-001",
+   "procedure": "nationale",
+   "grant_date": "2023-02-21",
+   "expiry_date": "2028-02-21",
+   "expiry_is_computed": false,
+   "holder": "Laboratoires Alpha (fictif)",
+   "manufacturer": "Beta Santé Animale (fictif)",
+   "dispensing_condition": "sur ordonnance vétérinaire",
+   "source": {
+    "nature": "officielle",
+    "title": "Liste des médicaments vétérinaires autorisés, Pays A (SPÉCIMEN)",
+    "document_date": "2027-06-09",
+    "latest_edition": true
+   },
+   "validations": 2,
+   "last_verified_at": "2027-08-01",
+   "dispute_open": false,
+   "scenario": "",
+   "events": [
+    {
+     "type": "octroi",
+     "decision_date": "2023-02-21",
+     "effective_date": "2023-02-21"
+    }
+   ],
+   "spc": {
+    "version_label": "v1",
+    "languages": [
+     "fr",
+     "en"
+    ],
+    "withdrawal_periods": [
+     {
+      "species": "bovins",
+      "commodity": "viande et abats",
+      "route": "IM",
+      "dose_condition": null,
+      "kind": "valeur",
+      "value": 28,
+      "unit": "jour"
+     },
+     {
+      "species": "bovins",
+      "commodity": "lait",
+      "route": "IM",
+      "dose_condition": null,
+      "kind": "valeur",
+      "value": 7,
+      "unit": "jour"
+     },
+     {
+      "species": "porcins",
+      "commodity": "viande et abats",
+      "route": "IM",
+      "dose_condition": null,
+      "kind": "valeur",
+      "value": 21,
+      "unit": "jour"
+     }
+    ],
+    "restrictions": []
+   },
+   "expected": {
+    "status": "valide",
+    "mentions": [],
+    "evidence": {
+     "level": "A",
+     "label": "Confirmé",
+     "missing_for_a": null
+    },
+    "banners": [],
+    "published": true
+   }
+  },
+  {
+   "id": "amm-002",
+   "jurisdiction": "PA",
+   "ma_number": "PA-V-2023-0002",
+   "product_id": "prd-002",
+   "procedure": "nationale",
+   "grant_date": "2023-03-30",
+   "expiry_date": "2028-03-30",
+   "expiry_is_computed": false,
+   "holder": "Beta Santé Animale (fictif)",
+   "manufacturer": "Gamma Vet (fictif)",
+   "dispensing_condition": "sur ordonnance vétérinaire",
+   "source": {
+    "nature": "officielle",
+    "title": "Liste des médicaments vétérinaires autorisés, Pays A (SPÉCIMEN)",
+    "document_date": "2027-06-09",
+    "latest_edition": true
+   },
+   "validations": 2,
+   "last_verified_at": "2027-05-02",
+   "dispute_open": false,
+   "scenario": "suspendue",
+   "events": [
+    {
+     "type": "octroi",
+     "decision_date": "2023-03-30",
+     "effective_date": "2023-03-30"
+    },
+    {
+     "type": "suspension",
+     "decision_date": "2027-07-29",
+     "effective_date": "2027-07-31",
+     "end_date": "2028-01-25",
+     "reason": "défaut de qualité constaté sur plusieurs lots (motif fictif)"
+    }
+   ],
+   "spc": {
+    "version_label": "v1",
+    "languages": [
+     "fr",
+     "en"
+    ],
+    "withdrawal_periods": [
+     {
+      "species": "bovins",
+      "commodity": "viande et abats",
+      "route": "IM",
+      "dose_condition": null,
+      "kind": "valeur",
+      "value": 14,
+      "unit": "jour"
+     },
+     {
+      "species": "bovins",
+      "commodity": "viande et abats",
+      "route": "SC",
+      "dose_condition": null,
+      "kind": "valeur",
+      "value": 21,
+      "unit": "jour"
+     },
+     {
+      "species": "bovins",
+      "commodity": "lait",
+      "route": "IM",
+      "dose_condition": null,
+      "kind": "valeur",
+      "value": 72,
+      "unit": "heure"
+     },
+     {
+      "species": "porcins",
+      "commodity": "viande et abats",
+      "route": "IM",
+      "dose_condition": null,
+      "kind": "valeur",
+      "value": 16,
+      "unit": "jour"
+     }
+    ],
+    "restrictions": []
+   },
+   "expected": {
+    "status": "suspendue",
+    "mentions": [],
+    "evidence": {
+     "level": "A",
+     "label": "Confirmé",
+     "missing_for_a": null
+    },
+    "banners": [
+     {
+      "rule": "RG-15",
+      "level": "rouge",
+      "text": "AMM suspendue dans cette juridiction depuis le 2027-07-31. Motif : défaut de qualité constaté sur plusieurs lots (motif fictif). Ne pas délivrer. Stocks et animaux déjà traités : suivre la décision ou interroger l'autorité."
+     }
+    ],
+    "published": true
+   }
+  },
+  {
+   "id": "amm-003",
+   "jurisdiction": "PA",
+   "ma_number": "PA-V-2023-0003",
+   "product_id": "prd-003",
+   "procedure": "nationale",
+   "grant_date": "2023-05-06",
+   "expiry_date": "2028-05-06",
+   "expiry_is_computed": true,
+   "holder": "Gamma Vet (fictif)",
+   "manufacturer": "Delta Pharma (fictif)",
+   "dispensing_condition": "sur ordonnance vétérinaire",
+   "source": {
+    "nature": "officielle",
+    "title": "Liste des médicaments vétérinaires autorisés, Pays A (SPÉCIMEN)",
+    "document_date": "2027-06-09",
+    "latest_edition": true
+   },
+   "validations": 2,
+   "last_verified_at": "2027-08-08",
+   "dispute_open": false,
+   "scenario": "suspension échue sans levée",
+   "events": [
+    {
+     "type": "octroi",
+     "decision_date": "2023-05-06",
+     "effective_date": "2023-05-06"
+    },
+    {
+     "type": "suspension",
+     "decision_date": "2026-07-14",
+     "effective_date": "2026-07-19",
+     "end_date": "2027-07-19",
+     "reason": "non communiqué"
+    }
+   ],
+   "spc": {
+    "version_label": "v1",
+    "languages": [
+     "fr",
+     "en"
+    ],
+    "withdrawal_periods": [
+     {
+      "species": "bovins",
+      "commodity": "viande et abats",
+      "route": "SC",
+      "dose_condition": null,
+      "kind": "valeur",
+      "value": 8,
+      "unit": "jour"
+     },
+     {
+      "species": "bovins",
+      "commodity": "lait",
+      "route": "SC",
+      "dose_condition": null,
+      "kind": "valeur",
+      "value": 0,
+      "unit": "jour"
+     },
+     {
+      "species": "porcins",
+      "commodity": "viande et abats",
+      "route": "SC",
+      "dose_condition": null,
+      "kind": "valeur",
+      "value": 5,
+      "unit": "jour"
+     }
+    ],
+    "restrictions": []
+   },
+   "expected": {
+    "status": "suspendue",
+    "mentions": [],
+    "evidence": {
+     "level": "A",
+     "label": "Confirmé",
+     "missing_for_a": null
+    },
+    "banners": [
+     {
+      "rule": "RG-15",
+      "level": "rouge",
+      "text": "AMM suspendue dans cette juridiction depuis le 2026-07-19. Motif : non communiqué. Ne pas délivrer. Stocks et animaux déjà traités : suivre la décision ou interroger l'autorité. Échéance de la suspension dépassée : à confirmer auprès de l'autorité."
+     },
+     {
+      "rule": "RG-20",
+      "level": "orange",
+      "text": "Antimicrobien de priorité la plus élevée pour la médecine humaine (OMS). Recommandations de l'OMSA : pas d'usage préventif ; pas en première intention sauf justification, de préférence après analyse bactériologique ; hors AMM seulement faute d'alternative ; jamais comme promoteur de croissance."
+     }
+    ],
+    "published": true
+   }
+  },
+  {
+   "id": "amm-004",
+   "jurisdiction": "PA",
+   "ma_number": "PA-V-2023-0004",
+   "product_id": "prd-004",
+   "procedure": "nationale",
+   "grant_date": "2023-06-12",
+   "expiry_date": "2028-06-12",
+   "expiry_is_computed": false,
+   "holder": "Delta Pharma (fictif)",
+   "manufacturer": "Epsilon Animal Health (fictif)",
+   "dispensing_condition": "sur ordonnance vétérinaire",
+   "source": {
+    "nature": "officielle",
+    "title": "Liste des médicaments vétérinaires autorisés, Pays A (SPÉCIMEN)",
+    "document_date": "2027-06-09",
+    "latest_edition": true
+   },
+   "validations": 2,
+   "last_verified_at": "2027-08-25",
+   "dispute_open": false,
+   "scenario": "retirée d'office",
+   "events": [
+    {
+     "type": "octroi",
+     "decision_date": "2023-06-12",
+     "effective_date": "2023-06-12"
+    },
+    {
+     "type": "retrait d'office",
+     "decision_date": "2027-02-19",
+     "effective_date": "2027-02-24",
+     "reason": "rapport bénéfice-risque défavorable (motif fictif)"
+    }
+   ],
+   "spc": {
+    "version_label": "v1",
+    "languages": [
+     "fr",
+     "en"
+    ],
+    "withdrawal_periods": [
+     {
+      "species": "poulets",
+      "commodity": "viande et abats",
+      "route": "orale",
+      "dose_condition": null,
+      "kind": "valeur",
+      "value": 7,
+      "unit": "jour"
+     },
+     {
+      "species": "poulets",
+      "commodity": "œufs",
+      "route": null,
+      "dose_condition": null,
+      "kind": "interdit",
+      "value": null,
+      "unit": null
+     },
+     {
+      "species": "dindes",
+      "commodity": "viande et abats",
+      "route": "orale",
+      "dose_condition": null,
+      "kind": "valeur",
+      "value": 13,
+      "unit": "jour"
+     }
+    ],
+    "restrictions": [
+     {
+      "type": "interdiction",
+      "species": "poulets",
+      "production_category": "poules pondeuses dont les œufs sont destinés à la consommation",
+      "text": "Ne pas utiliser chez les poules pondeuses dont les œufs sont destinés à la consommation humaine."
+     }
+    ]
+   },
+   "expected": {
+    "status": "retirée",
+    "mentions": [],
+    "evidence": {
+     "level": "A",
+     "label": "Confirmé",
+     "missing_for_a": null
+    },
+    "banners": [
+     {
+      "rule": "RG-15",
+      "level": "rouge",
+      "text": "AMM retirée dans cette juridiction depuis le 2027-02-24. Motif : rapport bénéfice-risque défavorable (motif fictif). Ne pas délivrer. Stocks et animaux déjà traités : suivre la décision ou interroger l'autorité."
+     },
+     {
+      "rule": "RG-20",
+      "level": "orange",
+      "text": "Antimicrobien de priorité la plus élevée pour la médecine humaine (OMS). Recommandations de l'OMSA : pas d'usage préventif ; pas en première intention sauf justification, de préférence après analyse bactériologique ; hors AMM seulement faute d'alternative ; jamais comme promoteur de croissance."
+     }
+    ],
+    "published": true
+   }
+  },
+  {
+   "id": "amm-005",
+   "jurisdiction": "PA",
+   "ma_number": "PA-V-2023-0005",
+   "product_id": "prd-005",
+   "procedure": "nationale",
+   "grant_date": "2023-07-19",
+   "expiry_date": "2028-07-19",
+   "expiry_is_computed": false,
+   "holder": "Epsilon Animal Health (fictif)",
+   "manufacturer": "Zêta Biologiques (fictif)",
+   "dispensing_condition": "sur ordonnance vétérinaire",
+   "source": {
+    "nature": "officielle",
+    "title": "Liste des médicaments vétérinaires autorisés, Pays A (SPÉCIMEN)",
+    "document_date": "2027-06-09",
+    "latest_edition": true
+   },
+   "validations": 2,
+   "last_verified_at": "2027-06-07",
+   "dispute_open": false,
+   "scenario": "retirée à la demande du titulaire",
+   "events": [
+    {
+     "type": "octroi",
+     "decision_date": "2023-07-19",
+     "effective_date": "2023-07-19"
+    },
+    {
+     "type": "retrait à la demande du titulaire",
+     "decision_date": "2027-05-10",
+     "effective_date": "2027-05-30",
+     "reason": null
+    }
+   ],
+   "spc": {
+    "version_label": "v1",
+    "languages": [
+     "fr",
+     "en"
+    ],
+    "withdrawal_periods": [
+     {
+      "species": "poulets",
+      "commodity": "viande et abats",
+      "route": "orale",
+      "dose_condition": null,
+      "kind": "valeur",
+      "value": 1,
+      "unit": "jour"
+     },
+     {
+      "species": "poulets",
+      "commodity": "œufs",
+      "route": "orale",
+      "dose_condition": null,
+      "kind": "valeur",
+      "value": 0,
+      "unit": "jour"
+     },
+     {
+      "species": "porcins",
+      "commodity": "viande et abats",
+      "route": "orale",
+      "dose_condition": null,
+      "kind": "valeur",
+      "value": 1,
+      "unit": "jour"
+     }
+    ],
+    "restrictions": []
+   },
+   "expected": {
+    "status": "retirée",
+    "mentions": [],
+    "evidence": {
+     "level": "A",
+     "label": "Confirmé",
+     "missing_for_a": null
+    },
+    "banners": [
+     {
+      "rule": "RG-15",
+      "level": "orange",
+      "text": "AMM abandonnée par le titulaire le 2027-05-30 ; écoulement des stocks selon la décision."
+     },
+     {
+      "rule": "RG-20",
+      "level": "orange",
+      "text": "Antimicrobien de priorité la plus élevée pour la médecine humaine (OMS). Recommandations de l'OMSA : pas d'usage préventif ; pas en première intention sauf justification, de préférence après analyse bactériologique ; hors AMM seulement faute d'alternative ; jamais comme promoteur de croissance."
+     }
+    ],
+    "published": true
+   }
+  },
+  {
+   "id": "amm-006",
+   "jurisdiction": "PA",
+   "ma_number": "PA-V-2022-0006",
+   "product_id": "prd-006",
+   "procedure": "nationale",
+   "grant_date": "2022-03-01",
+   "expiry_date": "2027-03-01",
+   "expiry_is_computed": true,
+   "holder": "Zêta Biologiques (fictif)",
+   "manufacturer": "Laboratoires Alpha (fictif)",
+   "dispensing_condition": "sur ordonnance vétérinaire",
+   "source": {
+    "nature": "officielle",
+    "title": "Liste des médicaments vétérinaires autorisés, Pays A (SPÉCIMEN)",
+    "document_date": "2027-06-09",
+    "latest_edition": true
+   },
+   "validations": 2,
+   "last_verified_at": "2027-05-17",
+   "dispute_open": false,
+   "scenario": "expirée",
+   "events": [
+    {
+     "type": "octroi",
+     "decision_date": "2022-03-01",
+     "effective_date": "2022-03-01"
+    }
+   ],
+   "spc": {
+    "version_label": "v1",
+    "languages": [
+     "fr",
+     "en"
+    ],
+    "withdrawal_periods": [
+     {
+      "species": "bovins",
+      "commodity": "viande et abats",
+      "route": "IM",
+      "dose_condition": null,
+      "kind": "valeur",
+      "value": 30,
+      "unit": "jour"
+     },
+     {
+      "species": "bovins",
+      "commodity": "viande et abats",
+      "route": "SC",
+      "dose_condition": null,
+      "kind": "valeur",
+      "value": 44,
+      "unit": "jour"
+     },
+     {
+      "species": "bovins",
+      "commodity": "lait",
+      "route": null,
+      "dose_condition": null,
+      "kind": "interdit",
+      "value": null,
+      "unit": null
+     }
+    ],
+    "restrictions": [
+     {
+      "type": "interdiction",
+      "species": "bovins",
+      "production_category": "femelles dont le lait est destiné à la consommation",
+      "text": "Ne pas utiliser chez les femelles productrices de lait destiné à la consommation humaine."
+     }
+    ]
+   },
+   "expected": {
+    "status": "expirée, à confirmer",
+    "mentions": [],
+    "evidence": {
+     "level": "A",
+     "label": "Confirmé",
+     "missing_for_a": null
+    },
+    "banners": [
+     {
+      "rule": "RG-03",
+      "level": "orange",
+      "text": "Date d'expiration dépassée sans renouvellement connu : vérifier auprès de l'autorité."
+     }
+    ],
+    "published": true
+   }
+  },
+  {
+   "id": "amm-007",
+   "jurisdiction": "PA",
+   "ma_number": "PA-V-2022-0007",
+   "product_id": "prd-007",
+   "procedure": "nationale",
+   "grant_date": "2022-03-01",
+   "expiry_date": "2027-03-01",
+   "expiry_is_computed": false,
+   "holder": "Laboratoires Alpha (fictif)",
+   "manufacturer": "Beta Santé Animale (fictif)",
+   "dispensing_condition": "sur ordonnance vétérinaire",
+   "source": {
+    "nature": "officielle",
+    "title": "Liste des médicaments vétérinaires autorisés, Pays A (SPÉCIMEN)",
+    "document_date": "2027-06-09",
+    "latest_edition": true
+   },
+   "validations": 2,
+   "last_verified_at": "2027-07-13",
+   "dispute_open": false,
+   "scenario": "renouvellement en instance",
+   "renewal_pending": true,
+   "events": [
+    {
+     "type": "octroi",
+     "decision_date": "2022-03-01",
+     "effective_date": "2022-03-01"
+    }
+   ],
+   "spc": {
+    "version_label": "v1",
+    "languages": [
+     "fr",
+     "en"
+    ],
+    "withdrawal_periods": [
+     {
+      "species": "bovins",
+      "commodity": "viande et abats",
+      "route": "SC",
+      "dose_condition": null,
+      "kind": "valeur",
+      "value": 49,
+      "unit": "jour"
+     },
+     {
+      "species": "ovins",
+      "commodity": "viande et abats",
+      "route": "SC",
+      "dose_condition": null,
+      "kind": "valeur",
+      "value": 42,
+      "unit": "jour"
+     },
+     {
+      "species": "bovins",
+      "commodity": "lait",
+      "route": null,
+      "dose_condition": null,
+      "kind": "interdit",
+      "value": null,
+      "unit": null
+     }
+    ],
+    "restrictions": [
+     {
+      "type": "interdiction",
+      "species": "bovins",
+      "production_category": "femelles dont le lait est destiné à la consommation",
+      "text": "Ne pas utiliser chez les femelles laitières, y compris pendant le tarissement."
+     }
+    ]
+   },
+   "expected": {
+    "status": "renouvellement en instance",
+    "mentions": [],
+    "evidence": {
+     "level": "A",
+     "label": "Confirmé",
+     "missing_for_a": null
+    },
+    "banners": [
+     {
+      "rule": "RG-03",
+      "level": "orange",
+      "text": "Renouvellement en cours d'examen ; statut à confirmer auprès de l'autorité."
+     }
+    ],
+    "published": true
+   }
+  },
+  {
+   "id": "amm-008",
+   "jurisdiction": "PA",
+   "ma_number": "PA-V-2023-0008",
+   "product_id": "prd-008",
+   "procedure": "nationale",
+   "grant_date": "2023-11-07",
+   "expiry_date": "2028-11-07",
+   "expiry_is_computed": false,
+   "holder": "Beta Santé Animale (fictif)",
+   "manufacturer": "Gamma Vet (fictif)",
+   "dispensing_condition": "sur ordonnance vétérinaire",
+   "source": null,
+   "validations": 2,
+   "last_verified_at": "2027-05-18",
+   "dispute_open": false,
+   "scenario": "sans source officielle",
+   "events": [
+    {
+     "type": "octroi",
+     "decision_date": "2023-11-07",
+     "effective_date": "2023-11-07"
+    }
+   ],
+   "spc": {
+    "version_label": "v1",
+    "languages": [
+     "fr",
+     "en"
+    ],
+    "withdrawal_periods": [
+     {
+      "species": "bovins",
+      "commodity": "viande et abats",
+      "route": "orale",
+      "dose_condition": null,
+      "kind": "valeur",
+      "value": 14,
+      "unit": "jour"
+     },
+     {
+      "species": "bovins",
+      "commodity": "lait",
+      "route": "orale",
+      "dose_condition": null,
+      "kind": "valeur",
+      "value": 4,
+      "unit": "jour"
+     },
+     {
+      "species": "ovins",
+      "commodity": "viande et abats",
+      "route": "orale",
+      "dose_condition": null,
+      "kind": "valeur",
+      "value": 10,
+      "unit": "jour"
+     }
+    ],
+    "restrictions": []
+   },
+   "expected": {
+    "status": "non vérifiable",
+    "mentions": [],
+    "evidence": {
+     "level": "D",
+     "label": "Non vérifiable",
+     "missing_for_a": "aucune source exploitable"
+    },
+    "banners": [
+     {
+      "rule": "RG-03",
+      "level": "gris",
+      "text": "Aucune source officielle exploitable : aucune valeur n'est présentée comme certaine."
+     }
+    ],
+    "published": true
+   }
+  },
+  {
+   "id": "amm-009",
+   "jurisdiction": "PA",
+   "ma_number": "PA-V-2023-0009",
+   "product_id": "prd-009",
+   "procedure": "nationale",
+   "grant_date": "2023-12-14",
+   "expiry_date": "2028-12-14",
+   "expiry_is_computed": true,
+   "holder": "Gamma Vet (fictif)",
+   "manufacturer": "Delta Pharma (fictif)",
+   "dispensing_condition": "sur ordonnance vétérinaire",
+   "source": {
+    "nature": "officielle",
+    "title": "Liste des médicaments vétérinaires autorisés, Pays A (SPÉCIMEN)",
+    "document_date": "2027-06-09",
+    "latest_edition": true
+   },
+   "validations": 2,
+   "last_verified_at": "2027-02-19",
+   "dispute_open": false,
+   "scenario": "vérification de 200 jours",
+   "events": [
+    {
+     "type": "octroi",
+     "decision_date": "2023-12-14",
+     "effective_date": "2023-12-14"
+    }
+   ],
+   "spc": {
+    "version_label": "v1",
+    "languages": [
+     "fr",
+     "en"
+    ],
+    "withdrawal_periods": [
+     {
+      "species": "bovins",
+      "commodity": "viande et abats",
+      "route": "IM",
+      "dose_condition": null,
+      "kind": "valeur",
+      "value": 21,
+      "unit": "jour"
+     },
+     {
+      "species": "bovins",
+      "commodity": "lait",
+      "route": "IM",
+      "dose_condition": null,
+      "kind": "valeur",
+      "value": 4,
+      "unit": "jour"
+     },
+     {
+      "species": "porcins",
+      "commodity": "viande et abats",
+      "route": "IM",
+      "dose_condition": null,
+      "kind": "valeur",
+      "value": 14,
+      "unit": "jour"
+     }
+    ],
+    "restrictions": []
+   },
+   "expected": {
+    "status": "valide",
+    "mentions": [
+     "à revérifier"
+    ],
+    "evidence": {
+     "level": "B",
+     "label": "À revérifier",
+     "missing_for_a": "revérification due depuis le 2027-08-18"
+    },
+    "banners": [
+     {
+      "rule": "RG-20",
+      "level": "gris",
+      "text": "Antimicrobien d'importance critique pour la médecine humaine (OMS) : usage prudent."
+     }
+    ],
+    "published": true
+   }
+  },
+  {
+   "id": "amm-010",
+   "jurisdiction": "PA",
+   "ma_number": "PA-V-2024-0010",
+   "product_id": "prd-010",
+   "procedure": "nationale",
+   "grant_date": "2024-01-20",
+   "expiry_date": "2029-01-20",
+   "expiry_is_computed": false,
+   "holder": "Delta Pharma (fictif)",
+   "manufacturer": "Epsilon Animal Health (fictif)",
+   "dispensing_condition": "sur ordonnance vétérinaire",
+   "source": {
+    "nature": "déclarative",
+    "title": "Déclaration du titulaire (SPÉCIMEN)",
+    "document_date": "2027-07-09",
+    "latest_edition": true
+   },
+   "validations": 2,
+   "last_verified_at": "2027-05-31",
+   "dispute_open": false,
+   "scenario": "source déclarative",
+   "events": [
+    {
+     "type": "octroi",
+     "decision_date": "2024-01-20",
+     "effective_date": "2024-01-20"
+    }
+   ],
+   "spc": {
+    "version_label": "v1",
+    "languages": [
+     "fr",
+     "en"
+    ],
+    "withdrawal_periods": [
+     {
+      "species": "bovins",
+      "commodity": "viande et abats",
+      "route": null,
+      "dose_condition": null,
+      "kind": "valeur",
+      "value": 15,
+      "unit": "jour"
+     },
+     {
+      "species": "bovins",
+      "commodity": "lait",
+      "route": null,
+      "dose_condition": null,
+      "kind": "valeur",
+      "value": 5,
+      "unit": "jour"
+     },
+     {
+      "species": "porcins",
+      "commodity": "viande et abats",
+      "route": null,
+      "dose_condition": null,
+      "kind": "valeur",
+      "value": 5,
+      "unit": "jour"
+     }
+    ],
+    "restrictions": []
+   },
+   "expected": {
+    "status": "valide",
+    "mentions": [],
+    "evidence": {
+     "level": "C",
+     "label": "Déclaratif",
+     "missing_for_a": "confirmation par un document de l'autorité"
+    },
+    "banners": [],
+    "published": true
+   }
+  },
+  {
+   "id": "amm-011",
+   "jurisdiction": "PA",
+   "ma_number": "PA-V-2024-0011",
+   "product_id": "prd-011",
+   "procedure": "nationale",
+   "grant_date": "2024-02-26",
+   "expiry_date": "2029-02-26",
+   "expiry_is_computed": false,
+   "holder": "Epsilon Animal Health (fictif)",
+   "manufacturer": "Zêta Biologiques (fictif)",
+   "dispensing_condition": "sur ordonnance vétérinaire",
+   "source": {
+    "nature": "officielle",
+    "title": "Liste des médicaments vétérinaires autorisés, Pays A (SPÉCIMEN)",
+    "document_date": "2027-06-09",
+    "latest_edition": true
+   },
+   "validations": 2,
+   "last_verified_at": "2026-08-03",
+   "dispute_open": false,
+   "scenario": "vérification de 400 jours",
+   "events": [
+    {
+     "type": "octroi",
+     "decision_date": "2024-02-26",
+     "effective_date": "2024-02-26"
+    }
+   ],
+   "spc": {
+    "version_label": "v1",
+    "languages": [
+     "fr",
+     "en"
+    ],
+    "withdrawal_periods": [
+     {
+      "species": "poulets",
+      "commodity": "viande et abats",
+      "route": "orale",
+      "dose_condition": null,
+      "kind": "valeur",
+      "value": 16,
+      "unit": "jour"
+     },
+     {
+      "species": "poulets",
+      "commodity": "œufs",
+      "route": null,
+      "dose_condition": null,
+      "kind": "interdit",
+      "value": null,
+      "unit": null
+     }
+    ],
+    "restrictions": [
+     {
+      "type": "interdiction",
+      "species": "poulets",
+      "production_category": "poules pondeuses",
+      "text": "Ne pas utiliser chez les oiseaux pondeurs d'œufs destinés à la consommation."
+     }
+    ]
+   },
+   "expected": {
+    "status": "valide",
+    "mentions": [
+     "vérification échue depuis le 2027-08-03"
+    ],
+    "evidence": {
+     "level": "D",
+     "label": "Non vérifiable",
+     "missing_for_a": "vérification échue depuis le 2027-08-03"
+    },
+    "banners": [],
+    "published": true
+   }
+  },
+  {
+   "id": "amm-012",
+   "jurisdiction": "PA",
+   "ma_number": "PA-V-2024-0012",
+   "product_id": "prd-012",
+   "procedure": "nationale",
+   "grant_date": "2024-04-03",
+   "expiry_date": "2029-04-03",
+   "expiry_is_computed": true,
+   "holder": "Zêta Biologiques (fictif)",
+   "manufacturer": "Laboratoires Alpha (fictif)",
+   "dispensing_condition": "sur ordonnance vétérinaire",
+   "source": {
+    "nature": "officielle",
+    "title": "Liste des médicaments vétérinaires autorisés, Pays A (SPÉCIMEN)",
+    "document_date": "2026-01-15",
+    "latest_edition": true
+   },
+   "validations": 2,
+   "last_verified_at": "2027-06-19",
+   "dispute_open": false,
+   "scenario": "source officielle ancienne",
+   "events": [
+    {
+     "type": "octroi",
+     "decision_date": "2024-04-03",
+     "effective_date": "2024-04-03"
+    }
+   ],
+   "spc": {
+    "version_label": "v1",
+    "languages": [
+     "fr",
+     "en"
+    ],
+    "withdrawal_periods": [
+     {
+      "species": "poulets",
+      "commodity": "viande et abats",
+      "route": "orale",
+      "dose_condition": null,
+      "kind": "valeur",
+      "value": 7,
+      "unit": "jour"
+     },
+     {
+      "species": "poulets",
+      "commodity": "œufs",
+      "route": null,
+      "dose_condition": null,
+      "kind": "non renseigné",
+      "value": null,
+      "unit": null
+     },
+     {
+      "species": "porcins",
+      "commodity": "viande et abats",
+      "route": "orale",
+      "dose_condition": null,
+      "kind": "valeur",
+      "value": 7,
+      "unit": "jour"
+     }
+    ],
+    "restrictions": []
+   },
+   "expected": {
+    "status": "valide",
+    "mentions": [],
+    "evidence": {
+     "level": "B",
+     "label": "À revérifier",
+     "missing_for_a": "source officielle ancienne : édition de moins de 12 mois attendue"
+    },
+    "banners": [
+     {
+      "rule": "RG-20",
+      "level": "orange",
+      "text": "Antimicrobien de priorité la plus élevée pour la médecine humaine (OMS). Recommandations de l'OMSA : pas d'usage préventif ; pas en première intention sauf justification, de préférence après analyse bactériologique ; hors AMM seulement faute d'alternative ; jamais comme promoteur de croissance."
+     }
+    ],
+    "published": true
+   }
+  },
+  {
+   "id": "amm-013",
+   "jurisdiction": "PA",
+   "ma_number": "PA-V-2024-0013",
+   "product_id": "prd-013",
+   "procedure": "nationale",
+   "grant_date": "2024-05-10",
+   "expiry_date": "2029-05-10",
+   "expiry_is_computed": false,
+   "holder": "Laboratoires Alpha (fictif)",
+   "manufacturer": "Beta Santé Animale (fictif)",
+   "dispensing_condition": "sur ordonnance vétérinaire",
+   "source": {
+    "nature": "officielle",
+    "title": "Liste des médicaments vétérinaires autorisés, Pays A (SPÉCIMEN)",
+    "document_date": "2027-06-09",
+    "latest_edition": true
+   },
+   "validations": 2,
+   "last_verified_at": "2027-06-16",
+   "dispute_open": true,
+   "scenario": "en litige",
+   "events": [
+    {
+     "type": "octroi",
+     "decision_date": "2024-05-10",
+     "effective_date": "2024-05-10"
+    }
+   ],
+   "spc": {
+    "version_label": "v1",
+    "languages": [
+     "fr",
+     "en"
+    ],
+    "withdrawal_periods": [],
+    "restrictions": []
+   },
+   "expected": {
+    "status": "valide",
+    "mentions": [],
+    "evidence": {
+     "level": "B",
+     "label": "À revérifier",
+     "missing_for_a": "litige ouvert : en cours de vérification"
+    },
+    "banners": [
+     {
+      "rule": "RG-11",
+      "level": "gris",
+      "text": "Fiche en cours de vérification : la version publiée précédente reste affichée."
+     }
+    ],
+    "published": true
+   }
+  },
+  {
+   "id": "amm-014",
+   "jurisdiction": "PA",
+   "ma_number": "PA-V-2024-0014",
+   "product_id": "prd-014",
+   "procedure": "nationale",
+   "grant_date": "2024-06-16",
+   "expiry_date": "2029-06-16",
+   "expiry_is_computed": false,
+   "holder": "Beta Santé Animale (fictif)",
+   "manufacturer": "Gamma Vet (fictif)",
+   "dispensing_condition": "sur ordonnance vétérinaire",
+   "source": {
+    "nature": "officielle",
+    "title": "Liste des médicaments vétérinaires autorisés, Pays A (SPÉCIMEN)",
+    "document_date": "2027-06-09",
+    "latest_edition": true
+   },
+   "validations": 2,
+   "last_verified_at": "2027-08-09",
+   "dispute_open": false,
+   "scenario": "",
+   "events": [
+    {
+     "type": "octroi",
+     "decision_date": "2024-06-16",
+     "effective_date": "2024-06-16"
+    }
+   ],
+   "spc": {
+    "version_label": "v1",
+    "languages": [
+     "fr",
+     "en"
+    ],
+    "withdrawal_periods": [],
+    "restrictions": [
+     {
+      "type": "interdiction",
+      "species": null,
+      "production_category": "animaux producteurs de denrées",
+      "text": "Ne pas administrer aux animaux producteurs de denrées alimentaires."
+     }
+    ]
+   },
+   "expected": {
+    "status": "valide",
+    "mentions": [],
+    "evidence": {
+     "level": "A",
+     "label": "Confirmé",
+     "missing_for_a": null
+    },
+    "banners": [
+     {
+      "rule": "RG-19",
+      "level": "orange",
+      "text": "Chloramphénicol. Recommandation du Codex : ne pas utiliser chez les animaux producteurs de denrées. Ce n'est pas une interdiction nationale."
+     }
+    ],
+    "published": true
+   }
+  },
+  {
+   "id": "amm-015",
+   "jurisdiction": "PA",
+   "ma_number": "PA-V-2024-0015",
+   "product_id": "prd-015",
+   "procedure": "nationale",
+   "grant_date": "2024-07-23",
+   "expiry_date": "2029-07-23",
+   "expiry_is_computed": true,
+   "holder": "Gamma Vet (fictif)",
+   "manufacturer": "Delta Pharma (fictif)",
+   "dispensing_condition": "sur ordonnance vétérinaire",
+   "source": {
+    "nature": "officielle",
+    "title": "Liste des médicaments vétérinaires autorisés, Pays A (SPÉCIMEN)",
+    "document_date": "2027-06-09",
+    "latest_edition": true
+   },
+   "validations": 2,
+   "last_verified_at": "2027-06-02",
+   "dispute_open": false,
+   "scenario": "",
+   "events": [
+    {
+     "type": "octroi",
+     "decision_date": "2024-07-23",
+     "effective_date": "2024-07-23"
+    }
+   ],
+   "spc": {
+    "version_label": "v1",
+    "languages": [
+     "fr",
+     "en"
+    ],
+    "withdrawal_periods": [
+     {
+      "species": "poissons",
+      "commodity": "chair",
+      "route": "orale",
+      "dose_condition": null,
+      "kind": "valeur",
+      "value": 500,
+      "unit": "degré-jour"
+     }
+    ],
+    "restrictions": []
+   },
+   "expected": {
+    "status": "valide",
+    "mentions": [],
+    "evidence": {
+     "level": "A",
+     "label": "Confirmé",
+     "missing_for_a": null
+    },
+    "banners": [],
+    "published": true
+   }
+  },
+  {
+   "id": "amm-016",
+   "jurisdiction": "PA",
+   "ma_number": "PA-V-2024-0016",
+   "product_id": "prd-016",
+   "procedure": "nationale",
+   "grant_date": "2024-08-29",
+   "expiry_date": "2029-08-29",
+   "expiry_is_computed": false,
+   "holder": "Delta Pharma (fictif)",
+   "manufacturer": "Epsilon Animal Health (fictif)",
+   "dispensing_condition": "sur ordonnance vétérinaire",
+   "source": {
+    "nature": "officielle",
+    "title": "Liste des médicaments vétérinaires autorisés, Pays A (SPÉCIMEN)",
+    "document_date": "2027-06-09",
+    "latest_edition": true
+   },
+   "validations": 2,
+   "last_verified_at": "2027-06-12",
+   "dispute_open": false,
+   "scenario": "",
+   "events": [
+    {
+     "type": "octroi",
+     "decision_date": "2024-08-29",
+     "effective_date": "2024-08-29"
+    }
+   ],
+   "spc": {
+    "version_label": "v1",
+    "languages": [
+     "fr",
+     "en"
+    ],
+    "withdrawal_periods": [
+     {
+      "species": "bovins",
+      "commodity": "viande et abats",
+      "route": "IM",
+      "dose_condition": "veaux jusqu'à 13 semaines",
+      "kind": "valeur",
+      "value": 60,
+      "unit": "jour"
+     },
+     {
+      "species": "bovins",
+      "commodity": "lait",
+      "route": null,
+      "dose_condition": null,
+      "kind": "interdit",
+      "value": null,
+      "unit": null
+     }
+    ],
+    "restrictions": []
+   },
+   "expected": {
+    "status": "valide",
+    "mentions": [],
+    "evidence": {
+     "level": "A",
+     "label": "Confirmé",
+     "missing_for_a": null
+    },
+    "banners": [
+     {
+      "rule": "RG-20",
+      "level": "gris",
+      "text": "Antimicrobien d'importance critique pour la médecine humaine (OMS) : usage prudent."
+     }
+    ],
+    "published": true
+   }
+  },
+  {
+   "id": "amm-017",
+   "jurisdiction": "PA",
+   "ma_number": "PA-V-2024-0017",
+   "product_id": "prd-017",
+   "procedure": "nationale",
+   "grant_date": "2024-10-05",
+   "expiry_date": "2029-10-05",
+   "expiry_is_computed": false,
+   "holder": "Epsilon Animal Health (fictif)",
+   "manufacturer": "Zêta Biologiques (fictif)",
+   "dispensing_condition": "sur ordonnance vétérinaire",
+   "source": {
+    "nature": "officielle",
+    "title": "Liste des médicaments vétérinaires autorisés, Pays A (SPÉCIMEN)",
+    "document_date": "2027-06-09",
+    "latest_edition": true
+   },
+   "validations": 2,
+   "last_verified_at": "2027-08-11",
+   "dispute_open": false,
+   "scenario": "RCP en anglais seulement",
+   "events": [
+    {
+     "type": "octroi",
+     "decision_date": "2024-10-05",
+     "effective_date": "2024-10-05"
+    }
+   ],
+   "spc": {
+    "version_label": "v1",
+    "languages": [
+     "en"
+    ],
+    "withdrawal_periods": [
+     {
+      "species": "bovins",
+      "commodity": "viande et abats",
+      "route": "IM",
+      "dose_condition": null,
+      "kind": "valeur",
+      "value": 28,
+      "unit": "jour"
+     },
+     {
+      "species": "bovins",
+      "commodity": "lait",
+      "route": "IM",
+      "dose_condition": null,
+      "kind": "valeur",
+      "value": 7,
+      "unit": "jour"
+     },
+     {
+      "species": "porcins",
+      "commodity": "viande et abats",
+      "route": "IM",
+      "dose_condition": null,
+      "kind": "valeur",
+      "value": 21,
+      "unit": "jour"
+     }
+    ],
+    "restrictions": []
+   },
+   "expected": {
+    "status": "valide",
+    "mentions": [],
+    "evidence": {
+     "level": "A",
+     "label": "Confirmé",
+     "missing_for_a": null
+    },
+    "banners": [],
+    "published": true
+   }
+  },
+  {
+   "id": "amm-018",
+   "jurisdiction": "PA",
+   "ma_number": "PA-V-2024-0018",
+   "product_id": "prd-018",
+   "procedure": "nationale",
+   "grant_date": "2024-11-11",
+   "expiry_date": "2029-11-11",
+   "expiry_is_computed": true,
+   "holder": "Zêta Biologiques (fictif)",
+   "manufacturer": "Laboratoires Alpha (fictif)",
+   "dispensing_condition": "sur ordonnance vétérinaire",
+   "source": {
+    "nature": "officielle",
+    "title": "Liste des médicaments vétérinaires autorisés, Pays A (SPÉCIMEN)",
+    "document_date": "2027-06-09",
+    "latest_edition": true
+   },
+   "validations": 2,
+   "last_verified_at": "2027-06-24",
+   "dispute_open": false,
+   "scenario": "",
+   "events": [
+    {
+     "type": "octroi",
+     "decision_date": "2024-11-11",
+     "effective_date": "2024-11-11"
+    }
+   ],
+   "spc": {
+    "version_label": "v1",
+    "languages": [
+     "fr",
+     "en"
+    ],
+    "withdrawal_periods": [
+     {
+      "species": "bovins",
+      "commodity": "viande et abats",
+      "route": "IM",
+      "dose_condition": null,
+      "kind": "valeur",
+      "value": 14,
+      "unit": "jour"
+     },
+     {
+      "species": "bovins",
+      "commodity": "viande et abats",
+      "route": "SC",
+      "dose_condition": null,
+      "kind": "valeur",
+      "value": 21,
+      "unit": "jour"
+     },
+     {
+      "species": "bovins",
+      "commodity": "lait",
+      "route": "IM",
+      "dose_condition": null,
+      "kind": "valeur",
+      "value": 72,
+      "unit": "heure"
+     },
+     {
+      "species": "porcins",
+      "commodity": "viande et abats",
+      "route": "IM",
+      "dose_condition": null,
+      "kind": "valeur",
+      "value": 16,
+      "unit": "jour"
+     }
+    ],
+    "restrictions": []
+   },
+   "expected": {
+    "status": "valide",
+    "mentions": [],
+    "evidence": {
+     "level": "A",
+     "label": "Confirmé",
+     "missing_for_a": null
+    },
+    "banners": [],
+    "published": true
+   }
+  },
+  {
+   "id": "amm-019",
+   "jurisdiction": "PA",
+   "ma_number": "PA-V-2024-0019",
+   "product_id": "prd-019",
+   "procedure": "nationale",
+   "grant_date": "2024-12-18",
+   "expiry_date": "2029-12-18",
+   "expiry_is_computed": false,
+   "holder": "Laboratoires Alpha (fictif)",
+   "manufacturer": "Beta Santé Animale (fictif)",
+   "dispensing_condition": "sur ordonnance vétérinaire",
+   "source": {
+    "nature": "officielle",
+    "title": "Liste des médicaments vétérinaires autorisés, Pays A (SPÉCIMEN)",
+    "document_date": "2027-06-09",
+    "latest_edition": true
+   },
+   "validations": 2,
+   "last_verified_at": "2027-06-24",
+   "dispute_open": false,
+   "scenario": "",
+   "events": [
+    {
+     "type": "octroi",
+     "decision_date": "2024-12-18",
+     "effective_date": "2024-12-18"
+    }
+   ],
+   "spc": {
+    "version_label": "v1",
+    "languages": [
+     "fr",
+     "en"
+    ],
+    "withdrawal_periods": [
+     {
+      "species": "bovins",
+      "commodity": "viande et abats",
+      "route": "SC",
+      "dose_condition": null,
+      "kind": "valeur",
+      "value": 8,
+      "unit": "jour"
+     },
+     {
+      "species": "bovins",
+      "commodity": "lait",
+      "route": "SC",
+      "dose_condition": null,
+      "kind": "valeur",
+      "value": 0,
+      "unit": "jour"
+     },
+     {
+      "species": "porcins",
+      "commodity": "viande et abats",
+      "route": "SC",
+      "dose_condition": null,
+      "kind": "valeur",
+      "value": 5,
+      "unit": "jour"
+     }
+    ],
+    "restrictions": []
+   },
+   "expected": {
+    "status": "valide",
+    "mentions": [],
+    "evidence": {
+     "level": "A",
+     "label": "Confirmé",
+     "missing_for_a": null
+    },
+    "banners": [
+     {
+      "rule": "RG-20",
+      "level": "orange",
+      "text": "Antimicrobien de priorité la plus élevée pour la médecine humaine (OMS). Recommandations de l'OMSA : pas d'usage préventif ; pas en première intention sauf justification, de préférence après analyse bactériologique ; hors AMM seulement faute d'alternative ; jamais comme promoteur de croissance."
+     }
+    ],
+    "published": true
+   }
+  },
+  {
+   "id": "amm-020",
+   "jurisdiction": "PA",
+   "ma_number": "PA-V-2025-0020",
+   "product_id": "prd-020",
+   "procedure": "nationale",
+   "grant_date": "2025-01-24",
+   "expiry_date": "2030-01-24",
+   "expiry_is_computed": false,
+   "holder": "Beta Santé Animale (fictif)",
+   "manufacturer": "Gamma Vet (fictif)",
+   "dispensing_condition": "sur ordonnance vétérinaire",
+   "source": {
+    "nature": "officielle",
+    "title": "Liste des médicaments vétérinaires autorisés, Pays A (SPÉCIMEN)",
+    "document_date": "2027-06-09",
+    "latest_edition": true
+   },
+   "validations": 2,
+   "last_verified_at": "2027-05-12",
+   "dispute_open": false,
+   "scenario": "",
+   "events": [
+    {
+     "type": "octroi",
+     "decision_date": "2025-01-24",
+     "effective_date": "2025-01-24"
+    }
+   ],
+   "spc": {
+    "version_label": "v1",
+    "languages": [
+     "fr",
+     "en"
+    ],
+    "withdrawal_periods": [
+     {
+      "species": "poulets",
+      "commodity": "viande et abats",
+      "route": "orale",
+      "dose_condition": null,
+      "kind": "valeur",
+      "value": 7,
+      "unit": "jour"
+     },
+     {
+      "species": "poulets",
+      "commodity": "œufs",
+      "route": null,
+      "dose_condition": null,
+      "kind": "interdit",
+      "value": null,
+      "unit": null
+     },
+     {
+      "species": "dindes",
+      "commodity": "viande et abats",
+      "route": "orale",
+      "dose_condition": null,
+      "kind": "valeur",
+      "value": 13,
+      "unit": "jour"
+     }
+    ],
+    "restrictions": [
+     {
+      "type": "interdiction",
+      "species": "poulets",
+      "production_category": "poules pondeuses dont les œufs sont destinés à la consommation",
+      "text": "Ne pas utiliser chez les poules pondeuses dont les œufs sont destinés à la consommation humaine."
+     }
+    ]
+   },
+   "expected": {
+    "status": "valide",
+    "mentions": [],
+    "evidence": {
+     "level": "A",
+     "label": "Confirmé",
+     "missing_for_a": null
+    },
+    "banners": [
+     {
+      "rule": "RG-20",
+      "level": "orange",
+      "text": "Antimicrobien de priorité la plus élevée pour la médecine humaine (OMS). Recommandations de l'OMSA : pas d'usage préventif ; pas en première intention sauf justification, de préférence après analyse bactériologique ; hors AMM seulement faute d'alternative ; jamais comme promoteur de croissance."
+     }
+    ],
+    "published": true
+   }
+  },
+  {
+   "id": "amm-021",
+   "jurisdiction": "PA",
+   "ma_number": "PA-V-2025-0021",
+   "product_id": "prd-021",
+   "procedure": "nationale",
+   "grant_date": "2025-03-02",
+   "expiry_date": "2030-03-02",
+   "expiry_is_computed": true,
+   "holder": "Gamma Vet (fictif)",
+   "manufacturer": "Delta Pharma (fictif)",
+   "dispensing_condition": "sur ordonnance vétérinaire",
+   "source": {
+    "nature": "officielle",
+    "title": "Liste des médicaments vétérinaires autorisés, Pays A (SPÉCIMEN)",
+    "document_date": "2027-06-09",
+    "latest_edition": true
+   },
+   "validations": 2,
+   "last_verified_at": "2027-04-21",
+   "dispute_open": false,
+   "scenario": "",
+   "events": [
+    {
+     "type": "octroi",
+     "decision_date": "2025-03-02",
+     "effective_date": "2025-03-02"
+    }
+   ],
+   "expected": {
+    "status": "valide",
+    "mentions": [],
+    "evidence": {
+     "level": "A",
+     "label": "Confirmé",
+     "missing_for_a": null
+    },
+    "banners": [
+     {
+      "rule": "RG-20",
+      "level": "orange",
+      "text": "Antimicrobien de priorité la plus élevée pour la médecine humaine (OMS). Recommandations de l'OMSA : pas d'usage préventif ; pas en première intention sauf justification, de préférence après analyse bactériologique ; hors AMM seulement faute d'alternative ; jamais comme promoteur de croissance."
+     }
+    ],
+    "published": true
+   }
+  },
+  {
+   "id": "amm-022",
+   "jurisdiction": "PA",
+   "ma_number": "PA-V-2025-0022",
+   "product_id": "prd-022",
+   "procedure": "nationale",
+   "grant_date": "2025-04-08",
+   "expiry_date": "2030-04-08",
+   "expiry_is_computed": false,
+   "holder": "Delta Pharma (fictif)",
+   "manufacturer": "Epsilon Animal Health (fictif)",
+   "dispensing_condition": "sur ordonnance vétérinaire",
+   "source": {
+    "nature": "officielle",
+    "title": "Liste des médicaments vétérinaires autorisés, Pays A (SPÉCIMEN)",
+    "document_date": "2027-06-09",
+    "latest_edition": true
+   },
+   "validations": 2,
+   "last_verified_at": "2027-07-01",
+   "dispute_open": false,
+   "scenario": "",
+   "events": [
+    {
+     "type": "octroi",
+     "decision_date": "2025-04-08",
+     "effective_date": "2025-04-08"
+    }
+   ],
+   "expected": {
+    "status": "valide",
+    "mentions": [],
+    "evidence": {
+     "level": "A",
+     "label": "Confirmé",
+     "missing_for_a": null
+    },
+    "banners": [],
+    "published": true
+   }
+  },
+  {
+   "id": "amm-023",
+   "jurisdiction": "PA",
+   "ma_number": "PA-V-2025-0023",
+   "product_id": "prd-023",
+   "procedure": "nationale",
+   "grant_date": "2025-05-15",
+   "expiry_date": "2030-05-15",
+   "expiry_is_computed": false,
+   "holder": "Epsilon Animal Health (fictif)",
+   "manufacturer": "Zêta Biologiques (fictif)",
+   "dispensing_condition": "sur ordonnance vétérinaire",
+   "source": {
+    "nature": "officielle",
+    "title": "Liste des médicaments vétérinaires autorisés, Pays A (SPÉCIMEN)",
+    "document_date": "2027-06-09",
+    "latest_edition": true
+   },
+   "validations": 2,
+   "last_verified_at": "2027-07-19",
+   "dispute_open": false,
+   "scenario": "",
+   "events": [
+    {
+     "type": "octroi",
+     "decision_date": "2025-05-15",
+     "effective_date": "2025-05-15"
+    }
+   ],
+   "expected": {
+    "status": "valide",
+    "mentions": [],
+    "evidence": {
+     "level": "A",
+     "label": "Confirmé",
+     "missing_for_a": null
+    },
+    "banners": [],
+    "published": true
+   }
+  },
+  {
+   "id": "amm-024",
+   "jurisdiction": "PA",
+   "ma_number": "PA-V-2025-0024",
+   "product_id": "prd-024",
+   "procedure": "nationale",
+   "grant_date": "2025-06-21",
+   "expiry_date": "2030-06-21",
+   "expiry_is_computed": true,
+   "holder": "Zêta Biologiques (fictif)",
+   "manufacturer": "Laboratoires Alpha (fictif)",
+   "dispensing_condition": "sur ordonnance vétérinaire",
+   "source": {
+    "nature": "officielle",
+    "title": "Liste des médicaments vétérinaires autorisés, Pays A (SPÉCIMEN)",
+    "document_date": "2027-06-09",
+    "latest_edition": true
+   },
+   "validations": 2,
+   "last_verified_at": "2027-06-03",
+   "dispute_open": false,
+   "scenario": "non publiée : teneur ambiguë",
+   "events": [
+    {
+     "type": "octroi",
+     "decision_date": "2025-06-21",
+     "effective_date": "2025-06-21"
+    }
+   ],
+   "expected": {
+    "status": "valide",
+    "mentions": [],
+    "evidence": {
+     "level": "A",
+     "label": "Confirmé",
+     "missing_for_a": null
+    },
+    "banners": [],
+    "published": false
+   }
+  },
+  {
+   "id": "amm-025",
+   "jurisdiction": "PA",
+   "ma_number": "PA-V-2025-0025",
+   "product_id": "prd-025",
+   "procedure": "nationale",
+   "grant_date": "2025-07-28",
+   "expiry_date": "2030-07-28",
+   "expiry_is_computed": false,
+   "holder": "Laboratoires Alpha (fictif)",
+   "manufacturer": "Beta Santé Animale (fictif)",
+   "dispensing_condition": "sur ordonnance vétérinaire",
+   "source": {
+    "nature": "officielle",
+    "title": "Liste des médicaments vétérinaires autorisés, Pays A (SPÉCIMEN)",
+    "document_date": "2027-06-09",
+    "latest_edition": true
+   },
+   "validations": 2,
+   "last_verified_at": "2027-06-01",
+   "dispute_open": false,
+   "scenario": "",
+   "events": [
+    {
+     "type": "octroi",
+     "decision_date": "2025-07-28",
+     "effective_date": "2025-07-28"
+    }
+   ],
+   "expected": {
+    "status": "valide",
+    "mentions": [],
+    "evidence": {
+     "level": "A",
+     "label": "Confirmé",
+     "missing_for_a": null
+    },
+    "banners": [
+     {
+      "rule": "RG-20",
+      "level": "gris",
+      "text": "Antimicrobien d'importance critique pour la médecine humaine (OMS) : usage prudent."
+     }
+    ],
+    "published": true
+   }
+  },
+  {
+   "id": "amm-026",
+   "jurisdiction": "PA",
+   "ma_number": "PA-V-2025-0026",
+   "product_id": "prd-026",
+   "procedure": "nationale",
+   "grant_date": "2025-09-03",
+   "expiry_date": "2030-09-03",
+   "expiry_is_computed": false,
+   "holder": "Beta Santé Animale (fictif)",
+   "manufacturer": "Gamma Vet (fictif)",
+   "dispensing_condition": "sur ordonnance vétérinaire",
+   "source": {
+    "nature": "officielle",
+    "title": "Liste des médicaments vétérinaires autorisés, Pays A (SPÉCIMEN)",
+    "document_date": "2027-06-09",
+    "latest_edition": true
+   },
+   "validations": 2,
+   "last_verified_at": "2027-07-03",
+   "dispute_open": false,
+   "scenario": "",
+   "events": [
+    {
+     "type": "octroi",
+     "decision_date": "2025-09-03",
+     "effective_date": "2025-09-03"
+    }
+   ],
+   "expected": {
+    "status": "valide",
+    "mentions": [],
+    "evidence": {
+     "level": "A",
+     "label": "Confirmé",
+     "missing_for_a": null
+    },
+    "banners": [],
+    "published": true
+   }
+  },
+  {
+   "id": "amm-027",
+   "jurisdiction": "PA",
+   "ma_number": "PA-V-2025-0027",
+   "product_id": "prd-027",
+   "procedure": "nationale",
+   "grant_date": "2025-10-10",
+   "expiry_date": "2030-10-10",
+   "expiry_is_computed": true,
+   "holder": "Gamma Vet (fictif)",
+   "manufacturer": "Delta Pharma (fictif)",
+   "dispensing_condition": "sur ordonnance vétérinaire",
+   "source": {
+    "nature": "officielle",
+    "title": "Liste des médicaments vétérinaires autorisés, Pays A (SPÉCIMEN)",
+    "document_date": "2027-06-09",
+    "latest_edition": true
+   },
+   "validations": 2,
+   "last_verified_at": "2027-05-19",
+   "dispute_open": false,
+   "scenario": "",
+   "events": [
+    {
+     "type": "octroi",
+     "decision_date": "2025-10-10",
+     "effective_date": "2025-10-10"
+    }
+   ],
+   "expected": {
+    "status": "valide",
+    "mentions": [],
+    "evidence": {
+     "level": "A",
+     "label": "Confirmé",
+     "missing_for_a": null
+    },
+    "banners": [],
+    "published": true
+   }
+  },
+  {
+   "id": "amm-028",
+   "jurisdiction": "PA",
+   "ma_number": "PA-V-2025-0028",
+   "product_id": "prd-028",
+   "procedure": "nationale",
+   "grant_date": "2025-11-16",
+   "expiry_date": "2030-11-16",
+   "expiry_is_computed": false,
+   "holder": "Delta Pharma (fictif)",
+   "manufacturer": "Epsilon Animal Health (fictif)",
+   "dispensing_condition": "sur ordonnance vétérinaire",
+   "source": {
+    "nature": "officielle",
+    "title": "Liste des médicaments vétérinaires autorisés, Pays A (SPÉCIMEN)",
+    "document_date": "2027-06-09",
+    "latest_edition": true
+   },
+   "validations": 2,
+   "last_verified_at": "2027-05-04",
+   "dispute_open": false,
+   "scenario": "",
+   "events": [
+    {
+     "type": "octroi",
+     "decision_date": "2025-11-16",
+     "effective_date": "2025-11-16"
+    }
+   ],
+   "expected": {
+    "status": "valide",
+    "mentions": [],
+    "evidence": {
+     "level": "A",
+     "label": "Confirmé",
+     "missing_for_a": null
+    },
+    "banners": [
+     {
+      "rule": "RG-20",
+      "level": "orange",
+      "text": "Antimicrobien de priorité la plus élevée pour la médecine humaine (OMS). Recommandations de l'OMSA : pas d'usage préventif ; pas en première intention sauf justification, de préférence après analyse bactériologique ; hors AMM seulement faute d'alternative ; jamais comme promoteur de croissance."
+     }
+    ],
+    "published": true
+   }
+  },
+  {
+   "id": "amm-029",
+   "jurisdiction": "PA",
+   "ma_number": "PA-V-2025-0029",
+   "product_id": "prd-029",
+   "procedure": "nationale",
+   "grant_date": "2025-12-23",
+   "expiry_date": "2030-12-23",
+   "expiry_is_computed": false,
+   "holder": "Epsilon Animal Health (fictif)",
+   "manufacturer": "Zêta Biologiques (fictif)",
+   "dispensing_condition": "sur ordonnance vétérinaire",
+   "source": {
+    "nature": "officielle",
+    "title": "Liste des médicaments vétérinaires autorisés, Pays A (SPÉCIMEN)",
+    "document_date": "2027-06-09",
+    "latest_edition": true
+   },
+   "validations": 2,
+   "last_verified_at": "2027-05-23",
+   "dispute_open": false,
+   "scenario": "",
+   "events": [
+    {
+     "type": "octroi",
+     "decision_date": "2025-12-23",
+     "effective_date": "2025-12-23"
+    }
+   ],
+   "expected": {
+    "status": "valide",
+    "mentions": [],
+    "evidence": {
+     "level": "A",
+     "label": "Confirmé",
+     "missing_for_a": null
+    },
+    "banners": [],
+    "published": true
+   }
+  },
+  {
+   "id": "amm-030",
+   "jurisdiction": "PA",
+   "ma_number": "PA-V-2026-0030",
+   "product_id": "prd-030",
+   "procedure": "nationale",
+   "grant_date": "2026-01-29",
+   "expiry_date": "2031-01-29",
+   "expiry_is_computed": true,
+   "holder": "Zêta Biologiques (fictif)",
+   "manufacturer": "Laboratoires Alpha (fictif)",
+   "dispensing_condition": "sur ordonnance vétérinaire",
+   "source": {
+    "nature": "officielle",
+    "title": "Liste des médicaments vétérinaires autorisés, Pays A (SPÉCIMEN)",
+    "document_date": "2027-06-09",
+    "latest_edition": true
+   },
+   "validations": 2,
+   "last_verified_at": "2027-07-18",
+   "dispute_open": false,
+   "scenario": "",
+   "events": [
+    {
+     "type": "octroi",
+     "decision_date": "2026-01-29",
+     "effective_date": "2026-01-29"
+    }
+   ],
+   "expected": {
+    "status": "valide",
+    "mentions": [],
+    "evidence": {
+     "level": "A",
+     "label": "Confirmé",
+     "missing_for_a": null
+    },
+    "banners": [
+     {
+      "rule": "RG-19",
+      "level": "orange",
+      "text": "Chloramphénicol. Recommandation du Codex : ne pas utiliser chez les animaux producteurs de denrées. Ce n'est pas une interdiction nationale."
+     }
+    ],
+    "published": true
+   }
+  },
+  {
+   "id": "amm-031",
+   "jurisdiction": "PB",
+   "ma_number": "PB-V-2023-0001",
+   "product_id": "prd-014",
+   "procedure": "nationale",
+   "grant_date": "2023-02-21",
+   "expiry_date": "2028-02-21",
+   "expiry_is_computed": false,
+   "holder": "Laboratoires Alpha (fictif)",
+   "manufacturer": "Beta Santé Animale (fictif)",
+   "dispensing_condition": "sur ordonnance vétérinaire",
+   "source": {
+    "nature": "officielle",
+    "title": "Liste des médicaments vétérinaires autorisés, Pays B (SPÉCIMEN)",
+    "document_date": "2027-06-09",
+    "latest_edition": true
+   },
+   "validations": 2,
+   "last_verified_at": "2027-05-01",
+   "dispute_open": false,
+   "scenario": "",
+   "events": [
+    {
+     "type": "octroi",
+     "decision_date": "2023-02-21",
+     "effective_date": "2023-02-21"
+    }
+   ],
+   "spc": {
+    "version_label": "v1",
+    "languages": [
+     "fr"
+    ],
+    "withdrawal_periods": [],
+    "restrictions": [
+     {
+      "type": "interdiction",
+      "species": null,
+      "production_category": "animaux producteurs de denrées",
+      "text": "Ne pas administrer aux animaux producteurs de denrées alimentaires."
+     }
+    ]
+   },
+   "expected": {
+    "status": "valide",
+    "mentions": [],
+    "evidence": {
+     "level": "A",
+     "label": "Confirmé",
+     "missing_for_a": null
+    },
+    "banners": [
+     {
+      "rule": "RG-19",
+      "level": "rouge",
+      "text": "Chloramphénicol : substance interdite chez les animaux producteurs de denrées dans cette juridiction."
+     }
+    ],
+    "published": true
+   }
+  },
+  {
+   "id": "amm-032",
+   "jurisdiction": "PB",
+   "ma_number": "PB-V-2023-0002",
+   "product_id": "prd-017",
+   "procedure": "nationale",
+   "grant_date": "2023-03-30",
+   "expiry_date": "2028-03-30",
+   "expiry_is_computed": false,
+   "holder": "Beta Santé Animale (fictif)",
+   "manufacturer": "Gamma Vet (fictif)",
+   "dispensing_condition": "sur ordonnance vétérinaire",
+   "source": {
+    "nature": "officielle",
+    "title": "Liste des médicaments vétérinaires autorisés, Pays B (SPÉCIMEN)",
+    "document_date": "2027-06-09",
+    "latest_edition": true
+   },
+   "validations": 2,
+   "last_verified_at": "2027-05-25",
+   "dispute_open": false,
+   "scenario": "",
+   "events": [
+    {
+     "type": "octroi",
+     "decision_date": "2023-03-30",
+     "effective_date": "2023-03-30"
+    }
+   ],
+   "spc": {
+    "version_label": "v1",
+    "languages": [
+     "fr"
+    ],
+    "withdrawal_periods": [
+     {
+      "species": "bovins",
+      "commodity": "viande et abats",
+      "route": "IM",
+      "dose_condition": null,
+      "kind": "valeur",
+      "value": 28,
+      "unit": "jour"
+     },
+     {
+      "species": "bovins",
+      "commodity": "lait",
+      "route": "IM",
+      "dose_condition": null,
+      "kind": "valeur",
+      "value": 7,
+      "unit": "jour"
+     },
+     {
+      "species": "porcins",
+      "commodity": "viande et abats",
+      "route": "IM",
+      "dose_condition": null,
+      "kind": "valeur",
+      "value": 21,
+      "unit": "jour"
+     }
+    ],
+    "restrictions": []
+   },
+   "expected": {
+    "status": "valide",
+    "mentions": [],
+    "evidence": {
+     "level": "A",
+     "label": "Confirmé",
+     "missing_for_a": null
+    },
+    "banners": [],
+    "published": true
+   }
+  },
+  {
+   "id": "amm-033",
+   "jurisdiction": "PB",
+   "ma_number": "PB-V-2023-0003",
+   "product_id": "prd-020",
+   "procedure": "nationale",
+   "grant_date": "2023-05-06",
+   "expiry_date": "2028-05-06",
+   "expiry_is_computed": true,
+   "holder": "Gamma Vet (fictif)",
+   "manufacturer": "Delta Pharma (fictif)",
+   "dispensing_condition": "sur ordonnance vétérinaire",
+   "source": {
+    "nature": "officielle",
+    "title": "Liste des médicaments vétérinaires autorisés, Pays B (SPÉCIMEN)",
+    "document_date": "2027-06-09",
+    "latest_edition": true
+   },
+   "validations": 2,
+   "last_verified_at": "2027-06-09",
+   "dispute_open": false,
+   "scenario": "",
+   "events": [
+    {
+     "type": "octroi",
+     "decision_date": "2023-05-06",
+     "effective_date": "2023-05-06"
+    }
+   ],
+   "spc": {
+    "version_label": "v1",
+    "languages": [
+     "fr"
+    ],
+    "withdrawal_periods": [
+     {
+      "species": "poulets",
+      "commodity": "viande et abats",
+      "route": "orale",
+      "dose_condition": null,
+      "kind": "valeur",
+      "value": 7,
+      "unit": "jour"
+     },
+     {
+      "species": "poulets",
+      "commodity": "œufs",
+      "route": null,
+      "dose_condition": null,
+      "kind": "interdit",
+      "value": null,
+      "unit": null
+     },
+     {
+      "species": "dindes",
+      "commodity": "viande et abats",
+      "route": "orale",
+      "dose_condition": null,
+      "kind": "valeur",
+      "value": 13,
+      "unit": "jour"
+     }
+    ],
+    "restrictions": [
+     {
+      "type": "interdiction",
+      "species": "poulets",
+      "production_category": "poules pondeuses dont les œufs sont destinés à la consommation",
+      "text": "Ne pas utiliser chez les poules pondeuses dont les œufs sont destinés à la consommation humaine."
+     }
+    ]
+   },
+   "expected": {
+    "status": "valide",
+    "mentions": [],
+    "evidence": {
+     "level": "A",
+     "label": "Confirmé",
+     "missing_for_a": null
+    },
+    "banners": [
+     {
+      "rule": "RG-20",
+      "level": "orange",
+      "text": "Antimicrobien de priorité la plus élevée pour la médecine humaine (OMS). Recommandations de l'OMSA : pas d'usage préventif ; pas en première intention sauf justification, de préférence après analyse bactériologique ; hors AMM seulement faute d'alternative ; jamais comme promoteur de croissance."
+     }
+    ],
+    "published": true
+   }
+  },
+  {
+   "id": "amm-034",
+   "jurisdiction": "PB",
+   "ma_number": "PB-V-2023-0004",
+   "product_id": "prd-023",
+   "procedure": "nationale",
+   "grant_date": "2023-06-12",
+   "expiry_date": "2028-06-12",
+   "expiry_is_computed": false,
+   "holder": "Delta Pharma (fictif)",
+   "manufacturer": "Epsilon Animal Health (fictif)",
+   "dispensing_condition": "sur ordonnance vétérinaire",
+   "source": {
+    "nature": "officielle",
+    "title": "Liste des médicaments vétérinaires autorisés, Pays B (SPÉCIMEN)",
+    "document_date": "2027-06-09",
+    "latest_edition": true
+   },
+   "validations": 2,
+   "last_verified_at": "2027-07-28",
+   "dispute_open": false,
+   "scenario": "",
+   "events": [
+    {
+     "type": "octroi",
+     "decision_date": "2023-06-12",
+     "effective_date": "2023-06-12"
+    }
+   ],
+   "spc": {
+    "version_label": "v1",
+    "languages": [
+     "fr"
+    ],
+    "withdrawal_periods": [
+     {
+      "species": "bovins",
+      "commodity": "viande et abats",
+      "route": "SC",
+      "dose_condition": null,
+      "kind": "valeur",
+      "value": 49,
+      "unit": "jour"
+     },
+     {
+      "species": "ovins",
+      "commodity": "viande et abats",
+      "route": "SC",
+      "dose_condition": null,
+      "kind": "valeur",
+      "value": 42,
+      "unit": "jour"
+     },
+     {
+      "species": "bovins",
+      "commodity": "lait",
+      "route": null,
+      "dose_condition": null,
+      "kind": "interdit",
+      "value": null,
+      "unit": null
+     }
+    ],
+    "restrictions": [
+     {
+      "type": "interdiction",
+      "species": "bovins",
+      "production_category": "femelles dont le lait est destiné à la consommation",
+      "text": "Ne pas utiliser chez les femelles laitières, y compris pendant le tarissement."
+     }
+    ]
+   },
+   "expected": {
+    "status": "valide",
+    "mentions": [],
+    "evidence": {
+     "level": "A",
+     "label": "Confirmé",
+     "missing_for_a": null
+    },
+    "banners": [],
+    "published": true
+   }
+  },
+  {
+   "id": "amm-035",
+   "jurisdiction": "PB",
+   "ma_number": "PB-V-2023-0005",
+   "product_id": "prd-026",
+   "procedure": "nationale",
+   "grant_date": "2023-07-19",
+   "expiry_date": "2028-07-19",
+   "expiry_is_computed": false,
+   "holder": "Epsilon Animal Health (fictif)",
+   "manufacturer": "Zêta Biologiques (fictif)",
+   "dispensing_condition": "sur ordonnance vétérinaire",
+   "source": {
+    "nature": "officielle",
+    "title": "Liste des médicaments vétérinaires autorisés, Pays B (SPÉCIMEN)",
+    "document_date": "2027-06-09",
+    "latest_edition": true
+   },
+   "validations": 2,
+   "last_verified_at": "2027-07-10",
+   "dispute_open": false,
+   "scenario": "suspendue",
+   "events": [
+    {
+     "type": "octroi",
+     "decision_date": "2023-07-19",
+     "effective_date": "2023-07-19"
+    },
+    {
+     "type": "suspension",
+     "decision_date": "2027-07-29",
+     "effective_date": "2027-07-31",
+     "end_date": "2028-01-25",
+     "reason": "défaut de qualité constaté sur plusieurs lots (motif fictif)"
+    }
+   ],
+   "spc": {
+    "version_label": "v1",
+    "languages": [
+     "fr"
+    ],
+    "withdrawal_periods": [
+     {
+      "species": "bovins",
+      "commodity": "viande et abats",
+      "route": null,
+      "dose_condition": null,
+      "kind": "valeur",
+      "value": 15,
+      "unit": "jour"
+     },
+     {
+      "species": "bovins",
+      "commodity": "lait",
+      "route": null,
+      "dose_condition": null,
+      "kind": "valeur",
+      "value": 5,
+      "unit": "jour"
+     },
+     {
+      "species": "porcins",
+      "commodity": "viande et abats",
+      "route": null,
+      "dose_condition": null,
+      "kind": "valeur",
+      "value": 5,
+      "unit": "jour"
+     }
+    ],
+    "restrictions": []
+   },
+   "expected": {
+    "status": "suspendue",
+    "mentions": [],
+    "evidence": {
+     "level": "A",
+     "label": "Confirmé",
+     "missing_for_a": null
+    },
+    "banners": [
+     {
+      "rule": "RG-15",
+      "level": "rouge",
+      "text": "AMM suspendue dans cette juridiction depuis le 2027-07-31. Motif : défaut de qualité constaté sur plusieurs lots (motif fictif). Ne pas délivrer. Stocks et animaux déjà traités : suivre la décision ou interroger l'autorité."
+     }
+    ],
+    "published": true
+   }
+  },
+  {
+   "id": "amm-036",
+   "jurisdiction": "PB",
+   "ma_number": "PB-V-2023-0006",
+   "product_id": "prd-029",
+   "procedure": "nationale",
+   "grant_date": "2023-08-25",
+   "expiry_date": "2028-08-25",
+   "expiry_is_computed": true,
+   "holder": "Zêta Biologiques (fictif)",
+   "manufacturer": "Laboratoires Alpha (fictif)",
+   "dispensing_condition": "sur ordonnance vétérinaire",
+   "source": {
+    "nature": "officielle",
+    "title": "Liste des médicaments vétérinaires autorisés, Pays B (SPÉCIMEN)",
+    "document_date": "2027-06-09",
+    "latest_edition": true
+   },
+   "validations": 2,
+   "last_verified_at": "2027-08-13",
+   "dispute_open": false,
+   "scenario": "",
+   "events": [
+    {
+     "type": "octroi",
+     "decision_date": "2023-08-25",
+     "effective_date": "2023-08-25"
+    }
+   ],
+   "spc": {
+    "version_label": "v1",
+    "languages": [
+     "fr"
+    ],
+    "withdrawal_periods": [],
+    "restrictions": []
+   },
+   "expected": {
+    "status": "valide",
+    "mentions": [],
+    "evidence": {
+     "level": "A",
+     "label": "Confirmé",
+     "missing_for_a": null
+    },
+    "banners": [],
+    "published": true
+   }
+  },
+  {
+   "id": "amm-037",
+   "jurisdiction": "PB",
+   "ma_number": "PB-V-2023-0007",
+   "product_id": "prd-032",
+   "procedure": "nationale",
+   "grant_date": "2023-10-01",
+   "expiry_date": "2028-10-01",
+   "expiry_is_computed": false,
+   "holder": "Laboratoires Alpha (fictif)",
+   "manufacturer": "Beta Santé Animale (fictif)",
+   "dispensing_condition": "sur ordonnance vétérinaire",
+   "source": {
+    "nature": "officielle",
+    "title": "Liste des médicaments vétérinaires autorisés, Pays B (SPÉCIMEN)",
+    "document_date": "2027-06-09",
+    "latest_edition": true
+   },
+   "validations": 2,
+   "last_verified_at": "2027-06-06",
+   "dispute_open": false,
+   "scenario": "",
+   "events": [
+    {
+     "type": "octroi",
+     "decision_date": "2023-10-01",
+     "effective_date": "2023-10-01"
+    }
+   ],
+   "expected": {
+    "status": "valide",
+    "mentions": [],
+    "evidence": {
+     "level": "A",
+     "label": "Confirmé",
+     "missing_for_a": null
+    },
+    "banners": [
+     {
+      "rule": "RG-20",
+      "level": "gris",
+      "text": "Antimicrobien d'importance critique pour la médecine humaine (OMS) : usage prudent."
+     }
+    ],
+    "published": true
+   }
+  },
+  {
+   "id": "amm-038",
+   "jurisdiction": "PB",
+   "ma_number": "PB-V-2023-0008",
+   "product_id": "prd-035",
+   "procedure": "nationale",
+   "grant_date": "2023-11-07",
+   "expiry_date": "2028-11-07",
+   "expiry_is_computed": false,
+   "holder": "Beta Santé Animale (fictif)",
+   "manufacturer": "Gamma Vet (fictif)",
+   "dispensing_condition": "sur ordonnance vétérinaire",
+   "source": {
+    "nature": "officielle",
+    "title": "Liste des médicaments vétérinaires autorisés, Pays B (SPÉCIMEN)",
+    "document_date": "2027-06-09",
+    "latest_edition": true
+   },
+   "validations": 2,
+   "last_verified_at": "2027-04-29",
+   "dispute_open": false,
+   "scenario": "",
+   "events": [
+    {
+     "type": "octroi",
+     "decision_date": "2023-11-07",
+     "effective_date": "2023-11-07"
+    }
+   ],
+   "expected": {
+    "status": "valide",
+    "mentions": [],
+    "evidence": {
+     "level": "A",
+     "label": "Confirmé",
+     "missing_for_a": null
+    },
+    "banners": [
+     {
+      "rule": "RG-20",
+      "level": "orange",
+      "text": "Antimicrobien de priorité la plus élevée pour la médecine humaine (OMS). Recommandations de l'OMSA : pas d'usage préventif ; pas en première intention sauf justification, de préférence après analyse bactériologique ; hors AMM seulement faute d'alternative ; jamais comme promoteur de croissance."
+     }
+    ],
+    "published": true
+   }
+  },
+  {
+   "id": "amm-039",
+   "jurisdiction": "PB",
+   "ma_number": "PB-V-2023-0009",
+   "product_id": "prd-038",
+   "procedure": "nationale",
+   "grant_date": "2023-12-14",
+   "expiry_date": "2028-12-14",
+   "expiry_is_computed": true,
+   "holder": "Gamma Vet (fictif)",
+   "manufacturer": "Delta Pharma (fictif)",
+   "dispensing_condition": "sur ordonnance vétérinaire",
+   "source": {
+    "nature": "officielle",
+    "title": "Liste des médicaments vétérinaires autorisés, Pays B (SPÉCIMEN)",
+    "document_date": "2027-06-09",
+    "latest_edition": true
+   },
+   "validations": 2,
+   "last_verified_at": "2027-02-19",
+   "dispute_open": false,
+   "scenario": "vérification de 200 jours",
+   "events": [
+    {
+     "type": "octroi",
+     "decision_date": "2023-12-14",
+     "effective_date": "2023-12-14"
+    }
+   ],
+   "expected": {
+    "status": "valide",
+    "mentions": [
+     "à revérifier"
+    ],
+    "evidence": {
+     "level": "B",
+     "label": "À revérifier",
+     "missing_for_a": "revérification due depuis le 2027-08-18"
+    },
+    "banners": [],
+    "published": true
+   }
+  },
+  {
+   "id": "amm-040",
+   "jurisdiction": "PB",
+   "ma_number": "PB-V-2024-0010",
+   "product_id": "prd-001",
+   "procedure": "nationale",
+   "grant_date": "2024-01-20",
+   "expiry_date": "2029-01-20",
+   "expiry_is_computed": false,
+   "holder": "Delta Pharma (fictif)",
+   "manufacturer": "Epsilon Animal Health (fictif)",
+   "dispensing_condition": "sur ordonnance vétérinaire",
+   "source": {
+    "nature": "officielle",
+    "title": "Liste des médicaments vétérinaires autorisés, Pays B (SPÉCIMEN)",
+    "document_date": "2027-06-09",
+    "latest_edition": true
+   },
+   "validations": 2,
+   "last_verified_at": "2027-04-16",
+   "dispute_open": false,
+   "scenario": "",
+   "events": [
+    {
+     "type": "octroi",
+     "decision_date": "2024-01-20",
+     "effective_date": "2024-01-20"
+    }
+   ],
+   "expected": {
+    "status": "valide",
+    "mentions": [],
+    "evidence": {
+     "level": "A",
+     "label": "Confirmé",
+     "missing_for_a": null
+    },
+    "banners": [],
+    "published": true
+   }
+  },
+  {
+   "id": "amm-041",
+   "jurisdiction": "PB",
+   "ma_number": "PB-V-2024-0011",
+   "product_id": "prd-004",
+   "procedure": "nationale",
+   "grant_date": "2024-02-26",
+   "expiry_date": "2029-02-26",
+   "expiry_is_computed": false,
+   "holder": "Epsilon Animal Health (fictif)",
+   "manufacturer": "Zêta Biologiques (fictif)",
+   "dispensing_condition": "sur ordonnance vétérinaire",
+   "source": {
+    "nature": "officielle",
+    "title": "Liste des médicaments vétérinaires autorisés, Pays B (SPÉCIMEN)",
+    "document_date": "2027-06-09",
+    "latest_edition": true
+   },
+   "validations": 2,
+   "last_verified_at": "2027-08-03",
+   "dispute_open": false,
+   "scenario": "",
+   "events": [
+    {
+     "type": "octroi",
+     "decision_date": "2024-02-26",
+     "effective_date": "2024-02-26"
+    }
+   ],
+   "expected": {
+    "status": "valide",
+    "mentions": [],
+    "evidence": {
+     "level": "A",
+     "label": "Confirmé",
+     "missing_for_a": null
+    },
+    "banners": [
+     {
+      "rule": "RG-20",
+      "level": "orange",
+      "text": "Antimicrobien de priorité la plus élevée pour la médecine humaine (OMS). Recommandations de l'OMSA : pas d'usage préventif ; pas en première intention sauf justification, de préférence après analyse bactériologique ; hors AMM seulement faute d'alternative ; jamais comme promoteur de croissance."
+     }
+    ],
+    "published": true
+   }
+  },
+  {
+   "id": "amm-042",
+   "jurisdiction": "PB",
+   "ma_number": "PB-V-2024-0012",
+   "product_id": "prd-007",
+   "procedure": "nationale",
+   "grant_date": "2024-04-03",
+   "expiry_date": "2029-04-03",
+   "expiry_is_computed": true,
+   "holder": "Zêta Biologiques (fictif)",
+   "manufacturer": "Laboratoires Alpha (fictif)",
+   "dispensing_condition": "sur ordonnance vétérinaire",
+   "source": {
+    "nature": "officielle",
+    "title": "Liste des médicaments vétérinaires autorisés, Pays B (SPÉCIMEN)",
+    "document_date": "2027-06-09",
+    "latest_edition": true
+   },
+   "validations": 2,
+   "last_verified_at": "2027-06-19",
+   "dispute_open": false,
+   "scenario": "",
+   "events": [
+    {
+     "type": "octroi",
+     "decision_date": "2024-04-03",
+     "effective_date": "2024-04-03"
+    }
+   ],
+   "expected": {
+    "status": "valide",
+    "mentions": [],
+    "evidence": {
+     "level": "A",
+     "label": "Confirmé",
+     "missing_for_a": null
+    },
+    "banners": [],
+    "published": true
+   }
+  },
+  {
+   "id": "amm-043",
+   "jurisdiction": "PB",
+   "ma_number": "PB-V-2024-0013",
+   "product_id": "prd-010",
+   "procedure": "nationale",
+   "grant_date": "2024-05-10",
+   "expiry_date": "2029-05-10",
+   "expiry_is_computed": false,
+   "holder": "Laboratoires Alpha (fictif)",
+   "manufacturer": "Beta Santé Animale (fictif)",
+   "dispensing_condition": "sur ordonnance vétérinaire",
+   "source": {
+    "nature": "officielle",
+    "title": "Liste des médicaments vétérinaires autorisés, Pays B (SPÉCIMEN)",
+    "document_date": "2027-06-09",
+    "latest_edition": true
+   },
+   "validations": 2,
+   "last_verified_at": "2027-05-14",
+   "dispute_open": false,
+   "scenario": "",
+   "events": [
+    {
+     "type": "octroi",
+     "decision_date": "2024-05-10",
+     "effective_date": "2024-05-10"
+    }
+   ],
+   "expected": {
+    "status": "valide",
+    "mentions": [],
+    "evidence": {
+     "level": "A",
+     "label": "Confirmé",
+     "missing_for_a": null
+    },
+    "banners": [],
+    "published": true
+   }
+  },
+  {
+   "id": "amm-044",
+   "jurisdiction": "PB",
+   "ma_number": "PB-V-2024-0014",
+   "product_id": "prd-013",
+   "procedure": "nationale",
+   "grant_date": "2024-06-16",
+   "expiry_date": "2029-06-16",
+   "expiry_is_computed": false,
+   "holder": "Beta Santé Animale (fictif)",
+   "manufacturer": "Gamma Vet (fictif)",
+   "dispensing_condition": "sur ordonnance vétérinaire",
+   "source": {
+    "nature": "officielle",
+    "title": "Liste des médicaments vétérinaires autorisés, Pays B (SPÉCIMEN)",
+    "document_date": "2027-06-09",
+    "latest_edition": true
+   },
+   "validations": 2,
+   "last_verified_at": "2027-05-22",
+   "dispute_open": false,
+   "scenario": "",
+   "events": [
+    {
+     "type": "octroi",
+     "decision_date": "2024-06-16",
+     "effective_date": "2024-06-16"
+    }
+   ],
+   "expected": {
+    "status": "valide",
+    "mentions": [],
+    "evidence": {
+     "level": "A",
+     "label": "Confirmé",
+     "missing_for_a": null
+    },
+    "banners": [],
+    "published": true
+   }
+  },
+  {
+   "id": "amm-045",
+   "jurisdiction": "PB",
+   "ma_number": "PB-V-2024-0015",
+   "product_id": "prd-016",
+   "procedure": "nationale",
+   "grant_date": "2024-07-23",
+   "expiry_date": "2029-07-23",
+   "expiry_is_computed": true,
+   "holder": "Gamma Vet (fictif)",
+   "manufacturer": "Delta Pharma (fictif)",
+   "dispensing_condition": "sur ordonnance vétérinaire",
+   "source": {
+    "nature": "officielle",
+    "title": "Liste des médicaments vétérinaires autorisés, Pays B (SPÉCIMEN)",
+    "document_date": "2027-06-09",
+    "latest_edition": true
+   },
+   "validations": 2,
+   "last_verified_at": "2027-08-06",
+   "dispute_open": false,
+   "scenario": "",
+   "events": [
+    {
+     "type": "octroi",
+     "decision_date": "2024-07-23",
+     "effective_date": "2024-07-23"
+    }
+   ],
+   "expected": {
+    "status": "valide",
+    "mentions": [],
+    "evidence": {
+     "level": "A",
+     "label": "Confirmé",
+     "missing_for_a": null
+    },
+    "banners": [
+     {
+      "rule": "RG-20",
+      "level": "gris",
+      "text": "Antimicrobien d'importance critique pour la médecine humaine (OMS) : usage prudent."
+     }
+    ],
+    "published": true
+   }
+  },
+  {
+   "id": "amm-046",
+   "jurisdiction": "PB",
+   "ma_number": "PB-V-2024-0016",
+   "product_id": "prd-019",
+   "procedure": "nationale",
+   "grant_date": "2024-08-29",
+   "expiry_date": "2029-08-29",
+   "expiry_is_computed": false,
+   "holder": "Delta Pharma (fictif)",
+   "manufacturer": "Epsilon Animal Health (fictif)",
+   "dispensing_condition": "sur ordonnance vétérinaire",
+   "source": {
+    "nature": "officielle",
+    "title": "Liste des médicaments vétérinaires autorisés, Pays B (SPÉCIMEN)",
+    "document_date": "2027-06-09",
+    "latest_edition": true
+   },
+   "validations": 2,
+   "last_verified_at": "2027-07-14",
+   "dispute_open": false,
+   "scenario": "",
+   "events": [
+    {
+     "type": "octroi",
+     "decision_date": "2024-08-29",
+     "effective_date": "2024-08-29"
+    }
+   ],
+   "expected": {
+    "status": "valide",
+    "mentions": [],
+    "evidence": {
+     "level": "A",
+     "label": "Confirmé",
+     "missing_for_a": null
+    },
+    "banners": [
+     {
+      "rule": "RG-20",
+      "level": "orange",
+      "text": "Antimicrobien de priorité la plus élevée pour la médecine humaine (OMS). Recommandations de l'OMSA : pas d'usage préventif ; pas en première intention sauf justification, de préférence après analyse bactériologique ; hors AMM seulement faute d'alternative ; jamais comme promoteur de croissance."
+     }
+    ],
+    "published": true
+   }
+  },
+  {
+   "id": "amm-047",
+   "jurisdiction": "PB",
+   "ma_number": "PB-V-2024-0017",
+   "product_id": "prd-022",
+   "procedure": "nationale",
+   "grant_date": "2024-10-05",
+   "expiry_date": "2029-10-05",
+   "expiry_is_computed": false,
+   "holder": "Epsilon Animal Health (fictif)",
+   "manufacturer": "Zêta Biologiques (fictif)",
+   "dispensing_condition": "sur ordonnance vétérinaire",
+   "source": {
+    "nature": "officielle",
+    "title": "Liste des médicaments vétérinaires autorisés, Pays B (SPÉCIMEN)",
+    "document_date": "2027-06-09",
+    "latest_edition": true
+   },
+   "validations": 2,
+   "last_verified_at": "2027-06-20",
+   "dispute_open": false,
+   "scenario": "",
+   "events": [
+    {
+     "type": "octroi",
+     "decision_date": "2024-10-05",
+     "effective_date": "2024-10-05"
+    }
+   ],
+   "expected": {
+    "status": "valide",
+    "mentions": [],
+    "evidence": {
+     "level": "A",
+     "label": "Confirmé",
+     "missing_for_a": null
+    },
+    "banners": [],
+    "published": true
+   }
+  },
+  {
+   "id": "amm-048",
+   "jurisdiction": "PB",
+   "ma_number": "PB-V-2024-0018",
+   "product_id": "prd-025",
+   "procedure": "nationale",
+   "grant_date": "2024-11-11",
+   "expiry_date": "2029-11-11",
+   "expiry_is_computed": true,
+   "holder": "Zêta Biologiques (fictif)",
+   "manufacturer": "Laboratoires Alpha (fictif)",
+   "dispensing_condition": "sur ordonnance vétérinaire",
+   "source": {
+    "nature": "officielle",
+    "title": "Liste des médicaments vétérinaires autorisés, Pays B (SPÉCIMEN)",
+    "document_date": "2027-06-09",
+    "latest_edition": true
+   },
+   "validations": 2,
+   "last_verified_at": "2027-08-10",
+   "dispute_open": false,
+   "scenario": "",
+   "events": [
+    {
+     "type": "octroi",
+     "decision_date": "2024-11-11",
+     "effective_date": "2024-11-11"
+    }
+   ],
+   "expected": {
+    "status": "valide",
+    "mentions": [],
+    "evidence": {
+     "level": "A",
+     "label": "Confirmé",
+     "missing_for_a": null
+    },
+    "banners": [
+     {
+      "rule": "RG-20",
+      "level": "gris",
+      "text": "Antimicrobien d'importance critique pour la médecine humaine (OMS) : usage prudent."
+     }
+    ],
+    "published": true
+   }
+  },
+  {
+   "id": "amm-049",
+   "jurisdiction": "CC",
+   "ma_number": "CC-V-2023-0001",
+   "product_id": "prd-028",
+   "procedure": "communautaire",
+   "grant_date": "2023-02-21",
+   "expiry_date": "2028-02-21",
+   "expiry_is_computed": false,
+   "holder": "Laboratoires Alpha (fictif)",
+   "manufacturer": "Beta Santé Animale (fictif)",
+   "dispensing_condition": "sur ordonnance vétérinaire",
+   "source": {
+    "nature": "officielle",
+    "title": "Liste des médicaments vétérinaires autorisés, Communauté C (SPÉCIMEN)",
+    "document_date": "2027-06-09",
+    "latest_edition": true
+   },
+   "validations": 2,
+   "last_verified_at": "2027-08-08",
+   "dispute_open": false,
+   "scenario": "",
+   "events": [
+    {
+     "type": "octroi",
+     "decision_date": "2023-02-21",
+     "effective_date": "2023-02-21"
+    }
+   ],
+   "spc": {
+    "version_label": "v1",
+    "languages": [
+     "fr"
+    ],
+    "withdrawal_periods": [
+     {
+      "species": "poulets",
+      "commodity": "viande et abats",
+      "route": "orale",
+      "dose_condition": null,
+      "kind": "valeur",
+      "value": 7,
+      "unit": "jour"
+     },
+     {
+      "species": "poulets",
+      "commodity": "œufs",
+      "route": null,
+      "dose_condition": null,
+      "kind": "non renseigné",
+      "value": null,
+      "unit": null
+     },
+     {
+      "species": "porcins",
+      "commodity": "viande et abats",
+      "route": "orale",
+      "dose_condition": null,
+      "kind": "valeur",
+      "value": 7,
+      "unit": "jour"
+     }
+    ],
+    "restrictions": []
+   },
+   "expected": {
+    "status": "valide",
+    "mentions": [],
+    "evidence": {
+     "level": "A",
+     "label": "Confirmé",
+     "missing_for_a": null
+    },
+    "banners": [
+     {
+      "rule": "RG-20",
+      "level": "orange",
+      "text": "Antimicrobien de priorité la plus élevée pour la médecine humaine (OMS). Recommandations de l'OMSA : pas d'usage préventif ; pas en première intention sauf justification, de préférence après analyse bactériologique ; hors AMM seulement faute d'alternative ; jamais comme promoteur de croissance."
+     }
+    ],
+    "published": true
+   }
+  },
+  {
+   "id": "amm-050",
+   "jurisdiction": "CC",
+   "ma_number": "CC-V-2023-0002",
+   "product_id": "prd-031",
+   "procedure": "communautaire",
+   "grant_date": "2023-03-30",
+   "expiry_date": "2028-03-30",
+   "expiry_is_computed": false,
+   "holder": "Beta Santé Animale (fictif)",
+   "manufacturer": "Gamma Vet (fictif)",
+   "dispensing_condition": "sur ordonnance vétérinaire",
+   "source": {
+    "nature": "officielle",
+    "title": "Liste des médicaments vétérinaires autorisés, Communauté C (SPÉCIMEN)",
+    "document_date": "2027-06-09",
+    "latest_edition": true
+   },
+   "validations": 2,
+   "last_verified_at": "2027-04-22",
+   "dispute_open": false,
+   "scenario": "",
+   "events": [
+    {
+     "type": "octroi",
+     "decision_date": "2023-03-30",
+     "effective_date": "2023-03-30"
+    }
+   ],
+   "spc": {
+    "version_label": "v1",
+    "languages": [
+     "fr"
+    ],
+    "withdrawal_periods": [
+     {
+      "species": "poissons",
+      "commodity": "chair",
+      "route": "orale",
+      "dose_condition": null,
+      "kind": "valeur",
+      "value": 500,
+      "unit": "degré-jour"
+     }
+    ],
+    "restrictions": []
+   },
+   "expected": {
+    "status": "valide",
+    "mentions": [],
+    "evidence": {
+     "level": "A",
+     "label": "Confirmé",
+     "missing_for_a": null
+    },
+    "banners": [],
+    "published": true
+   }
+  },
+  {
+   "id": "amm-051",
+   "jurisdiction": "CC",
+   "ma_number": "CC-V-2023-0003",
+   "product_id": "prd-034",
+   "procedure": "communautaire",
+   "grant_date": "2023-05-06",
+   "expiry_date": "2028-05-06",
+   "expiry_is_computed": true,
+   "holder": "Gamma Vet (fictif)",
+   "manufacturer": "Delta Pharma (fictif)",
+   "dispensing_condition": "sur ordonnance vétérinaire",
+   "source": {
+    "nature": "officielle",
+    "title": "Liste des médicaments vétérinaires autorisés, Communauté C (SPÉCIMEN)",
+    "document_date": "2027-06-09",
+    "latest_edition": true
+   },
+   "validations": 2,
+   "last_verified_at": "2027-05-13",
+   "dispute_open": false,
+   "scenario": "",
+   "events": [
+    {
+     "type": "octroi",
+     "decision_date": "2023-05-06",
+     "effective_date": "2023-05-06"
+    }
+   ],
+   "spc": {
+    "version_label": "v1",
+    "languages": [
+     "fr"
+    ],
+    "withdrawal_periods": [
+     {
+      "species": "bovins",
+      "commodity": "viande et abats",
+      "route": "IM",
+      "dose_condition": null,
+      "kind": "valeur",
+      "value": 14,
+      "unit": "jour"
+     },
+     {
+      "species": "bovins",
+      "commodity": "viande et abats",
+      "route": "SC",
+      "dose_condition": null,
+      "kind": "valeur",
+      "value": 21,
+      "unit": "jour"
+     },
+     {
+      "species": "bovins",
+      "commodity": "lait",
+      "route": "IM",
+      "dose_condition": null,
+      "kind": "valeur",
+      "value": 72,
+      "unit": "heure"
+     },
+     {
+      "species": "porcins",
+      "commodity": "viande et abats",
+      "route": "IM",
+      "dose_condition": null,
+      "kind": "valeur",
+      "value": 16,
+      "unit": "jour"
+     }
+    ],
+    "restrictions": []
+   },
+   "expected": {
+    "status": "valide",
+    "mentions": [],
+    "evidence": {
+     "level": "A",
+     "label": "Confirmé",
+     "missing_for_a": null
+    },
+    "banners": [],
+    "published": true
+   }
+  },
+  {
+   "id": "amm-052",
+   "jurisdiction": "CC",
+   "ma_number": "CC-V-2023-0004",
+   "product_id": "prd-037",
+   "procedure": "communautaire",
+   "grant_date": "2023-06-12",
+   "expiry_date": "2028-06-12",
+   "expiry_is_computed": false,
+   "holder": "Delta Pharma (fictif)",
+   "manufacturer": "Epsilon Animal Health (fictif)",
+   "dispensing_condition": "sur ordonnance vétérinaire",
+   "source": {
+    "nature": "officielle",
+    "title": "Liste des médicaments vétérinaires autorisés, Communauté C (SPÉCIMEN)",
+    "document_date": "2027-06-09",
+    "latest_edition": true
+   },
+   "validations": 2,
+   "last_verified_at": "2027-08-11",
+   "dispute_open": false,
+   "scenario": "",
+   "events": [
+    {
+     "type": "octroi",
+     "decision_date": "2023-06-12",
+     "effective_date": "2023-06-12"
+    }
+   ],
+   "spc": {
+    "version_label": "v1",
+    "languages": [
+     "fr"
+    ],
+    "withdrawal_periods": [
+     {
+      "species": "poulets",
+      "commodity": "viande et abats",
+      "route": "SC",
+      "dose_condition": null,
+      "kind": "valeur",
+      "value": 0,
+      "unit": "jour"
+     },
+     {
+      "species": "poulets",
+      "commodity": "œufs",
+      "route": "SC",
+      "dose_condition": null,
+      "kind": "valeur",
+      "value": 0,
+      "unit": "jour"
+     }
+    ],
+    "restrictions": []
+   },
+   "expected": {
+    "status": "valide",
+    "mentions": [],
+    "evidence": {
+     "level": "A",
+     "label": "Confirmé",
+     "missing_for_a": null
+    },
+    "banners": [],
+    "published": true
+   }
+  },
+  {
+   "id": "amm-053",
+   "jurisdiction": "CC",
+   "ma_number": "CC-V-2023-0005",
+   "product_id": "prd-040",
+   "procedure": "communautaire",
+   "grant_date": "2023-07-19",
+   "expiry_date": "2028-07-19",
+   "expiry_is_computed": false,
+   "holder": "Epsilon Animal Health (fictif)",
+   "manufacturer": "Zêta Biologiques (fictif)",
+   "dispensing_condition": "sur ordonnance vétérinaire",
+   "source": {
+    "nature": "officielle",
+    "title": "Liste des médicaments vétérinaires autorisés, Communauté C (SPÉCIMEN)",
+    "document_date": "2027-06-09",
+    "latest_edition": true
+   },
+   "validations": 2,
+   "last_verified_at": "2027-04-25",
+   "dispute_open": false,
+   "scenario": "suspendue",
+   "events": [
+    {
+     "type": "octroi",
+     "decision_date": "2023-07-19",
+     "effective_date": "2023-07-19"
+    },
+    {
+     "type": "suspension",
+     "decision_date": "2027-07-29",
+     "effective_date": "2027-07-31",
+     "end_date": "2028-01-25",
+     "reason": "défaut de qualité constaté sur plusieurs lots (motif fictif)"
+    }
+   ],
+   "expected": {
+    "status": "suspendue",
+    "mentions": [],
+    "evidence": {
+     "level": "A",
+     "label": "Confirmé",
+     "missing_for_a": null
+    },
+    "banners": [
+     {
+      "rule": "RG-15",
+      "level": "rouge",
+      "text": "AMM suspendue dans cette juridiction depuis le 2027-07-31. Motif : défaut de qualité constaté sur plusieurs lots (motif fictif). Ne pas délivrer. Stocks et animaux déjà traités : suivre la décision ou interroger l'autorité."
+     }
+    ],
+    "published": true
+   }
+  },
+  {
+   "id": "amm-054",
+   "jurisdiction": "CC",
+   "ma_number": "CC-V-2023-0006",
+   "product_id": "prd-003",
+   "procedure": "communautaire",
+   "grant_date": "2023-08-25",
+   "expiry_date": "2028-08-25",
+   "expiry_is_computed": true,
+   "holder": "Zêta Biologiques (fictif)",
+   "manufacturer": "Laboratoires Alpha (fictif)",
+   "dispensing_condition": "sur ordonnance vétérinaire",
+   "source": {
+    "nature": "officielle",
+    "title": "Liste des médicaments vétérinaires autorisés, Communauté C (SPÉCIMEN)",
+    "document_date": "2027-06-09",
+    "latest_edition": true
+   },
+   "validations": 2,
+   "last_verified_at": "2027-07-01",
+   "dispute_open": false,
+   "scenario": "",
+   "events": [
+    {
+     "type": "octroi",
+     "decision_date": "2023-08-25",
+     "effective_date": "2023-08-25"
+    }
+   ],
+   "expected": {
+    "status": "valide",
+    "mentions": [],
+    "evidence": {
+     "level": "A",
+     "label": "Confirmé",
+     "missing_for_a": null
+    },
+    "banners": [
+     {
+      "rule": "RG-20",
+      "level": "orange",
+      "text": "Antimicrobien de priorité la plus élevée pour la médecine humaine (OMS). Recommandations de l'OMSA : pas d'usage préventif ; pas en première intention sauf justification, de préférence après analyse bactériologique ; hors AMM seulement faute d'alternative ; jamais comme promoteur de croissance."
+     }
+    ],
+    "published": true
+   }
+  },
+  {
+   "id": "amm-055",
+   "jurisdiction": "CC",
+   "ma_number": "CC-V-2023-0007",
+   "product_id": "prd-006",
+   "procedure": "communautaire",
+   "grant_date": "2023-10-01",
+   "expiry_date": "2028-10-01",
+   "expiry_is_computed": false,
+   "holder": "Laboratoires Alpha (fictif)",
+   "manufacturer": "Beta Santé Animale (fictif)",
+   "dispensing_condition": "sur ordonnance vétérinaire",
+   "source": {
+    "nature": "officielle",
+    "title": "Liste des médicaments vétérinaires autorisés, Communauté C (SPÉCIMEN)",
+    "document_date": "2027-06-09",
+    "latest_edition": true
+   },
+   "validations": 2,
+   "last_verified_at": "2027-07-04",
+   "dispute_open": false,
+   "scenario": "",
+   "events": [
+    {
+     "type": "octroi",
+     "decision_date": "2023-10-01",
+     "effective_date": "2023-10-01"
+    }
+   ],
+   "expected": {
+    "status": "valide",
+    "mentions": [],
+    "evidence": {
+     "level": "A",
+     "label": "Confirmé",
+     "missing_for_a": null
+    },
+    "banners": [],
+    "published": true
+   }
+  },
+  {
+   "id": "amm-056",
+   "jurisdiction": "CC",
+   "ma_number": "CC-V-2023-0008",
+   "product_id": "prd-009",
+   "procedure": "communautaire",
+   "grant_date": "2023-11-07",
+   "expiry_date": "2028-11-07",
+   "expiry_is_computed": false,
+   "holder": "Beta Santé Animale (fictif)",
+   "manufacturer": "Gamma Vet (fictif)",
+   "dispensing_condition": "sur ordonnance vétérinaire",
+   "source": {
+    "nature": "officielle",
+    "title": "Liste des médicaments vétérinaires autorisés, Communauté C (SPÉCIMEN)",
+    "document_date": "2027-06-09",
+    "latest_edition": true
+   },
+   "validations": 2,
+   "last_verified_at": "2027-08-19",
+   "dispute_open": false,
+   "scenario": "",
+   "events": [
+    {
+     "type": "octroi",
+     "decision_date": "2023-11-07",
+     "effective_date": "2023-11-07"
+    }
+   ],
+   "expected": {
+    "status": "valide",
+    "mentions": [],
+    "evidence": {
+     "level": "A",
+     "label": "Confirmé",
+     "missing_for_a": null
+    },
+    "banners": [
+     {
+      "rule": "RG-20",
+      "level": "gris",
+      "text": "Antimicrobien d'importance critique pour la médecine humaine (OMS) : usage prudent."
+     }
+    ],
+    "published": true
+   }
+  },
+  {
+   "id": "amm-057",
+   "jurisdiction": "CC",
+   "ma_number": "CC-V-2023-0009",
+   "product_id": "prd-012",
+   "procedure": "communautaire",
+   "grant_date": "2023-12-14",
+   "expiry_date": "2028-12-14",
+   "expiry_is_computed": true,
+   "holder": "Gamma Vet (fictif)",
+   "manufacturer": "Delta Pharma (fictif)",
+   "dispensing_condition": "sur ordonnance vétérinaire",
+   "source": {
+    "nature": "officielle",
+    "title": "Liste des médicaments vétérinaires autorisés, Communauté C (SPÉCIMEN)",
+    "document_date": "2027-06-09",
+    "latest_edition": true
+   },
+   "validations": 2,
+   "last_verified_at": "2027-02-19",
+   "dispute_open": false,
+   "scenario": "vérification de 200 jours",
+   "events": [
+    {
+     "type": "octroi",
+     "decision_date": "2023-12-14",
+     "effective_date": "2023-12-14"
+    }
+   ],
+   "expected": {
+    "status": "valide",
+    "mentions": [
+     "à revérifier"
+    ],
+    "evidence": {
+     "level": "B",
+     "label": "À revérifier",
+     "missing_for_a": "revérification due depuis le 2027-08-18"
+    },
+    "banners": [
+     {
+      "rule": "RG-20",
+      "level": "orange",
+      "text": "Antimicrobien de priorité la plus élevée pour la médecine humaine (OMS). Recommandations de l'OMSA : pas d'usage préventif ; pas en première intention sauf justification, de préférence après analyse bactériologique ; hors AMM seulement faute d'alternative ; jamais comme promoteur de croissance."
+     }
+    ],
+    "published": true
+   }
+  },
+  {
+   "id": "amm-058",
+   "jurisdiction": "CC",
+   "ma_number": "CC-V-2024-0010",
+   "product_id": "prd-015",
+   "procedure": "communautaire",
+   "grant_date": "2024-01-20",
+   "expiry_date": "2029-01-20",
+   "expiry_is_computed": false,
+   "holder": "Delta Pharma (fictif)",
+   "manufacturer": "Epsilon Animal Health (fictif)",
+   "dispensing_condition": "sur ordonnance vétérinaire",
+   "source": {
+    "nature": "officielle",
+    "title": "Liste des médicaments vétérinaires autorisés, Communauté C (SPÉCIMEN)",
+    "document_date": "2027-06-09",
+    "latest_edition": true
+   },
+   "validations": 2,
+   "last_verified_at": "2027-06-12",
+   "dispute_open": false,
+   "scenario": "",
+   "events": [
+    {
+     "type": "octroi",
+     "decision_date": "2024-01-20",
+     "effective_date": "2024-01-20"
+    }
+   ],
+   "expected": {
+    "status": "valide",
+    "mentions": [],
+    "evidence": {
+     "level": "A",
+     "label": "Confirmé",
+     "missing_for_a": null
+    },
+    "banners": [],
+    "published": true
+   }
+  },
+  {
+   "id": "amm-059",
+   "jurisdiction": "CC",
+   "ma_number": "CC-V-2024-0011",
+   "product_id": "prd-018",
+   "procedure": "communautaire",
+   "grant_date": "2024-02-26",
+   "expiry_date": "2029-02-26",
+   "expiry_is_computed": false,
+   "holder": "Epsilon Animal Health (fictif)",
+   "manufacturer": "Zêta Biologiques (fictif)",
+   "dispensing_condition": "sur ordonnance vétérinaire",
+   "source": {
+    "nature": "officielle",
+    "title": "Liste des médicaments vétérinaires autorisés, Communauté C (SPÉCIMEN)",
+    "document_date": "2027-06-09",
+    "latest_edition": true
+   },
+   "validations": 2,
+   "last_verified_at": "2027-04-21",
+   "dispute_open": false,
+   "scenario": "",
+   "events": [
+    {
+     "type": "octroi",
+     "decision_date": "2024-02-26",
+     "effective_date": "2024-02-26"
+    }
+   ],
+   "expected": {
+    "status": "valide",
+    "mentions": [],
+    "evidence": {
+     "level": "A",
+     "label": "Confirmé",
+     "missing_for_a": null
+    },
+    "banners": [],
+    "published": true
+   }
+  },
+  {
+   "id": "amm-060",
+   "jurisdiction": "CC",
+   "ma_number": "CC-V-2024-0012",
+   "product_id": "prd-021",
+   "procedure": "communautaire",
+   "grant_date": "2024-04-03",
+   "expiry_date": "2029-04-03",
+   "expiry_is_computed": true,
+   "holder": "Zêta Biologiques (fictif)",
+   "manufacturer": "Laboratoires Alpha (fictif)",
+   "dispensing_condition": "sur ordonnance vétérinaire",
+   "source": {
+    "nature": "officielle",
+    "title": "Liste des médicaments vétérinaires autorisés, Communauté C (SPÉCIMEN)",
+    "document_date": "2027-06-09",
+    "latest_edition": true
+   },
+   "validations": 2,
+   "last_verified_at": "2027-08-05",
+   "dispute_open": false,
+   "scenario": "",
+   "events": [
+    {
+     "type": "octroi",
+     "decision_date": "2024-04-03",
+     "effective_date": "2024-04-03"
+    }
+   ],
+   "expected": {
+    "status": "valide",
+    "mentions": [],
+    "evidence": {
+     "level": "A",
+     "label": "Confirmé",
+     "missing_for_a": null
+    },
+    "banners": [
+     {
+      "rule": "RG-20",
+      "level": "orange",
+      "text": "Antimicrobien de priorité la plus élevée pour la médecine humaine (OMS). Recommandations de l'OMSA : pas d'usage préventif ; pas en première intention sauf justification, de préférence après analyse bactériologique ; hors AMM seulement faute d'alternative ; jamais comme promoteur de croissance."
+     }
+    ],
+    "published": true
+   }
+  }
+ ],
+ "alerts": [
+  {
+   "id": "alr-001",
+   "type": "suspension d'AMM",
+   "level": "rouge",
+   "jurisdictions": [
+    "PA"
+   ],
+   "ma_ids": [
+    "amm-002"
+   ],
+   "published_at": "2027-07-31",
+   "text": "Suspension de l'AMM de Produit-002 dans le Pays A (alerte fictive)."
+  },
+  {
+   "id": "alr-002",
+   "type": "retrait d'AMM",
+   "level": "rouge",
+   "jurisdictions": [
+    "PA"
+   ],
+   "ma_ids": [
+    "amm-004"
+   ],
+   "published_at": "2027-02-24",
+   "text": "Retrait de l'AMM de Produit-004 dans le Pays A (alerte fictive)."
+  },
+  {
+   "id": "alr-003",
+   "type": "rappel de lot",
+   "level": "rouge",
+   "jurisdictions": [
+    "PA"
+   ],
+   "ma_ids": [
+    "amm-001"
+   ],
+   "batch_numbers": [
+    "L27-0412",
+    "L27-0413"
+   ],
+   "published_at": "2027-08-26",
+   "text": "Rappel des lots L27-0412 et L27-0413 de Produit-001 : défaut de stérilité (alerte fictive)."
+  },
+  {
+   "id": "alr-004",
+   "type": "produit signalé falsifié ou sous-norme",
+   "level": "rouge",
+   "jurisdictions": [
+    "PA",
+    "PB"
+   ],
+   "unlisted_product": "« Oxytétra 20 % » sans numéro d'AMM (fictif)",
+   "published_at": "2027-08-13",
+   "text": "Produit sans AMM signalé sur des marchés du Pays A et du Pays B (alerte fictive)."
+  },
+  {
+   "id": "alr-005",
+   "type": "information de sécurité",
+   "level": "orange",
+   "jurisdictions": [
+    "PA"
+   ],
+   "ma_ids": [
+    "amm-006"
+   ],
+   "published_at": "2027-06-29",
+   "text": "Ajout d'une contre-indication au RCP (alerte fictive)."
+  },
+  {
+   "id": "alr-006",
+   "type": "suspension d'AMM",
+   "level": "rouge",
+   "jurisdictions": [
+    "PB"
+   ],
+   "ma_ids": [
+    "amm-035"
+   ],
+   "published_at": "2027-07-31",
+   "text": "Suspension d'une AMM dans le Pays B (alerte fictive)."
+  },
+  {
+   "id": "alr-007",
+   "type": "rappel de lot",
+   "level": "rouge",
+   "jurisdictions": [
+    "PB"
+   ],
+   "ma_ids": [
+    "amm-033"
+   ],
+   "batch_numbers": [
+    "B26-1188"
+   ],
+   "published_at": "2027-04-10",
+   "closed_at": "2027-07-09",
+   "text": "Rappel du lot B26-1188, clos (alerte fictive)."
+  },
+  {
+   "id": "alr-008",
+   "type": "information de sécurité",
+   "level": "orange",
+   "jurisdictions": [
+    "CC"
+   ],
+   "ma_ids": [
+    "amm-050"
+   ],
+   "published_at": "2027-08-18",
+   "text": "Modification restrictive d'un RCP dans la Communauté C (alerte fictive)."
+  },
+  {
+   "id": "alr-009",
+   "type": "suspension d'AMM",
+   "level": "rouge",
+   "jurisdictions": [
+    "PA"
+   ],
+   "ma_ids": [
+    "amm-003"
+   ],
+   "published_at": "2026-07-19",
+   "text": "Suspension de l'AMM de Produit-003 ; échéance dépassée sans décision de levée (alerte fictive)."
+  },
+  {
+   "id": "alr-010",
+   "type": "produit signalé falsifié ou sous-norme",
+   "level": "rouge",
+   "jurisdictions": [
+    "CC"
+   ],
+   "unlisted_product": "« Ivermec Super » d'origine inconnue (fictif)",
+   "published_at": "2027-09-02",
+   "text": "Produit signalé falsifié dans la Communauté C (alerte fictive)."
+  }
+ ],
+ "documents": [
+  {
+   "id": "doc-01",
+   "type": "liste",
+   "title": "Liste n° 1 (SPÉCIMEN)",
+   "language": "fr",
+   "scanned": false,
+   "watermark": "SPÉCIMEN"
+  },
+  {
+   "id": "doc-02",
+   "type": "liste",
+   "title": "Liste n° 2 (SPÉCIMEN)",
+   "language": "fr",
+   "scanned": true,
+   "watermark": "SPÉCIMEN"
+  },
+  {
+   "id": "doc-03",
+   "type": "liste",
+   "title": "Liste n° 3 (SPÉCIMEN)",
+   "language": "fr",
+   "scanned": false,
+   "watermark": "SPÉCIMEN"
+  },
+  {
+   "id": "doc-04",
+   "type": "décision d'AMM",
+   "title": "Décision d'amm n° 4 (SPÉCIMEN)",
+   "language": "fr et en",
+   "scanned": false,
+   "watermark": "SPÉCIMEN"
+  },
+  {
+   "id": "doc-05",
+   "type": "décision d'AMM",
+   "title": "Décision d'amm n° 5 (SPÉCIMEN)",
+   "language": "fr",
+   "scanned": false,
+   "watermark": "SPÉCIMEN"
+  },
+  {
+   "id": "doc-06",
+   "type": "décision d'AMM",
+   "title": "Décision d'amm n° 6 (SPÉCIMEN)",
+   "language": "fr",
+   "scanned": false,
+   "watermark": "SPÉCIMEN"
+  },
+  {
+   "id": "doc-07",
+   "type": "décision d'AMM",
+   "title": "Décision d'amm n° 7 (SPÉCIMEN)",
+   "language": "fr",
+   "scanned": true,
+   "watermark": "SPÉCIMEN"
+  },
+  {
+   "id": "doc-08",
+   "type": "décision d'AMM",
+   "title": "Décision d'amm n° 8 (SPÉCIMEN)",
+   "language": "fr",
+   "scanned": false,
+   "watermark": "SPÉCIMEN"
+  },
+  {
+   "id": "doc-09",
+   "type": "RCP",
+   "title": "Rcp n° 9 (SPÉCIMEN)",
+   "language": "fr et en",
+   "scanned": false,
+   "watermark": "SPÉCIMEN"
+  },
+  {
+   "id": "doc-10",
+   "type": "RCP",
+   "title": "Rcp n° 10 (SPÉCIMEN)",
+   "language": "fr",
+   "scanned": false,
+   "watermark": "SPÉCIMEN"
+  },
+  {
+   "id": "doc-11",
+   "type": "RCP",
+   "title": "Rcp n° 11 (SPÉCIMEN)",
+   "language": "fr",
+   "scanned": false,
+   "watermark": "SPÉCIMEN"
+  },
+  {
+   "id": "doc-12",
+   "type": "RCP",
+   "title": "Rcp n° 12 (SPÉCIMEN)",
+   "language": "fr",
+   "scanned": true,
+   "watermark": "SPÉCIMEN"
+  },
+  {
+   "id": "doc-13",
+   "type": "RCP",
+   "title": "Rcp n° 13 (SPÉCIMEN)",
+   "language": "fr",
+   "scanned": false,
+   "watermark": "SPÉCIMEN"
+  },
+  {
+   "id": "doc-14",
+   "type": "alerte",
+   "title": "Alerte n° 14 (SPÉCIMEN)",
+   "language": "fr",
+   "scanned": false,
+   "watermark": "SPÉCIMEN"
+  },
+  {
+   "id": "doc-15",
+   "type": "alerte",
+   "title": "Alerte n° 15 (SPÉCIMEN)",
+   "language": "fr",
+   "scanned": false,
+   "watermark": "SPÉCIMEN"
+  }
+ ],
+ "accounts": [
+  {
+   "id": "cpt-01",
+   "role": "Visiteur",
+   "login": "demo01@recallpharma.example"
+  },
+  {
+   "id": "cpt-02",
+   "role": "Inscrit",
+   "login": "demo02@recallpharma.example"
+  },
+  {
+   "id": "cpt-03",
+   "role": "Professionnel vérifié",
+   "login": "demo03@recallpharma.example"
+  },
+  {
+   "id": "cpt-04",
+   "role": "Titulaire",
+   "login": "demo04@recallpharma.example"
+  },
+  {
+   "id": "cpt-05",
+   "role": "Agent d'autorité",
+   "login": "demo05@recallpharma.example"
+  },
+  {
+   "id": "cpt-06",
+   "role": "Validateur",
+   "login": "demo06@recallpharma.example"
+  },
+  {
+   "id": "cpt-07",
+   "role": "Responsable réglementaire",
+   "login": "demo07@recallpharma.example"
+  },
+  {
+   "id": "cpt-08",
+   "role": "Évaluateur de pharmacovigilance",
+   "login": "demo08@recallpharma.example"
+  },
+  {
+   "id": "cpt-09",
+   "role": "Administrateur fonctionnel",
+   "login": "demo09@recallpharma.example"
+  },
+  {
+   "id": "cpt-10",
+   "role": "Administrateur technique",
+   "login": "demo10@recallpharma.example"
+  },
+  {
+   "id": "cpt-11",
+   "role": "Auditeur",
+   "login": "demo11@recallpharma.example"
+  },
+  {
+   "id": "cpt-12",
+   "role": "Application partenaire",
+   "login": "demo12@recallpharma.example"
+  },
+  {
+   "id": "cpt-13",
+   "role": "Validateur",
+   "login": "demo13@recallpharma.example",
+   "second": true
+  },
+  {
+   "id": "cpt-14",
+   "role": "Administrateur fonctionnel",
+   "login": "demo14@recallpharma.example",
+   "second": true
+  },
+  {
+   "id": "cpt-15",
+   "role": "Responsable réglementaire",
+   "login": "demo15@recallpharma.example",
+   "second": true
+  }
+ ]
+}

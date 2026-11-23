@@ -1,0 +1,20 @@
+# Environnement de développement local : base PostgreSQL 17 avec pgvector (pg_trgm, unaccent, btree_gist inclus).
+services:
+  db:
+    image: pgvector/pgvector:pg17
+    environment:
+      POSTGRES_DB: recallpharma
+      POSTGRES_USER: recallpharma
+      POSTGRES_PASSWORD: recallpharma
+    ports:
+      - "5434:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U recallpharma -d recallpharma"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+
+volumes:
+  pgdata:
