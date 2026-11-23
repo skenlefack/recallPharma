@@ -12,6 +12,8 @@ class Settings(BaseSettings):
     database_url: str = "postgresql+psycopg://recallpharma:recallpharma@localhost:5434/recallpharma"
     # Date de consultation imposée (démonstration sur le jeu A10, daté du 2027-09-07) ; vide = aujourd'hui.
     reference_date: date | None = None
+    # Dépôt local des documents sources ; stockage objet S3 avec verrouillage en production (ADR-13).
+    storage_dir: str = "var/documents"
 
 
 @lru_cache

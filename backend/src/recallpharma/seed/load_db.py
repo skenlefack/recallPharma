@@ -42,6 +42,15 @@ def load_a10(session: Session) -> int:
                 banned_substances=j.get("banned_substances", []),
             )
         )
+    for acc in raw["accounts"]:
+        session.add(
+            m.Account(
+                id=acc["id"],
+                login=acc["login"],
+                display_name=f"{acc['role']} ({acc['id']})",
+                roles=[acc["role"]],
+            )
+        )
     for o in raw["organisations"]:
         session.add(m.Organisation(id=o["id"], name=o["name"], country=o.get("country")))
     for s in raw["substances"]:

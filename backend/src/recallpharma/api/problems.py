@@ -9,7 +9,21 @@ from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
 from starlette.exceptions import HTTPException as StarletteHTTPException
 
+from recallpharma.domain.curation import WorkflowError
+
 PROBLEM = "application/problem+json"
+
+WORKFLOW_STATUS = {
+    "not_found": 404,
+    "unknown_account": 401,
+    "forbidden": 403,
+    "tech_admin_cannot_validate": 403,
+    "not_preparer": 403,
+    "same_person": 403,
+    "arbiter_involved": 403,
+    "invalid_state": 409,
+    "stale_revision": 409,
+}
 
 
 class Problem(Exception):
@@ -33,6 +47,10 @@ def install(app: FastAPI) -> None:
     @app.exception_handler(Problem)
     async def _problem(request: Request, exc: Problem) -> JSONResponse:
         return _response(exc.status, exc.code, exc.title, exc.detail, request.url.path, **exc.extra)
+
+    @app.exception_handler(WorkflowError)
+    async def _workflow(request: Request, exc: WorkflowError) -> JSONResponse:
+        return _response(WORKFLOW_STATUS.get(exc.code, 422), exc.code, exc.message, None, request.url.path)
 
     @app.exception_handler(StarletteHTTPException)
     async def _http(request: Request, exc: StarletteHTTPException) -> JSONResponse:

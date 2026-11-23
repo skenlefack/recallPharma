@@ -221,6 +221,8 @@ def product_sheet(db: DB, authorisation_id: str, as_of: AsOf = None, known_at: K
         spc=s.SpcOut(
             version_label=spc.version_label,
             languages=spc.languages,
+            posology=spc.posology,
+            contraindications=spc.contraindications,
             withdrawal_periods=[_withdrawal_out(w) for w in spc.withdrawal_periods],
             restrictions=spc.restrictions,
         )

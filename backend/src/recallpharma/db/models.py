@@ -133,6 +133,12 @@ class SourceDocument(Base):
     latest_edition: Mapped[bool] = mapped_column(Boolean)
     sha256: Mapped[str | None] = mapped_column(String(64), unique=True)
     storage_key: Mapped[str | None] = mapped_column(Text)
+    filename: Mapped[str | None] = mapped_column(Text)
+    media_type: Mapped[str | None] = mapped_column(Text)
+    size_bytes: Mapped[int | None] = mapped_column(BigInteger)
+    replaces_document_id: Mapped[int | None] = mapped_column(ForeignKey("reg.source_document.id"))
+    uploaded_by: Mapped[str | None] = mapped_column(ForeignKey("core.account.id"))
+    uploaded_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
 
 
 class Authorisation(Base):
@@ -207,6 +213,9 @@ class SpcVersion(Base):
     version_label: Mapped[str] = mapped_column(Text)
     languages: Mapped[list[str]] = mapped_column(ARRAY(Text))
     restrictions: Mapped[list[dict[str, Any]]] = mapped_column(JSONB, server_default="[]")
+    posology: Mapped[str | None] = mapped_column(Text)
+    contraindications: Mapped[list[str]] = mapped_column(ARRAY(Text), server_default="{}")
+    proposal_id: Mapped[int | None] = mapped_column(ForeignKey("reg.proposal.id"))
 
     withdrawal_periods: Mapped[list[WithdrawalPeriod]] = relationship(lazy="selectin")
 
@@ -254,6 +263,92 @@ class SafetyNotice(Base):
     published_at: Mapped[date] = mapped_column(Date)
     closed_at: Mapped[date | None] = mapped_column(Date)
     text: Mapped[str] = mapped_column(Text)
+
+
+class Account(Base):
+    """Compte et rôles. Prototype : identité locale ; Keycloak (OIDC) la remplacera sans changer les rôles."""
+
+    __tablename__ = "account"
+    __table_args__ = ({"schema": "core"},)
+
+    id: Mapped[str] = mapped_column(Text, primary_key=True)
+    login: Mapped[str] = mapped_column(Text, unique=True)
+    display_name: Mapped[str] = mapped_column(Text)
+    roles: Mapped[list[str]] = mapped_column(ARRAY(Text))
+    active: Mapped[bool] = mapped_column(Boolean, server_default="true")
+
+
+class Proposal(Base):
+    """Proposition de fiche (création ou mise à jour d'une AMM) qui suit le circuit A → B → C (M02)."""
+
+    __tablename__ = "proposal"
+    __table_args__ = (
+        CheckConstraint(
+            "state IN ('proposée','en première validation','en seconde validation','en litige','publiée','archivée')",
+            name="state",
+        ),
+        CheckConstraint("first_validator IS NULL OR first_validator <> prepared_by", name="b_not_a"),
+        CheckConstraint(
+            "second_validator IS NULL OR (second_validator <> prepared_by AND second_validator <> first_validator)",
+            name="c_not_a_b",
+        ),
+        CheckConstraint(
+            "arbiter IS NULL OR (arbiter <> prepared_by AND arbiter <> first_validator "
+            "AND arbiter <> second_validator AND arbitration_reason IS NOT NULL)",
+            name="arbiter_independent",
+        ),
+        REG,
+    )
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    authorisation_id: Mapped[str | None] = mapped_column(ForeignKey("reg.authorisation.id"), index=True)
+    state: Mapped[str] = mapped_column(Text, server_default="proposée")
+    origin: Mapped[str] = mapped_column(Text, server_default="saisie")  # saisie, import, extraction
+    payload: Mapped[dict[str, Any]] = mapped_column(JSONB)
+    provenance: Mapped[dict[str, Any]] = mapped_column(JSONB, server_default="{}")
+    prepared_by: Mapped[str] = mapped_column(ForeignKey("core.account.id"))
+    first_validator: Mapped[str | None] = mapped_column(ForeignKey("core.account.id"))
+    second_validator: Mapped[str | None] = mapped_column(ForeignKey("core.account.id"))
+    blind_entry: Mapped[dict[str, Any] | None] = mapped_column(JSONB)
+    discrepancies: Mapped[list[dict[str, Any]] | None] = mapped_column(JSONB)
+    arbiter: Mapped[str | None] = mapped_column(ForeignKey("core.account.id"))
+    arbitration_decision: Mapped[str | None] = mapped_column(Text)
+    arbitration_reason: Mapped[str | None] = mapped_column(Text)
+    revision: Mapped[int] = mapped_column(Integer, server_default="1")
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+    updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+
+
+class ProposalStep(Base):
+    """Historique en ajout seul des actions sur une proposition (champ, valeur proposée, valeur retenue)."""
+
+    __tablename__ = "proposal_step"
+    __table_args__ = (REG,)
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    proposal_id: Mapped[int] = mapped_column(ForeignKey("reg.proposal.id"), index=True)
+    actor: Mapped[str] = mapped_column(ForeignKey("core.account.id"))
+    action: Mapped[str] = mapped_column(Text)
+    from_state: Mapped[str] = mapped_column(Text)
+    to_state: Mapped[str] = mapped_column(Text)
+    detail: Mapped[dict[str, Any]] = mapped_column(JSONB, server_default="{}")
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+
+
+class SourceView(Base):
+    """Trace qu'un validateur a affiché la page source d'un champ avant de le confirmer (CT-VAL-01)."""
+
+    __tablename__ = "source_view"
+    __table_args__ = (REG,)
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    proposal_id: Mapped[int] = mapped_column(ForeignKey("reg.proposal.id"), index=True)
+    revision: Mapped[int] = mapped_column(Integer)
+    actor: Mapped[str] = mapped_column(ForeignKey("core.account.id"))
+    field: Mapped[str] = mapped_column(Text)
+    document_id: Mapped[int] = mapped_column(ForeignKey("reg.source_document.id"))
+    page: Mapped[int] = mapped_column(Integer)
+    viewed_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
 
 
 class AuditEvent(Base):

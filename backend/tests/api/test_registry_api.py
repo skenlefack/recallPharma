@@ -2,56 +2,13 @@
 
 from __future__ import annotations
 
-import os
-
 import pytest
-from alembic import command
-from alembic.config import Config
 from fastapi.testclient import TestClient
-from sqlalchemy import create_engine, text
-from sqlalchemy.engine import make_url
-
-from recallpharma.config import get_settings
+from sqlalchemy import text
 
 pytestmark = pytest.mark.db
 
 AS_OF = {"as_of": "2027-09-07"}
-
-
-@pytest.fixture(scope="module")
-def client():  # type: ignore[no-untyped-def]
-    base = make_url(get_settings().database_url)
-    test_url = base.set(database="recallpharma_test")
-    admin = create_engine(base, isolation_level="AUTOCOMMIT")
-    try:
-        with admin.connect() as c:
-            c.execute(text("DROP DATABASE IF EXISTS recallpharma_test WITH (FORCE)"))
-            c.execute(text("CREATE DATABASE recallpharma_test"))
-    except Exception as exc:  # pragma: no cover - pas de serveur local
-        pytest.skip(f"PostgreSQL indisponible : {exc}")
-
-    os.environ["RECALLPHARMA_DATABASE_URL"] = test_url.render_as_string(hide_password=False)
-    get_settings.cache_clear()
-    from recallpharma.db.session import get_engine
-
-    get_engine.cache_clear()
-    cfg = Config(os.path.join(os.path.dirname(__file__), "..", "..", "alembic.ini"))
-    cfg.set_main_option("script_location", os.path.join(os.path.dirname(__file__), "..", "..", "migrations"))
-    command.upgrade(cfg, "head")
-
-    from recallpharma.db.session import session_factory
-    from recallpharma.seed.load_db import load_a10
-
-    with session_factory()() as session, session.begin():
-        load_a10(session)
-
-    from recallpharma.api.app import create_app
-
-    with TestClient(create_app()) as c:
-        yield c
-    get_engine().dispose()
-    get_engine.cache_clear()
-    get_settings.cache_clear()
 
 
 def test_search_tolerates_accents_and_typos(client: TestClient) -> None:

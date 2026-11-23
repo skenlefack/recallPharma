@@ -91,6 +91,8 @@ class WithdrawalOut(BaseModel):
 class SpcOut(BaseModel):
     version_label: str
     languages: list[str]
+    posology: str | None
+    contraindications: list[str]
     withdrawal_periods: list[WithdrawalOut]
     restrictions: list[dict[str, str | None]]
 

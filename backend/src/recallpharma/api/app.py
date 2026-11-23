@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from fastapi import FastAPI
 
-from recallpharma.api import problems, registry
+from recallpharma.api import curation, problems, registry
 
 
 def create_app() -> FastAPI:
@@ -13,6 +13,7 @@ def create_app() -> FastAPI:
     )
     problems.install(app)
     app.include_router(registry.router)
+    app.include_router(curation.router)
 
     @app.get("/health", tags=["exploitation"])
     def health() -> dict[str, str]:
