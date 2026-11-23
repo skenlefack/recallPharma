@@ -1,10 +1,14 @@
 import { type Page, expect, test } from "@playwright/test";
 
+/** Connexion réelle par Keycloak (royaume de développement). Effacer les cookies ferme aussi la session Keycloak. */
 async function login(page: Page, account: string) {
-  await page.goto("/connexion");
-  await page.locator(`input[name=account][value=${account}]`).check();
-  await page.getByRole("button", { name: "Se connecter" }).click();
-  await expect(page).toHaveURL(/\/validation/);
+  await page.context().clearCookies();
+  await page.goto("/connexion?next=/validation");
+  await page.getByRole("link", { name: "Se connecter avec Keycloak" }).click();
+  await page.locator("#username").fill(`demo${account.slice(-2)}@recallpharma.example`);
+  await page.locator("#password").fill("demo-recallpharma");
+  await page.locator("#kc-login").click();
+  await expect(page).toHaveURL(/localhost:3100\/validation/);
 }
 
 const card = (page: Page, title: string) => page.locator(".card", { has: page.getByRole("heading", { name: title, exact: true }) });
@@ -30,6 +34,17 @@ test("consultation : recherche tolérante, bandeau rouge, délai d'attente, lot"
   await lot.getByRole("button", { name: "Vérifier" }).click();
   await expect(lot).toContainText("lot visé par un rappel publié");
   await expect(lot).toContainText("Ne constitue pas une authentification.");
+});
+
+test("connexion : un compte sans rôle de validation ne peut pas préparer, la déconnexion ferme la session", async ({ page }) => {
+  await login(page, "cpt-03");
+  await expect(page.locator("header .who")).toContainText("Professionnel vérifié (cpt-03)");
+  await expect(page.getByRole("status")).toContainText("Ce compte ne peut ni préparer ni valider");
+  await page.goto("/connexion");
+  await page.getByRole("button", { name: "Se déconnecter" }).first().click();
+  await expect(page.locator("header .who")).toContainText("Se connecter");
+  await page.goto("/validation");
+  await expect(page).toHaveURL(/\/connexion/);
 });
 
 test("circuit A → B → C : une nouvelle AMM est publiée après double validation", async ({ page }) => {

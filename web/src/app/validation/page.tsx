@@ -1,23 +1,31 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
-import { accountLabel } from "@/lib/accounts";
-import { type Proposal, api, currentUser } from "@/lib/api";
+import { type Proposal, api, currentAccount } from "@/lib/api";
 import { CRITICAL_READERS, STATE_TONE, display } from "@/lib/proposal";
 
 const STATES = ["proposée", "en première validation", "en seconde validation", "en litige", "publiée", "archivée"];
 
 export default async function ValidationPage() {
-  const user = await currentUser();
-  if (!user) redirect("/connexion?next=/validation");
+  const me = await currentAccount();
+  if (!me) redirect("/connexion?next=/validation");
+  const user = me.id;
   const proposals = await api<Proposal[]>("/v1/curation/proposals");
   return (
     <>
       <h1>Validation des données</h1>
       <p className="muted">
         Circuit A → B → C : préparation, validation champ par champ, ressaisie à l&apos;aveugle. Connecté :{" "}
-        {accountLabel(user)}.
+        {me.display_name} ({me.roles.join(", ")}).
       </p>
+      {!me.can_curate && (
+        <div className="banner tone-orange" role="status">
+          <div>
+            Ce compte ne peut ni préparer ni valider : il faut le rôle Validateur ou Responsable réglementaire, jamais
+            celui d&apos;administrateur technique (RG-32). Les rôles se gèrent dans Keycloak.
+          </div>
+        </div>
+      )}
       <div className="row">
         <Link className="button" href="/validation/nouvelle">
           Nouvelle proposition

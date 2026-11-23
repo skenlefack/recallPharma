@@ -309,6 +309,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/me": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Me */
+        get: operations["me_v1_me_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/health": {
         parameters: {
             query?: never;
@@ -591,6 +608,17 @@ export interface components {
             timezone: string;
             /** Members */
             members: string[];
+        };
+        /** MeOut */
+        MeOut: {
+            /** Id */
+            id: string;
+            /** Display Name */
+            display_name: string;
+            /** Roles */
+            roles: string[];
+            /** Can Curate */
+            can_curate: boolean;
         };
         /** PayloadIn */
         PayloadIn: {
@@ -1198,8 +1226,9 @@ export interface operations {
     list_documents_v1_curation_documents_get: {
         parameters: {
             query?: never;
-            header: {
-                "x-recallpharma-user": string;
+            header?: {
+                authorization?: string | null;
+                "x-recallpharma-user"?: string | null;
             };
             path?: never;
             cookie?: never;
@@ -1229,8 +1258,9 @@ export interface operations {
     upload_document_v1_curation_documents_post: {
         parameters: {
             query?: never;
-            header: {
-                "x-recallpharma-user": string;
+            header?: {
+                authorization?: string | null;
+                "x-recallpharma-user"?: string | null;
             };
             path?: never;
             cookie?: never;
@@ -1266,8 +1296,9 @@ export interface operations {
             query?: {
                 state?: string | null;
             };
-            header: {
-                "x-recallpharma-user": string;
+            header?: {
+                authorization?: string | null;
+                "x-recallpharma-user"?: string | null;
             };
             path?: never;
             cookie?: never;
@@ -1297,8 +1328,9 @@ export interface operations {
     create_proposal_v1_curation_proposals_post: {
         parameters: {
             query?: never;
-            header: {
-                "x-recallpharma-user": string;
+            header?: {
+                authorization?: string | null;
+                "x-recallpharma-user"?: string | null;
             };
             path?: never;
             cookie?: never;
@@ -1332,8 +1364,9 @@ export interface operations {
     start_update_v1_curation_authorisations__authorisation_id__proposals_post: {
         parameters: {
             query?: never;
-            header: {
-                "x-recallpharma-user": string;
+            header?: {
+                authorization?: string | null;
+                "x-recallpharma-user"?: string | null;
             };
             path: {
                 authorisation_id: string;
@@ -1365,8 +1398,9 @@ export interface operations {
     get_proposal_v1_curation_proposals__proposal_id__get: {
         parameters: {
             query?: never;
-            header: {
-                "x-recallpharma-user": string;
+            header?: {
+                authorization?: string | null;
+                "x-recallpharma-user"?: string | null;
             };
             path: {
                 proposal_id: number;
@@ -1398,8 +1432,9 @@ export interface operations {
     edit_proposal_v1_curation_proposals__proposal_id__put: {
         parameters: {
             query?: never;
-            header: {
-                "x-recallpharma-user": string;
+            header?: {
+                authorization?: string | null;
+                "x-recallpharma-user"?: string | null;
             };
             path: {
                 proposal_id: number;
@@ -1435,8 +1470,9 @@ export interface operations {
     proposal_history_v1_curation_proposals__proposal_id__history_get: {
         parameters: {
             query?: never;
-            header: {
-                "x-recallpharma-user": string;
+            header?: {
+                authorization?: string | null;
+                "x-recallpharma-user"?: string | null;
             };
             path: {
                 proposal_id: number;
@@ -1470,8 +1506,9 @@ export interface operations {
     submit_v1_curation_proposals__proposal_id__submit_post: {
         parameters: {
             query?: never;
-            header: {
-                "x-recallpharma-user": string;
+            header?: {
+                authorization?: string | null;
+                "x-recallpharma-user"?: string | null;
             };
             path: {
                 proposal_id: number;
@@ -1503,8 +1540,9 @@ export interface operations {
     view_source_v1_curation_proposals__proposal_id__fields__field__source_view_post: {
         parameters: {
             query?: never;
-            header: {
-                "x-recallpharma-user": string;
+            header?: {
+                authorization?: string | null;
+                "x-recallpharma-user"?: string | null;
             };
             path: {
                 proposal_id: number;
@@ -1539,8 +1577,9 @@ export interface operations {
     first_validation_v1_curation_proposals__proposal_id__first_validation_post: {
         parameters: {
             query?: never;
-            header: {
-                "x-recallpharma-user": string;
+            header?: {
+                authorization?: string | null;
+                "x-recallpharma-user"?: string | null;
             };
             path: {
                 proposal_id: number;
@@ -1576,8 +1615,9 @@ export interface operations {
     blind_form_v1_curation_proposals__proposal_id__blind_entry_get: {
         parameters: {
             query?: never;
-            header: {
-                "x-recallpharma-user": string;
+            header?: {
+                authorization?: string | null;
+                "x-recallpharma-user"?: string | null;
             };
             path: {
                 proposal_id: number;
@@ -1611,8 +1651,9 @@ export interface operations {
     blind_entry_v1_curation_proposals__proposal_id__blind_entry_post: {
         parameters: {
             query?: never;
-            header: {
-                "x-recallpharma-user": string;
+            header?: {
+                authorization?: string | null;
+                "x-recallpharma-user"?: string | null;
             };
             path: {
                 proposal_id: number;
@@ -1648,8 +1689,9 @@ export interface operations {
     arbitration_v1_curation_proposals__proposal_id__arbitration_post: {
         parameters: {
             query?: never;
-            header: {
-                "x-recallpharma-user": string;
+            header?: {
+                authorization?: string | null;
+                "x-recallpharma-user"?: string | null;
             };
             path: {
                 proposal_id: number;
@@ -1669,6 +1711,38 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["ProposalOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    me_v1_me_get: {
+        parameters: {
+            query?: never;
+            header?: {
+                authorization?: string | null;
+                "x-recallpharma-user"?: string | null;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MeOut"];
                 };
             };
             /** @description Validation Error */

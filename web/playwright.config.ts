@@ -2,7 +2,7 @@ import { defineConfig } from "@playwright/test";
 
 /**
  * Parcours de bout en bout sur l'API locale chargée avec le jeu A10.
- * Prérequis : API démarrée sur :8000 avec RECALLPHARMA_REFERENCE_DATE=2027-09-07, puis `pnpm build`.
+ * Prérequis : `docker compose up -d` (base et Keycloak), API sur :8000 avec RECALLPHARMA_REFERENCE_DATE=2027-09-07, puis `pnpm build`.
  */
 export default defineConfig({
   testDir: "e2e",

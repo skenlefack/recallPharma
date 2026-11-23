@@ -22,6 +22,27 @@ def actor_for(session: Session, account_id: str) -> c.Actor:
     return c.Actor(account.id, frozenset(account.roles))
 
 
+def actor_for_login(session: Session, login: str, roles: frozenset[str]) -> c.Actor:
+    """Compte authentifié par Keycloak : le fournisseur d'identité fait foi pour les rôles, recopiés dans le
+    compte (clé des traces) avec une entrée d'audit quand ils changent."""
+    account = session.scalars(select(m.Account).where(m.Account.login == login)).one_or_none()
+    if account is None or not account.active:
+        raise c.WorkflowError("unknown_account", "Compte inconnu ou désactivé")
+    if frozenset(account.roles) != roles:
+        record(
+            session,
+            actor=account.id,
+            action="account.roles_synced",
+            object_type="account",
+            object_id=account.id,
+            before={"roles": sorted(account.roles)},
+            after={"roles": sorted(roles)},
+            reason="rôles reçus du fournisseur d'identité",
+        )
+        account.roles = sorted(roles)
+    return c.Actor(account.id, roles)
+
+
 def _snapshot(p: m.Proposal) -> c.ProposalSnapshot:
     return c.ProposalSnapshot(c.ProposalState(p.state), p.prepared_by, p.first_validator, p.second_validator)
 

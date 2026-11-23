@@ -1,9 +1,10 @@
 import { type NextRequest, NextResponse } from "next/server";
 
-import { API_URL, SESSION_COOKIE } from "@/lib/api";
+import { API_URL } from "@/lib/api";
+import { TOKEN_HEADER } from "@/lib/oidc";
 
 /**
- * BFF : les écritures du navigateur passent ici. L'identité vient du cookie HttpOnly, jamais du client,
+ * BFF : les écritures du navigateur passent ici. Le jeton vient de la session scellée (via le middleware), jamais du client,
  * et une requête d'une autre origine est refusée (protection CSRF, en plus de SameSite=Strict).
  */
 async function proxy(req: NextRequest, ctx: { params: Promise<{ path: string[] }> }) {
@@ -20,8 +21,8 @@ async function proxy(req: NextRequest, ctx: { params: Promise<{ path: string[] }
   const headers = new Headers();
   const contentType = req.headers.get("content-type");
   if (contentType) headers.set("content-type", contentType);
-  const user = req.cookies.get(SESSION_COOKIE)?.value;
-  if (user) headers.set("X-RecallPharma-User", user);
+  const token = req.headers.get(TOKEN_HEADER);
+  if (token) headers.set("authorization", `Bearer ${token}`);
 
   const target = `${API_URL}/${path.map(encodeURIComponent).join("/")}${req.nextUrl.search}`;
   const res = await fetch(target, {

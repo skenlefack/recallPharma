@@ -32,6 +32,7 @@ def client(tmp_path_factory: pytest.TempPathFactory) -> Iterator[TestClient]:
     os.environ["RECALLPHARMA_DATABASE_URL"] = test_url.render_as_string(hide_password=False)
     os.environ["RECALLPHARMA_STORAGE_DIR"] = str(tmp_path_factory.mktemp("documents"))
     os.environ["RECALLPHARMA_REFERENCE_DATE"] = "2027-09-07"
+    os.environ.setdefault("RECALLPHARMA_AUTH_MODE", "dev")
     get_settings.cache_clear()
     from recallpharma.db.session import get_engine
 
@@ -52,7 +53,12 @@ def client(tmp_path_factory: pytest.TempPathFactory) -> Iterator[TestClient]:
         yield c
     get_engine().dispose()
     get_engine.cache_clear()
-    for key in ("RECALLPHARMA_DATABASE_URL", "RECALLPHARMA_STORAGE_DIR", "RECALLPHARMA_REFERENCE_DATE"):
+    for key in (
+        "RECALLPHARMA_DATABASE_URL",
+        "RECALLPHARMA_STORAGE_DIR",
+        "RECALLPHARMA_REFERENCE_DATE",
+        "RECALLPHARMA_AUTH_MODE",
+    ):
         os.environ.pop(key, None)
     get_settings.cache_clear()
     admin.dispose()

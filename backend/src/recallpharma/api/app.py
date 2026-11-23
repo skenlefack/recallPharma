@@ -14,6 +14,7 @@ def create_app() -> FastAPI:
     problems.install(app)
     app.include_router(registry.router)
     app.include_router(curation.router)
+    app.include_router(curation.me_router)
 
     @app.get("/health", tags=["exploitation"])
     def health() -> dict[str, str]:

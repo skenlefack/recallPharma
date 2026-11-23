@@ -1,0 +1,425 @@
+{
+  "realm": "recallpharma",
+  "enabled": true,
+  "displayName": "RecallPharma (développement)",
+  "internationalizationEnabled": true,
+  "supportedLocales": [
+    "fr",
+    "en"
+  ],
+  "defaultLocale": "fr",
+  "sslRequired": "external",
+  "registrationAllowed": false,
+  "loginWithEmailAllowed": true,
+  "bruteForceProtected": true,
+  "failureFactor": 5,
+  "accessTokenLifespan": 300,
+  "ssoSessionIdleTimeout": 1800,
+  "ssoSessionMaxLifespan": 28800,
+  "otpPolicyType": "totp",
+  "otpPolicyAlgorithm": "HmacSHA1",
+  "otpPolicyDigits": 6,
+  "otpPolicyPeriod": 30,
+  "passwordPolicy": "length(12)",
+  "roles": {
+    "realm": [
+      {
+        "name": "visiteur",
+        "description": "Visiteur"
+      },
+      {
+        "name": "inscrit",
+        "description": "Inscrit"
+      },
+      {
+        "name": "professionnel-verifie",
+        "description": "Professionnel vérifié"
+      },
+      {
+        "name": "titulaire",
+        "description": "Titulaire"
+      },
+      {
+        "name": "agent-autorite",
+        "description": "Agent d'autorité"
+      },
+      {
+        "name": "validateur",
+        "description": "Validateur"
+      },
+      {
+        "name": "responsable-reglementaire",
+        "description": "Responsable réglementaire"
+      },
+      {
+        "name": "responsable-produit",
+        "description": "Responsable produit"
+      },
+      {
+        "name": "evaluateur-pharmacovigilance",
+        "description": "Évaluateur de pharmacovigilance"
+      },
+      {
+        "name": "administrateur-fonctionnel",
+        "description": "Administrateur fonctionnel"
+      },
+      {
+        "name": "administrateur-technique",
+        "description": "Administrateur technique"
+      },
+      {
+        "name": "auditeur",
+        "description": "Auditeur"
+      },
+      {
+        "name": "application-partenaire",
+        "description": "Application partenaire"
+      }
+    ]
+  },
+  "clients": [
+    {
+      "clientId": "recallpharma-api",
+      "name": "API RecallPharma (audience des jetons)",
+      "enabled": true,
+      "bearerOnly": true,
+      "publicClient": false,
+      "standardFlowEnabled": false,
+      "directAccessGrantsEnabled": false
+    },
+    {
+      "clientId": "recallpharma-web",
+      "name": "Interface web RecallPharma (BFF)",
+      "enabled": true,
+      "publicClient": false,
+      "clientAuthenticatorType": "client-secret",
+      "secret": "dev-only-web-secret",
+      "standardFlowEnabled": true,
+      "implicitFlowEnabled": false,
+      "directAccessGrantsEnabled": false,
+      "serviceAccountsEnabled": false,
+      "frontchannelLogout": true,
+      "redirectUris": [
+        "http://localhost:3100/api/auth/callback",
+        "http://localhost:3000/api/auth/callback"
+      ],
+      "webOrigins": [
+        "http://localhost:3100",
+        "http://localhost:3000"
+      ],
+      "attributes": {
+        "pkce.code.challenge.method": "S256",
+        "post.logout.redirect.uris": "http://localhost:3100/*##http://localhost:3000/*"
+      },
+      "defaultClientScopes": [
+        "roles",
+        "profile",
+        "email",
+        "basic",
+        "web-origins",
+        "acr"
+      ],
+      "optionalClientScopes": [],
+      "protocolMappers": [
+        {
+          "name": "audience recallpharma-api",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-audience-mapper",
+          "config": {
+            "included.client.audience": "recallpharma-api",
+            "access.token.claim": "true",
+            "id.token.claim": "false",
+            "introspection.token.claim": "true"
+          }
+        }
+      ]
+    }
+  ],
+  "users": [
+    {
+      "username": "demo01@recallpharma.example",
+      "email": "demo01@recallpharma.example",
+      "emailVerified": true,
+      "enabled": true,
+      "firstName": "Visiteur",
+      "lastName": "cpt-01",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "demo-recallpharma",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "default-roles-recallpharma",
+        "visiteur"
+      ]
+    },
+    {
+      "username": "demo02@recallpharma.example",
+      "email": "demo02@recallpharma.example",
+      "emailVerified": true,
+      "enabled": true,
+      "firstName": "Inscrit",
+      "lastName": "cpt-02",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "demo-recallpharma",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "default-roles-recallpharma",
+        "inscrit"
+      ]
+    },
+    {
+      "username": "demo03@recallpharma.example",
+      "email": "demo03@recallpharma.example",
+      "emailVerified": true,
+      "enabled": true,
+      "firstName": "Professionnel vérifié",
+      "lastName": "cpt-03",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "demo-recallpharma",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "default-roles-recallpharma",
+        "professionnel-verifie"
+      ]
+    },
+    {
+      "username": "demo04@recallpharma.example",
+      "email": "demo04@recallpharma.example",
+      "emailVerified": true,
+      "enabled": true,
+      "firstName": "Titulaire",
+      "lastName": "cpt-04",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "demo-recallpharma",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "default-roles-recallpharma",
+        "titulaire"
+      ]
+    },
+    {
+      "username": "demo05@recallpharma.example",
+      "email": "demo05@recallpharma.example",
+      "emailVerified": true,
+      "enabled": true,
+      "firstName": "Agent d'autorité",
+      "lastName": "cpt-05",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "demo-recallpharma",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "default-roles-recallpharma",
+        "agent-autorite"
+      ]
+    },
+    {
+      "username": "demo06@recallpharma.example",
+      "email": "demo06@recallpharma.example",
+      "emailVerified": true,
+      "enabled": true,
+      "firstName": "Validateur",
+      "lastName": "cpt-06",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "demo-recallpharma",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "default-roles-recallpharma",
+        "validateur"
+      ]
+    },
+    {
+      "username": "demo07@recallpharma.example",
+      "email": "demo07@recallpharma.example",
+      "emailVerified": true,
+      "enabled": true,
+      "firstName": "Responsable réglementaire",
+      "lastName": "cpt-07",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "demo-recallpharma",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "default-roles-recallpharma",
+        "responsable-reglementaire"
+      ]
+    },
+    {
+      "username": "demo08@recallpharma.example",
+      "email": "demo08@recallpharma.example",
+      "emailVerified": true,
+      "enabled": true,
+      "firstName": "Évaluateur de pharmacovigilance",
+      "lastName": "cpt-08",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "demo-recallpharma",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "default-roles-recallpharma",
+        "evaluateur-pharmacovigilance"
+      ]
+    },
+    {
+      "username": "demo09@recallpharma.example",
+      "email": "demo09@recallpharma.example",
+      "emailVerified": true,
+      "enabled": true,
+      "firstName": "Administrateur fonctionnel",
+      "lastName": "cpt-09",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "demo-recallpharma",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "default-roles-recallpharma",
+        "administrateur-fonctionnel"
+      ]
+    },
+    {
+      "username": "demo10@recallpharma.example",
+      "email": "demo10@recallpharma.example",
+      "emailVerified": true,
+      "enabled": true,
+      "firstName": "Administrateur technique",
+      "lastName": "cpt-10",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "demo-recallpharma",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "default-roles-recallpharma",
+        "administrateur-technique"
+      ]
+    },
+    {
+      "username": "demo11@recallpharma.example",
+      "email": "demo11@recallpharma.example",
+      "emailVerified": true,
+      "enabled": true,
+      "firstName": "Auditeur",
+      "lastName": "cpt-11",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "demo-recallpharma",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "default-roles-recallpharma",
+        "auditeur"
+      ]
+    },
+    {
+      "username": "demo12@recallpharma.example",
+      "email": "demo12@recallpharma.example",
+      "emailVerified": true,
+      "enabled": true,
+      "firstName": "Application partenaire",
+      "lastName": "cpt-12",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "demo-recallpharma",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "default-roles-recallpharma",
+        "application-partenaire"
+      ]
+    },
+    {
+      "username": "demo13@recallpharma.example",
+      "email": "demo13@recallpharma.example",
+      "emailVerified": true,
+      "enabled": true,
+      "firstName": "Validateur",
+      "lastName": "cpt-13",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "demo-recallpharma",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "default-roles-recallpharma",
+        "validateur"
+      ]
+    },
+    {
+      "username": "demo14@recallpharma.example",
+      "email": "demo14@recallpharma.example",
+      "emailVerified": true,
+      "enabled": true,
+      "firstName": "Administrateur fonctionnel",
+      "lastName": "cpt-14",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "demo-recallpharma",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "default-roles-recallpharma",
+        "administrateur-fonctionnel"
+      ]
+    },
+    {
+      "username": "demo15@recallpharma.example",
+      "email": "demo15@recallpharma.example",
+      "emailVerified": true,
+      "enabled": true,
+      "firstName": "Responsable réglementaire",
+      "lastName": "cpt-15",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "demo-recallpharma",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "default-roles-recallpharma",
+        "responsable-reglementaire"
+      ]
+    }
+  ]
+}

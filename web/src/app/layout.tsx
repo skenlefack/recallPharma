@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 
-import { accountLabel } from "@/lib/accounts";
-import { currentUser } from "@/lib/api";
+import { currentAccount } from "@/lib/api";
 
 import "./globals.css";
 
@@ -12,7 +11,7 @@ export const metadata: Metadata = {
 };
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  const user = await currentUser();
+  const me = await currentAccount();
   return (
     <html lang="fr">
       <body>
@@ -27,10 +26,13 @@ export default async function RootLayout({ children }: { children: React.ReactNo
               <Link href="/validation">Validation</Link>
             </nav>
             <span className="who">
-              {user ? (
-                <>
-                  {accountLabel(user)} · <Link href="/connexion">changer</Link>
-                </>
+              {me ? (
+                <form method="post" action="/api/auth/logout" className="inline">
+                  {me.display_name} ·{" "}
+                  <button type="submit" className="link">
+                    se déconnecter
+                  </button>
+                </form>
               ) : (
                 <Link href="/connexion">Se connecter</Link>
               )}

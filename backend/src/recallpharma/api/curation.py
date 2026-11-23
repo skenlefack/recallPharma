@@ -7,11 +7,12 @@ from datetime import UTC, date, datetime
 from pathlib import Path
 from typing import Annotated, Any, Literal
 
-from fastapi import APIRouter, Depends, File, Form, Header, UploadFile
+from fastapi import APIRouter, Depends, File, Form, UploadFile
 from pydantic import BaseModel, Field
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
+from recallpharma.api.auth import IdentityDep
 from recallpharma.api.problems import Problem
 from recallpharma.config import get_settings
 from recallpharma.curation import service
@@ -32,13 +33,37 @@ def get_db(session: Annotated[Session, Depends(get_session)]) -> Any:
 DB = Annotated[Session, Depends(get_db)]
 
 
-def current_actor(db: DB, x_recallpharma_user: Annotated[str, Header()]) -> c.Actor:
-    """Prototype : le compte est désigné par l'en-tête X-RecallPharma-User. Keycloak (OIDC, PKCE, MFA) le
-    remplacera ; les contrôles de rôle restent ceux du domaine."""
-    return service.actor_for(db, x_recallpharma_user)
+def current_actor(db: DB, identity: IdentityDep) -> c.Actor:
+    """Le compte vient du jeton Keycloak vérifié (ou de l'en-tête en mode dev) ; les contrôles de rôle restent ceux
+    du domaine."""
+    if identity.account_id is not None:
+        return service.actor_for(db, identity.account_id)
+    assert identity.login is not None
+    return service.actor_for_login(db, identity.login, identity.roles)
 
 
 ActorDep = Annotated[c.Actor, Depends(current_actor)]
+
+me_router = APIRouter(tags=["compte"])
+
+
+class MeOut(BaseModel):
+    id: str
+    display_name: str
+    roles: list[str]
+    can_curate: bool
+
+
+@me_router.get("/v1/me", response_model=MeOut)
+def me(db: DB, actor: ActorDep) -> MeOut:
+    account = db.get(m.Account, actor.id)
+    assert account is not None
+    return MeOut(
+        id=actor.id,
+        display_name=account.display_name,
+        roles=sorted(actor.roles),
+        can_curate=actor.has(*c.CURATOR_ROLES) and not actor.has(c.Role.TECH_ADMIN),
+    )
 
 
 def today() -> date:
