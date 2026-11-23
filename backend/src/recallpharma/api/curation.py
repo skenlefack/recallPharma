@@ -182,6 +182,17 @@ class ProposalOut(BaseModel):
     updated_at: datetime
 
 
+class DocumentOut(BaseModel):
+    id: int
+    title: str
+    nature: str
+    document_date: date
+    latest_edition: bool
+    sha256: str | None
+    filename: str | None
+    replaces_document_id: int | None
+
+
 def _out(p: m.Proposal, actor: c.Actor) -> ProposalOut:
     blind_phase = p.state == c.ProposalState.SECOND_REVIEW.value and actor.id not in (p.prepared_by, p.first_validator)
     return ProposalOut(
@@ -218,7 +229,7 @@ def _dump(body: ProposalIn) -> tuple[dict[str, Any], dict[str, Any]]:
 # --- Points d'accès -----------------------------------------------------------------------------
 
 
-@router.post("/documents", status_code=201)
+@router.post("/documents", status_code=201, response_model=DocumentOut)
 async def upload_document(
     db: DB,
     actor: ActorDep,
@@ -228,7 +239,7 @@ async def upload_document(
     document_date: Annotated[date, Form()],
     latest_edition: Annotated[bool, Form()] = True,
     replaces_document_id: Annotated[int | None, Form()] = None,
-) -> dict[str, Any]:
+) -> DocumentOut:
     """Capture immuable : empreinte SHA-256, doublon refusé, nouvelle version rattachée (CT-ING-01, CT-ING-02)."""
     c.check_prepare(actor)
     content = await file.read()
@@ -266,7 +277,34 @@ async def upload_document(
         object_id=str(doc.id),
         after={"sha256": digest, "title": title, "replaces": replaces_document_id},
     )
-    return {"id": doc.id, "sha256": digest, "size_bytes": len(content), "replaces_document_id": replaces_document_id}
+    return DocumentOut(
+        id=doc.id,
+        title=doc.title,
+        nature=doc.nature,
+        document_date=doc.document_date,
+        latest_edition=doc.latest_edition,
+        sha256=digest,
+        filename=doc.filename,
+        replaces_document_id=replaces_document_id,
+    )
+
+
+@router.get("/documents", response_model=list[DocumentOut])
+def list_documents(db: DB, actor: ActorDep) -> list[DocumentOut]:
+    rows = db.scalars(select(m.SourceDocument).order_by(m.SourceDocument.id.desc()))
+    return [
+        DocumentOut(
+            id=d.id,
+            title=d.title,
+            nature=d.nature,
+            document_date=d.document_date,
+            latest_edition=d.latest_edition,
+            sha256=d.sha256,
+            filename=d.filename,
+            replaces_document_id=d.replaces_document_id,
+        )
+        for d in rows
+    ]
 
 
 @router.get("/proposals", response_model=list[ProposalOut])

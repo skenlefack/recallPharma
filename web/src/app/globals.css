@@ -1,0 +1,349 @@
+:root {
+  --bg: #f7f7f4;
+  --surface: #ffffff;
+  --surface-2: #f0efea;
+  --text: #1d1f1c;
+  --muted: #5d625b;
+  --border: #dcdcd4;
+  --accent: #1f6f5c;
+  --accent-text: #ffffff;
+  --red-bg: #fbe9e7;
+  --red-fg: #9b1c12;
+  --red-border: #e6a49c;
+  --orange-bg: #fdf0dc;
+  --orange-fg: #8a4b00;
+  --orange-border: #e9c48a;
+  --grey-bg: #eeeeea;
+  --grey-fg: #45483f;
+  --grey-border: #cfcfc6;
+  --green-bg: #e3f2ea;
+  --green-fg: #17603f;
+  --green-border: #9fd0b5;
+  --blue-bg: #e6f0fa;
+  --blue-fg: #1c4f86;
+  --radius: 8px;
+  --mono: ui-monospace, "Cascadia Code", Consolas, monospace;
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #151714;
+    --surface: #1d201c;
+    --surface-2: #262a25;
+    --text: #e9eae5;
+    --muted: #a3a89f;
+    --border: #383d36;
+    --accent: #5cc0a2;
+    --accent-text: #0d1f19;
+    --red-bg: #3a1714;
+    --red-fg: #ffb4aa;
+    --red-border: #7a2c23;
+    --orange-bg: #3a2a10;
+    --orange-fg: #ffcf8a;
+    --orange-border: #7a5520;
+    --grey-bg: #2a2d28;
+    --grey-fg: #c9ccc3;
+    --grey-border: #4a4e46;
+    --green-bg: #15301f;
+    --green-fg: #9fe0bb;
+    --green-border: #2f6a48;
+    --blue-bg: #162a40;
+    --blue-fg: #a8cdf5;
+    color-scheme: dark;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font: 15px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+a {
+  color: var(--accent);
+}
+
+h1 {
+  font-size: 1.5rem;
+  margin: 0 0 0.25rem;
+}
+h2 {
+  font-size: 1.1rem;
+  margin: 1.75rem 0 0.75rem;
+}
+h3 {
+  font-size: 1rem;
+  margin: 1.25rem 0 0.5rem;
+}
+
+.wrap {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+header.top {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+}
+header.top .wrap {
+  display: flex;
+  gap: 1.25rem;
+  align-items: center;
+  min-height: 56px;
+  flex-wrap: wrap;
+}
+header.top .brand {
+  font-weight: 700;
+  color: var(--text);
+  text-decoration: none;
+}
+header.top nav {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+header.top nav a {
+  color: var(--muted);
+  text-decoration: none;
+}
+header.top nav a:hover {
+  color: var(--text);
+}
+header.top .who {
+  margin-left: auto;
+  color: var(--muted);
+  font-size: 0.875rem;
+}
+
+main {
+  padding: 24px 0 48px;
+}
+
+footer.legal {
+  border-top: 1px solid var(--border);
+  color: var(--muted);
+  font-size: 0.8125rem;
+  padding: 16px 0 32px;
+}
+
+.muted {
+  color: var(--muted);
+}
+.small {
+  font-size: 0.875rem;
+}
+.mono {
+  font-family: var(--mono);
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+}
+.stack > * + * {
+  margin-top: 12px;
+}
+.row {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  align-items: end;
+}
+.grid2 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 12px;
+}
+
+label.field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 0.875rem;
+  color: var(--muted);
+  min-width: 0;
+}
+input,
+select,
+textarea {
+  font: inherit;
+  color: var(--text);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 7px 9px;
+  min-width: 0;
+}
+textarea {
+  min-height: 70px;
+}
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+button:focus-visible,
+a:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+button,
+.button {
+  font: inherit;
+  border: 1px solid var(--accent);
+  background: var(--accent);
+  color: var(--accent-text);
+  border-radius: 6px;
+  padding: 7px 14px;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+}
+button.secondary,
+.button.secondary {
+  background: transparent;
+  color: var(--accent);
+}
+button.danger {
+  background: transparent;
+  color: var(--red-fg);
+  border-color: var(--red-border);
+}
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+th,
+td {
+  text-align: left;
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+th {
+  font-weight: 600;
+  color: var(--muted);
+  font-size: 0.8125rem;
+}
+.table-scroll {
+  overflow-x: auto;
+}
+
+/* Bandeaux : la couleur n'est jamais le seul porteur du risque (icône et libellé de niveau). */
+.banner {
+  display: flex;
+  gap: 10px;
+  border: 1px solid;
+  border-radius: var(--radius);
+  padding: 10px 12px;
+}
+.banner .icon {
+  font-weight: 700;
+  flex: none;
+}
+.banner .rule {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  opacity: 0.8;
+  margin-left: 6px;
+}
+.tone-rouge {
+  background: var(--red-bg);
+  color: var(--red-fg);
+  border-color: var(--red-border);
+}
+.tone-orange {
+  background: var(--orange-bg);
+  color: var(--orange-fg);
+  border-color: var(--orange-border);
+}
+.tone-gris {
+  background: var(--grey-bg);
+  color: var(--grey-fg);
+  border-color: var(--grey-border);
+}
+.tone-vert {
+  background: var(--green-bg);
+  color: var(--green-fg);
+  border-color: var(--green-border);
+}
+.tone-bleu {
+  background: var(--blue-bg);
+  color: var(--blue-fg);
+  border-color: var(--blue-fg);
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  border: 1px solid;
+  border-radius: 999px;
+  padding: 1px 9px;
+  font-size: 0.8125rem;
+  white-space: nowrap;
+}
+
+.hit {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+.hit:hover {
+  border-color: var(--accent);
+}
+.hit .title {
+  font-weight: 600;
+}
+
+.tabs {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+  border-bottom: 1px solid var(--border);
+  margin-top: 16px;
+}
+.tabs a {
+  padding: 8px 12px;
+  text-decoration: none;
+  color: var(--muted);
+}
+
+dl.kv {
+  display: grid;
+  grid-template-columns: minmax(140px, 220px) 1fr;
+  gap: 6px 16px;
+  margin: 0;
+}
+dl.kv dt {
+  color: var(--muted);
+}
+dl.kv dd {
+  margin: 0;
+}
+@media (max-width: 560px) {
+  dl.kv {
+    grid-template-columns: 1fr;
+  }
+  dl.kv dd {
+    margin-bottom: 6px;
+  }
+}
+
+.error {
+  color: var(--red-fg);
+}

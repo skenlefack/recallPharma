@@ -8,7 +8,7 @@ Référentiel du médicament vétérinaire intégré à RecallVET. Pour un produ
 
 Chaque réponse est accompagnée de sa preuve. Le dossier de conception unifié fait référence : https://claude.ai/artifact/MJVeJRHVBkE5VxFat8uxkb
 
-## État : incréments 1 et 2 (phase 1, lots 2 et 3)
+## État : incréments 1 à 3 (phase 1, lots 2 et 3)
 
 | Brique | Contenu | Règles |
 |---|---|---|
@@ -16,6 +16,7 @@ Chaque réponse est accompagnée de sa preuve. Le dossier de conception unifié 
 | Base (`backend/migrations`) | PostgreSQL 17 : schémas `reg` et `integration`, recherche sans accents et tolérante aux fautes (pg_trgm, unaccent), événements et audit en ajout seul, journal d'audit chaîné SHA-256 | RG-01, RG-08, RG-15, RG-33 |
 | API (`backend/src/recallpharma/api`) | `/v1/search`, `/v1/authorisations/{id}` (fiche, `as_of` et `known_at`), `/v1/authorisations/{id}/withdrawal-end`, `/v1/alerts`, `/v1/batch-check`, erreurs RFC 9457 | RG-05, RG-06, RG-16, RG-18, RG-21, RG-22 |
 | Circuit de validation (`domain/curation.py`, `curation/`, `/v1/curation/*`) | Dépôt de documents sources (SHA-256, doublon refusé, versions chaînées) ; proposition → première validation champ par champ (page source affichée obligatoire) → ressaisie à l'aveugle → publication atomique, ou litige → arbitrage motivé ; toute modification après signature remet la revue à zéro ; historique et audit en ajout seul | RG-01, RG-07, RG-09 à RG-12, RG-32, RG-33 |
+| Interface web (`web/`) | Next.js, qui sert aussi de BFF : recherche, fiche en cinq vues avec calcul du délai d'attente et vérification de lot, alertes ; back-office de validation (documents, saisie, première validation, ressaisie à l'aveugle, arbitrage) ; parcours Playwright de bout en bout | Toutes celles ci-dessus, à l'écran |
 | Jeu de démonstration | Annexe A10 : 60 AMM fictives et leurs résultats attendus, rejoués par les tests | — |
 
 Les données sont **entièrement fictives** (annexe A10). Aucune AMM réelle n'est chargée tant que la convention avec le MINEPIA n'est pas signée.
@@ -31,6 +32,14 @@ uv sync
 uv run alembic upgrade head               # schéma
 uv run python -m recallpharma.seed.load_db   # jeu fictif A10
 RECALLPHARMA_REFERENCE_DATE=2027-09-07 uv run uvicorn recallpharma.api.app:app --reload
+```
+
+Interface web, dans un second terminal :
+
+```sh
+cd web
+pnpm install
+RECALLPHARMA_API_URL=http://127.0.0.1:8000 pnpm dev   # http://localhost:3000
 ```
 
 `RECALLPHARMA_REFERENCE_DATE` fige la date de consultation à celle du jeu A10. Sans elle, les statuts sont calculés à la date du jour.
@@ -79,6 +88,5 @@ uv run lint-imports      # le domaine ne dépend ni de FastAPI, ni de SQLAlchemy
 
 ## Suite prévue
 
-1. Interface web Next.js : recherche, fiche en cinq vues, alertes, back-office de validation.
-2. Comptes et rôles avec Keycloak.
-3. Copilote : passerelle IA, modèle open source servi par vLLM, recherche hybride, contrôle après génération (RG-23 à RG-27).
+1. Comptes et rôles avec Keycloak (remplace la connexion de démonstration et l'en-tête `X-RecallPharma-User`).
+2. Copilote : passerelle IA, modèle open source servi par vLLM, recherche hybride, contrôle après génération (RG-23 à RG-27).

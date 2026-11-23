@@ -77,6 +77,21 @@ def list_jurisdictions(db: DB) -> list[s.JurisdictionOut]:
     ]
 
 
+@router.get("/substances", response_model=list[s.SubstanceOut])
+def list_substances(db: DB) -> list[s.SubstanceOut]:
+    rows = db.scalars(select(m.Substance).order_by(m.Substance.inn_name))
+    return [
+        s.SubstanceOut(
+            id=x.id,
+            inn_name=x.inn_name,
+            atcvet_code=x.atcvet_code,
+            who_category=x.who_category,
+            woah_category=x.woah_category,
+        )
+        for x in rows
+    ]
+
+
 @router.get("/search", response_model=s.SearchResult)
 def search(
     db: DB,

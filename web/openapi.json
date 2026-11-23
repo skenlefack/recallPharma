@@ -1,0 +1,3194 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "RecallPharma API",
+    "description": "Référentiel du médicament vétérinaire : statut calculé, preuves, délais d'attente, alertes.",
+    "version": "0.1.0"
+  },
+  "paths": {
+    "/v1/jurisdictions": {
+      "get": {
+        "tags": [
+          "registre"
+        ],
+        "summary": "List Jurisdictions",
+        "operationId": "list_jurisdictions_v1_jurisdictions_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/JurisdictionOut"
+                  },
+                  "type": "array",
+                  "title": "Response List Jurisdictions V1 Jurisdictions Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/substances": {
+      "get": {
+        "tags": [
+          "registre"
+        ],
+        "summary": "List Substances",
+        "operationId": "list_substances_v1_substances_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/SubstanceOut"
+                  },
+                  "type": "array",
+                  "title": "Response List Substances V1 Substances Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/search": {
+      "get": {
+        "tags": [
+          "registre"
+        ],
+        "summary": "Search",
+        "operationId": "search_v1_search_get",
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 2,
+              "maxLength": 100,
+              "description": "Nom, substance, n° d'AMM ou titulaire",
+              "title": "Q"
+            },
+            "description": "Nom, substance, n° d'AMM ou titulaire"
+          },
+          {
+            "name": "jurisdiction",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Jurisdiction"
+            }
+          },
+          {
+            "name": "as_of",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "date"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Date d'effet (défaut : aujourd'hui)",
+              "title": "As Of"
+            },
+            "description": "Date d'effet (défaut : aujourd'hui)"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 100,
+              "minimum": 1,
+              "default": 25,
+              "title": "Limit"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SearchResult"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/authorisations/{authorisation_id}": {
+      "get": {
+        "tags": [
+          "registre"
+        ],
+        "summary": "Product Sheet",
+        "operationId": "product_sheet_v1_authorisations__authorisation_id__get",
+        "parameters": [
+          {
+            "name": "authorisation_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Authorisation Id"
+            }
+          },
+          {
+            "name": "as_of",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "date"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Date d'effet (défaut : aujourd'hui)",
+              "title": "As Of"
+            },
+            "description": "Date d'effet (défaut : aujourd'hui)"
+          },
+          {
+            "name": "known_at",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "date"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Temps de connaissance : « ce que nous savions à cette date »",
+              "title": "Known At"
+            },
+            "description": "Temps de connaissance : « ce que nous savions à cette date »"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProductSheet"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/authorisations/{authorisation_id}/withdrawal-end": {
+      "post": {
+        "tags": [
+          "registre"
+        ],
+        "summary": "Withdrawal End",
+        "description": "RG-21. Plusieurs délais possibles sans voie pour les départager : erreur, aucun délai retenu par défaut.",
+        "operationId": "withdrawal_end_v1_authorisations__authorisation_id__withdrawal_end_post",
+        "parameters": [
+          {
+            "name": "authorisation_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Authorisation Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WithdrawalRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WithdrawalResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/alerts": {
+      "get": {
+        "tags": [
+          "registre"
+        ],
+        "summary": "List Alerts",
+        "operationId": "list_alerts_v1_alerts_get",
+        "parameters": [
+          {
+            "name": "jurisdiction",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Jurisdiction"
+            }
+          },
+          {
+            "name": "as_of",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "date"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Date d'effet (défaut : aujourd'hui)",
+              "title": "As Of"
+            },
+            "description": "Date d'effet (défaut : aujourd'hui)"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AlertOut"
+                  },
+                  "title": "Response List Alerts V1 Alerts Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/batch-check": {
+      "post": {
+        "tags": [
+          "registre"
+        ],
+        "summary": "Batch Check",
+        "description": "RG-22 : « lot visé par un rappel publié » ou « aucun rappel publié connu », jamais « authentique ».",
+        "operationId": "batch_check_v1_batch_check_post",
+        "parameters": [
+          {
+            "name": "as_of",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "date"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Date d'effet (défaut : aujourd'hui)",
+              "title": "As Of"
+            },
+            "description": "Date d'effet (défaut : aujourd'hui)"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BatchCheckRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BatchCheckResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/curation/documents": {
+      "post": {
+        "tags": [
+          "validation"
+        ],
+        "summary": "Upload Document",
+        "description": "Capture immuable : empreinte SHA-256, doublon refusé, nouvelle version rattachée (CT-ING-01, CT-ING-02).",
+        "operationId": "upload_document_v1_curation_documents_post",
+        "parameters": [
+          {
+            "name": "x-recallpharma-user",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "X-Recallpharma-User"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_upload_document_v1_curation_documents_post"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DocumentOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "validation"
+        ],
+        "summary": "List Documents",
+        "operationId": "list_documents_v1_curation_documents_get",
+        "parameters": [
+          {
+            "name": "x-recallpharma-user",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "X-Recallpharma-User"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DocumentOut"
+                  },
+                  "title": "Response List Documents V1 Curation Documents Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/curation/proposals": {
+      "get": {
+        "tags": [
+          "validation"
+        ],
+        "summary": "List Proposals",
+        "operationId": "list_proposals_v1_curation_proposals_get",
+        "parameters": [
+          {
+            "name": "state",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "State"
+            }
+          },
+          {
+            "name": "x-recallpharma-user",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "X-Recallpharma-User"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProposalOut"
+                  },
+                  "title": "Response List Proposals V1 Curation Proposals Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "validation"
+        ],
+        "summary": "Create Proposal",
+        "operationId": "create_proposal_v1_curation_proposals_post",
+        "parameters": [
+          {
+            "name": "x-recallpharma-user",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "X-Recallpharma-User"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProposalIn"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProposalOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/curation/authorisations/{authorisation_id}/proposals": {
+      "post": {
+        "tags": [
+          "validation"
+        ],
+        "summary": "Start Update",
+        "operationId": "start_update_v1_curation_authorisations__authorisation_id__proposals_post",
+        "parameters": [
+          {
+            "name": "authorisation_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Authorisation Id"
+            }
+          },
+          {
+            "name": "x-recallpharma-user",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "X-Recallpharma-User"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProposalOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/curation/proposals/{proposal_id}": {
+      "get": {
+        "tags": [
+          "validation"
+        ],
+        "summary": "Get Proposal",
+        "operationId": "get_proposal_v1_curation_proposals__proposal_id__get",
+        "parameters": [
+          {
+            "name": "proposal_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Proposal Id"
+            }
+          },
+          {
+            "name": "x-recallpharma-user",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "X-Recallpharma-User"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProposalOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "validation"
+        ],
+        "summary": "Edit Proposal",
+        "operationId": "edit_proposal_v1_curation_proposals__proposal_id__put",
+        "parameters": [
+          {
+            "name": "proposal_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Proposal Id"
+            }
+          },
+          {
+            "name": "x-recallpharma-user",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "X-Recallpharma-User"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProposalEdit"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProposalOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/curation/proposals/{proposal_id}/history": {
+      "get": {
+        "tags": [
+          "validation"
+        ],
+        "summary": "Proposal History",
+        "operationId": "proposal_history_v1_curation_proposals__proposal_id__history_get",
+        "parameters": [
+          {
+            "name": "proposal_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Proposal Id"
+            }
+          },
+          {
+            "name": "x-recallpharma-user",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "X-Recallpharma-User"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": true
+                  },
+                  "title": "Response Proposal History V1 Curation Proposals  Proposal Id  History Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/curation/proposals/{proposal_id}/submit": {
+      "post": {
+        "tags": [
+          "validation"
+        ],
+        "summary": "Submit",
+        "operationId": "submit_v1_curation_proposals__proposal_id__submit_post",
+        "parameters": [
+          {
+            "name": "proposal_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Proposal Id"
+            }
+          },
+          {
+            "name": "x-recallpharma-user",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "X-Recallpharma-User"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProposalOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/curation/proposals/{proposal_id}/fields/{field}/source-view": {
+      "post": {
+        "tags": [
+          "validation"
+        ],
+        "summary": "View Source",
+        "operationId": "view_source_v1_curation_proposals__proposal_id__fields__field__source_view_post",
+        "parameters": [
+          {
+            "name": "proposal_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Proposal Id"
+            }
+          },
+          {
+            "name": "field",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Field"
+            }
+          },
+          {
+            "name": "x-recallpharma-user",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "X-Recallpharma-User"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response View Source V1 Curation Proposals  Proposal Id  Fields  Field  Source View Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/curation/proposals/{proposal_id}/first-validation": {
+      "post": {
+        "tags": [
+          "validation"
+        ],
+        "summary": "First Validation",
+        "operationId": "first_validation_v1_curation_proposals__proposal_id__first_validation_post",
+        "parameters": [
+          {
+            "name": "proposal_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Proposal Id"
+            }
+          },
+          {
+            "name": "x-recallpharma-user",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "X-Recallpharma-User"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FirstValidationIn"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProposalOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/curation/proposals/{proposal_id}/blind-entry": {
+      "get": {
+        "tags": [
+          "validation"
+        ],
+        "summary": "Blind Form",
+        "description": "Fiche à ressaisir : n° d'AMM, teneurs, posologie et délais d'attente masqués (RG-10).",
+        "operationId": "blind_form_v1_curation_proposals__proposal_id__blind_entry_get",
+        "parameters": [
+          {
+            "name": "proposal_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Proposal Id"
+            }
+          },
+          {
+            "name": "x-recallpharma-user",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "X-Recallpharma-User"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Blind Form V1 Curation Proposals  Proposal Id  Blind Entry Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "validation"
+        ],
+        "summary": "Blind Entry",
+        "operationId": "blind_entry_v1_curation_proposals__proposal_id__blind_entry_post",
+        "parameters": [
+          {
+            "name": "proposal_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Proposal Id"
+            }
+          },
+          {
+            "name": "x-recallpharma-user",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "X-Recallpharma-User"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BlindEntryIn"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProposalOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/curation/proposals/{proposal_id}/arbitration": {
+      "post": {
+        "tags": [
+          "validation"
+        ],
+        "summary": "Arbitration",
+        "operationId": "arbitration_v1_curation_proposals__proposal_id__arbitration_post",
+        "parameters": [
+          {
+            "name": "proposal_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Proposal Id"
+            }
+          },
+          {
+            "name": "x-recallpharma-user",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "X-Recallpharma-User"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ArbitrationIn"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProposalOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/health": {
+      "get": {
+        "tags": [
+          "exploitation"
+        ],
+        "summary": "Health",
+        "operationId": "health_health_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": {
+                    "type": "string"
+                  },
+                  "type": "object",
+                  "title": "Response Health Health Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AlertOut": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "type": {
+            "type": "string",
+            "title": "Type"
+          },
+          "level": {
+            "type": "string",
+            "title": "Level"
+          },
+          "jurisdictions": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Jurisdictions"
+          },
+          "authorisation_ids": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Authorisation Ids"
+          },
+          "batch_numbers": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Batch Numbers"
+          },
+          "unlisted_product": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Unlisted Product"
+          },
+          "published_at": {
+            "type": "string",
+            "format": "date",
+            "title": "Published At"
+          },
+          "closed_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Closed At"
+          },
+          "text": {
+            "type": "string",
+            "title": "Text"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "type",
+          "level",
+          "jurisdictions",
+          "authorisation_ids",
+          "batch_numbers",
+          "unlisted_product",
+          "published_at",
+          "closed_at",
+          "text"
+        ],
+        "title": "AlertOut"
+      },
+      "ArbitrationDecision": {
+        "type": "string",
+        "enum": [
+          "retenir la préparation",
+          "retenir la ressaisie",
+          "rejeter"
+        ],
+        "title": "ArbitrationDecision"
+      },
+      "ArbitrationIn": {
+        "properties": {
+          "decision": {
+            "$ref": "#/components/schemas/ArbitrationDecision"
+          },
+          "reason": {
+            "type": "string",
+            "minLength": 3,
+            "title": "Reason"
+          }
+        },
+        "type": "object",
+        "required": [
+          "decision",
+          "reason"
+        ],
+        "title": "ArbitrationIn"
+      },
+      "AssessmentOut": {
+        "properties": {
+          "status": {
+            "type": "string",
+            "title": "Status"
+          },
+          "expiry_date": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Expiry Date"
+          },
+          "expiry_is_computed": {
+            "type": "boolean",
+            "title": "Expiry Is Computed"
+          },
+          "mentions": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Mentions"
+          },
+          "evidence": {
+            "$ref": "#/components/schemas/EvidenceOut"
+          },
+          "banners": {
+            "items": {
+              "$ref": "#/components/schemas/BannerOut"
+            },
+            "type": "array",
+            "title": "Banners"
+          }
+        },
+        "type": "object",
+        "required": [
+          "status",
+          "expiry_date",
+          "expiry_is_computed",
+          "mentions",
+          "evidence",
+          "banners"
+        ],
+        "title": "AssessmentOut",
+        "description": "Ce que tout canal doit afficher avec une AMM : statut calculé, preuve, bandeaux (RG-03, RG-14, RG-15)."
+      },
+      "BannerOut": {
+        "properties": {
+          "rule": {
+            "type": "string",
+            "title": "Rule"
+          },
+          "level": {
+            "type": "string",
+            "title": "Level"
+          },
+          "text": {
+            "type": "string",
+            "title": "Text"
+          }
+        },
+        "type": "object",
+        "required": [
+          "rule",
+          "level",
+          "text"
+        ],
+        "title": "BannerOut"
+      },
+      "BatchCheckRequest": {
+        "properties": {
+          "authorisation_id": {
+            "type": "string",
+            "title": "Authorisation Id"
+          },
+          "batch_number": {
+            "type": "string",
+            "maxLength": 64,
+            "minLength": 1,
+            "title": "Batch Number"
+          }
+        },
+        "type": "object",
+        "required": [
+          "authorisation_id",
+          "batch_number"
+        ],
+        "title": "BatchCheckRequest"
+      },
+      "BatchCheckResponse": {
+        "properties": {
+          "answer": {
+            "type": "string",
+            "title": "Answer"
+          },
+          "notice": {
+            "type": "string",
+            "title": "Notice"
+          },
+          "alert_ids": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Alert Ids"
+          }
+        },
+        "type": "object",
+        "required": [
+          "answer",
+          "notice",
+          "alert_ids"
+        ],
+        "title": "BatchCheckResponse"
+      },
+      "BlindEntryIn": {
+        "properties": {
+          "ma_number": {
+            "type": "string",
+            "title": "Ma Number"
+          },
+          "components": {
+            "items": {
+              "additionalProperties": {
+                "type": "string"
+              },
+              "type": "object"
+            },
+            "type": "array",
+            "title": "Components"
+          },
+          "posology": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Posology"
+          },
+          "withdrawal_periods": {
+            "items": {
+              "$ref": "#/components/schemas/WithdrawalIn"
+            },
+            "type": "array",
+            "title": "Withdrawal Periods",
+            "default": []
+          }
+        },
+        "type": "object",
+        "required": [
+          "ma_number",
+          "components"
+        ],
+        "title": "BlindEntryIn"
+      },
+      "Body_upload_document_v1_curation_documents_post": {
+        "properties": {
+          "file": {
+            "type": "string",
+            "contentMediaType": "application/octet-stream",
+            "title": "File"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "nature": {
+            "type": "string",
+            "enum": [
+              "officielle",
+              "déclarative"
+            ],
+            "title": "Nature"
+          },
+          "document_date": {
+            "type": "string",
+            "format": "date",
+            "title": "Document Date"
+          },
+          "latest_edition": {
+            "type": "boolean",
+            "title": "Latest Edition",
+            "default": true
+          },
+          "replaces_document_id": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Replaces Document Id"
+          }
+        },
+        "type": "object",
+        "required": [
+          "file",
+          "title",
+          "nature",
+          "document_date"
+        ],
+        "title": "Body_upload_document_v1_curation_documents_post"
+      },
+      "ComponentIn": {
+        "properties": {
+          "substance_id": {
+            "type": "string",
+            "title": "Substance Id"
+          },
+          "strength_as_stated": {
+            "type": "string",
+            "title": "Strength As Stated"
+          },
+          "strength_value": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Strength Value"
+          },
+          "strength_unit": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Strength Unit"
+          },
+          "strength_basis": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Strength Basis"
+          }
+        },
+        "type": "object",
+        "required": [
+          "substance_id",
+          "strength_as_stated"
+        ],
+        "title": "ComponentIn"
+      },
+      "ComponentOut": {
+        "properties": {
+          "substance": {
+            "type": "string",
+            "title": "Substance"
+          },
+          "strength_as_stated": {
+            "type": "string",
+            "title": "Strength As Stated"
+          },
+          "strength_value": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Strength Value"
+          },
+          "strength_unit": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Strength Unit"
+          },
+          "strength_basis": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Strength Basis"
+          },
+          "who_category": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Who Category"
+          },
+          "woah_category": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Woah Category"
+          }
+        },
+        "type": "object",
+        "required": [
+          "substance",
+          "strength_as_stated",
+          "strength_value",
+          "strength_unit",
+          "strength_basis",
+          "who_category",
+          "woah_category"
+        ],
+        "title": "ComponentOut"
+      },
+      "DocumentOut": {
+        "properties": {
+          "id": {
+            "type": "integer",
+            "title": "Id"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "nature": {
+            "type": "string",
+            "title": "Nature"
+          },
+          "document_date": {
+            "type": "string",
+            "format": "date",
+            "title": "Document Date"
+          },
+          "latest_edition": {
+            "type": "boolean",
+            "title": "Latest Edition"
+          },
+          "sha256": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Sha256"
+          },
+          "filename": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Filename"
+          },
+          "replaces_document_id": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Replaces Document Id"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "title",
+          "nature",
+          "document_date",
+          "latest_edition",
+          "sha256",
+          "filename",
+          "replaces_document_id"
+        ],
+        "title": "DocumentOut"
+      },
+      "EventIn": {
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "octroi",
+              "renouvellement",
+              "modification",
+              "extension",
+              "restriction",
+              "transfert de titulaire",
+              "suspension",
+              "levée de suspension",
+              "retrait d'office",
+              "retrait à la demande du titulaire",
+              "interdiction"
+            ],
+            "title": "Type"
+          },
+          "decision_date": {
+            "type": "string",
+            "format": "date",
+            "title": "Decision Date"
+          },
+          "effective_date": {
+            "type": "string",
+            "format": "date",
+            "title": "Effective Date"
+          },
+          "end_date": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "End Date"
+          },
+          "reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reason"
+          },
+          "new_expiry_date": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "New Expiry Date"
+          }
+        },
+        "type": "object",
+        "required": [
+          "type",
+          "decision_date",
+          "effective_date"
+        ],
+        "title": "EventIn"
+      },
+      "EventOut": {
+        "properties": {
+          "type": {
+            "type": "string",
+            "title": "Type"
+          },
+          "decision_date": {
+            "type": "string",
+            "format": "date",
+            "title": "Decision Date"
+          },
+          "effective_date": {
+            "type": "string",
+            "format": "date",
+            "title": "Effective Date"
+          },
+          "end_date": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "End Date"
+          },
+          "reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reason"
+          }
+        },
+        "type": "object",
+        "required": [
+          "type",
+          "decision_date",
+          "effective_date",
+          "end_date",
+          "reason"
+        ],
+        "title": "EventOut"
+      },
+      "EvidenceOut": {
+        "properties": {
+          "level": {
+            "type": "string",
+            "title": "Level"
+          },
+          "label": {
+            "type": "string",
+            "title": "Label"
+          },
+          "missing_for_a": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Missing For A"
+          }
+        },
+        "type": "object",
+        "required": [
+          "level",
+          "label",
+          "missing_for_a"
+        ],
+        "title": "EvidenceOut"
+      },
+      "FirstValidationIn": {
+        "properties": {
+          "approve": {
+            "type": "boolean",
+            "title": "Approve"
+          },
+          "confirmed_fields": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Confirmed Fields",
+            "default": []
+          },
+          "reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reason"
+          }
+        },
+        "type": "object",
+        "required": [
+          "approve"
+        ],
+        "title": "FirstValidationIn"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "IssueOut": {
+        "properties": {
+          "field": {
+            "type": "string",
+            "title": "Field"
+          },
+          "code": {
+            "type": "string",
+            "title": "Code"
+          },
+          "message": {
+            "type": "string",
+            "title": "Message"
+          }
+        },
+        "type": "object",
+        "required": [
+          "field",
+          "code",
+          "message"
+        ],
+        "title": "IssueOut"
+      },
+      "JurisdictionOut": {
+        "properties": {
+          "code": {
+            "type": "string",
+            "title": "Code"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "kind": {
+            "type": "string",
+            "title": "Kind"
+          },
+          "timezone": {
+            "type": "string",
+            "title": "Timezone"
+          },
+          "members": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Members"
+          }
+        },
+        "type": "object",
+        "required": [
+          "code",
+          "name",
+          "kind",
+          "timezone",
+          "members"
+        ],
+        "title": "JurisdictionOut"
+      },
+      "PayloadIn": {
+        "properties": {
+          "jurisdiction": {
+            "type": "string",
+            "title": "Jurisdiction"
+          },
+          "ma_number": {
+            "type": "string",
+            "title": "Ma Number"
+          },
+          "procedure": {
+            "type": "string",
+            "enum": [
+              "nationale",
+              "communautaire"
+            ],
+            "title": "Procedure",
+            "default": "nationale"
+          },
+          "holder": {
+            "type": "string",
+            "title": "Holder"
+          },
+          "manufacturer": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Manufacturer"
+          },
+          "dispensing_condition": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Dispensing Condition"
+          },
+          "grant_date": {
+            "type": "string",
+            "format": "date",
+            "title": "Grant Date"
+          },
+          "expiry_date": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Expiry Date"
+          },
+          "renewal_pending": {
+            "type": "boolean",
+            "title": "Renewal Pending",
+            "default": false
+          },
+          "events": {
+            "items": {
+              "$ref": "#/components/schemas/EventIn"
+            },
+            "type": "array",
+            "title": "Events",
+            "default": []
+          },
+          "product": {
+            "$ref": "#/components/schemas/ProductIn"
+          },
+          "spc": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/SpcIn"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "type": "object",
+        "required": [
+          "jurisdiction",
+          "ma_number",
+          "holder",
+          "grant_date",
+          "product"
+        ],
+        "title": "PayloadIn"
+      },
+      "ProductIn": {
+        "properties": {
+          "id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Id"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "designation": {
+            "type": "string",
+            "title": "Designation"
+          },
+          "pharmaceutical_form": {
+            "type": "string",
+            "title": "Pharmaceutical Form"
+          },
+          "product_type": {
+            "type": "string",
+            "title": "Product Type",
+            "default": "pharmaceutique"
+          },
+          "routes": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Routes",
+            "default": []
+          },
+          "target_species": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Target Species",
+            "default": []
+          },
+          "components": {
+            "items": {
+              "$ref": "#/components/schemas/ComponentIn"
+            },
+            "type": "array",
+            "title": "Components"
+          }
+        },
+        "type": "object",
+        "required": [
+          "name",
+          "designation",
+          "pharmaceutical_form",
+          "components"
+        ],
+        "title": "ProductIn"
+      },
+      "ProductSheet": {
+        "properties": {
+          "authorisation_id": {
+            "type": "string",
+            "title": "Authorisation Id"
+          },
+          "as_of": {
+            "type": "string",
+            "format": "date",
+            "title": "As Of"
+          },
+          "known_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Known At"
+          },
+          "identity": {
+            "additionalProperties": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "type": "object",
+            "title": "Identity"
+          },
+          "components": {
+            "items": {
+              "$ref": "#/components/schemas/ComponentOut"
+            },
+            "type": "array",
+            "title": "Components"
+          },
+          "jurisdiction": {
+            "$ref": "#/components/schemas/JurisdictionOut"
+          },
+          "regulation": {
+            "additionalProperties": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "boolean"
+                },
+                {
+                  "type": "string",
+                  "format": "date"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "type": "object",
+            "title": "Regulation"
+          },
+          "events": {
+            "items": {
+              "$ref": "#/components/schemas/EventOut"
+            },
+            "type": "array",
+            "title": "Events"
+          },
+          "assessment": {
+            "$ref": "#/components/schemas/AssessmentOut"
+          },
+          "spc": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/SpcOut"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "spc_notice": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Spc Notice"
+          },
+          "source": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/SourceOut"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "alerts": {
+            "items": {
+              "$ref": "#/components/schemas/AlertOut"
+            },
+            "type": "array",
+            "title": "Alerts"
+          }
+        },
+        "type": "object",
+        "required": [
+          "authorisation_id",
+          "as_of",
+          "known_at",
+          "identity",
+          "components",
+          "jurisdiction",
+          "regulation",
+          "events",
+          "assessment",
+          "spc",
+          "spc_notice",
+          "source",
+          "alerts"
+        ],
+        "title": "ProductSheet",
+        "description": "Fiche en cinq vues : identité, réglementation, RCP, preuves, alertes (M04)."
+      },
+      "ProposalEdit": {
+        "properties": {
+          "payload": {
+            "$ref": "#/components/schemas/PayloadIn"
+          },
+          "provenance": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/SourceRef"
+            },
+            "type": "object",
+            "title": "Provenance",
+            "default": {}
+          },
+          "authorisation_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Authorisation Id"
+          },
+          "expected_revision": {
+            "type": "integer",
+            "title": "Expected Revision"
+          }
+        },
+        "type": "object",
+        "required": [
+          "payload",
+          "expected_revision"
+        ],
+        "title": "ProposalEdit"
+      },
+      "ProposalIn": {
+        "properties": {
+          "payload": {
+            "$ref": "#/components/schemas/PayloadIn"
+          },
+          "provenance": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/SourceRef"
+            },
+            "type": "object",
+            "title": "Provenance",
+            "default": {}
+          },
+          "authorisation_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Authorisation Id"
+          }
+        },
+        "type": "object",
+        "required": [
+          "payload"
+        ],
+        "title": "ProposalIn"
+      },
+      "ProposalOut": {
+        "properties": {
+          "id": {
+            "type": "integer",
+            "title": "Id"
+          },
+          "state": {
+            "type": "string",
+            "title": "State"
+          },
+          "revision": {
+            "type": "integer",
+            "title": "Revision"
+          },
+          "origin": {
+            "type": "string",
+            "title": "Origin"
+          },
+          "authorisation_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Authorisation Id"
+          },
+          "prepared_by": {
+            "type": "string",
+            "title": "Prepared By"
+          },
+          "first_validator": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "First Validator"
+          },
+          "second_validator": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Second Validator"
+          },
+          "arbiter": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Arbiter"
+          },
+          "arbitration_decision": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Arbitration Decision"
+          },
+          "arbitration_reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Arbitration Reason"
+          },
+          "payload": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Payload"
+          },
+          "provenance": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Provenance"
+          },
+          "discrepancies": {
+            "anyOf": [
+              {
+                "items": {
+                  "additionalProperties": true,
+                  "type": "object"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Discrepancies"
+          },
+          "issues": {
+            "items": {
+              "$ref": "#/components/schemas/IssueOut"
+            },
+            "type": "array",
+            "title": "Issues"
+          },
+          "critical_fields": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "type": "object",
+            "title": "Critical Fields"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Updated At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "state",
+          "revision",
+          "origin",
+          "authorisation_id",
+          "prepared_by",
+          "first_validator",
+          "second_validator",
+          "arbiter",
+          "arbitration_decision",
+          "arbitration_reason",
+          "payload",
+          "provenance",
+          "discrepancies",
+          "issues",
+          "critical_fields",
+          "updated_at"
+        ],
+        "title": "ProposalOut"
+      },
+      "SearchHit": {
+        "properties": {
+          "authorisation_id": {
+            "type": "string",
+            "title": "Authorisation Id"
+          },
+          "ma_number": {
+            "type": "string",
+            "title": "Ma Number"
+          },
+          "jurisdiction": {
+            "type": "string",
+            "title": "Jurisdiction"
+          },
+          "applies_to_requested": {
+            "type": "boolean",
+            "title": "Applies To Requested"
+          },
+          "product_id": {
+            "type": "string",
+            "title": "Product Id"
+          },
+          "product_name": {
+            "type": "string",
+            "title": "Product Name"
+          },
+          "designation": {
+            "type": "string",
+            "title": "Designation"
+          },
+          "holder": {
+            "type": "string",
+            "title": "Holder"
+          },
+          "substances": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Substances"
+          },
+          "assessment": {
+            "$ref": "#/components/schemas/AssessmentOut"
+          }
+        },
+        "type": "object",
+        "required": [
+          "authorisation_id",
+          "ma_number",
+          "jurisdiction",
+          "applies_to_requested",
+          "product_id",
+          "product_name",
+          "designation",
+          "holder",
+          "substances",
+          "assessment"
+        ],
+        "title": "SearchHit"
+      },
+      "SearchResult": {
+        "properties": {
+          "query": {
+            "type": "string",
+            "title": "Query"
+          },
+          "jurisdiction": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Jurisdiction"
+          },
+          "as_of": {
+            "type": "string",
+            "format": "date",
+            "title": "As Of"
+          },
+          "hits": {
+            "items": {
+              "$ref": "#/components/schemas/SearchHit"
+            },
+            "type": "array",
+            "title": "Hits"
+          },
+          "notice": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Notice"
+          }
+        },
+        "type": "object",
+        "required": [
+          "query",
+          "jurisdiction",
+          "as_of",
+          "hits"
+        ],
+        "title": "SearchResult"
+      },
+      "SourceOut": {
+        "properties": {
+          "nature": {
+            "type": "string",
+            "title": "Nature"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "document_date": {
+            "type": "string",
+            "format": "date",
+            "title": "Document Date"
+          },
+          "latest_edition": {
+            "type": "boolean",
+            "title": "Latest Edition"
+          }
+        },
+        "type": "object",
+        "required": [
+          "nature",
+          "title",
+          "document_date",
+          "latest_edition"
+        ],
+        "title": "SourceOut"
+      },
+      "SourceRef": {
+        "properties": {
+          "document_id": {
+            "type": "integer",
+            "title": "Document Id"
+          },
+          "page": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Page"
+          },
+          "zone": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Zone"
+          }
+        },
+        "type": "object",
+        "required": [
+          "document_id",
+          "page"
+        ],
+        "title": "SourceRef"
+      },
+      "SpcIn": {
+        "properties": {
+          "languages": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Languages",
+            "default": []
+          },
+          "posology": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Posology"
+          },
+          "contraindications": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Contraindications",
+            "default": []
+          },
+          "restrictions": {
+            "items": {
+              "additionalProperties": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "type": "object"
+            },
+            "type": "array",
+            "title": "Restrictions",
+            "default": []
+          },
+          "withdrawal_periods": {
+            "items": {
+              "$ref": "#/components/schemas/WithdrawalIn"
+            },
+            "type": "array",
+            "title": "Withdrawal Periods",
+            "default": []
+          }
+        },
+        "type": "object",
+        "title": "SpcIn"
+      },
+      "SpcOut": {
+        "properties": {
+          "version_label": {
+            "type": "string",
+            "title": "Version Label"
+          },
+          "languages": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Languages"
+          },
+          "posology": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Posology"
+          },
+          "contraindications": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Contraindications"
+          },
+          "withdrawal_periods": {
+            "items": {
+              "$ref": "#/components/schemas/WithdrawalOut"
+            },
+            "type": "array",
+            "title": "Withdrawal Periods"
+          },
+          "restrictions": {
+            "items": {
+              "additionalProperties": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "type": "object"
+            },
+            "type": "array",
+            "title": "Restrictions"
+          }
+        },
+        "type": "object",
+        "required": [
+          "version_label",
+          "languages",
+          "posology",
+          "contraindications",
+          "withdrawal_periods",
+          "restrictions"
+        ],
+        "title": "SpcOut"
+      },
+      "SubstanceOut": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "inn_name": {
+            "type": "string",
+            "title": "Inn Name"
+          },
+          "atcvet_code": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Atcvet Code"
+          },
+          "who_category": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Who Category"
+          },
+          "woah_category": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Woah Category"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "inn_name",
+          "atcvet_code",
+          "who_category",
+          "woah_category"
+        ],
+        "title": "SubstanceOut"
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          },
+          "input": {
+            "title": "Input"
+          },
+          "ctx": {
+            "type": "object",
+            "title": "Context"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError"
+      },
+      "WithdrawalIn": {
+        "properties": {
+          "species": {
+            "type": "string",
+            "title": "Species"
+          },
+          "commodity": {
+            "type": "string",
+            "title": "Commodity"
+          },
+          "route": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Route"
+          },
+          "dose_condition": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Dose Condition"
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "valeur",
+              "interdit",
+              "non renseigné",
+              "conditionnel",
+              "sans objet"
+            ],
+            "title": "Kind"
+          },
+          "value": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Value"
+          },
+          "unit": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "heure",
+                  "jour",
+                  "degré-jour",
+                  "traite"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Unit"
+          },
+          "spc_text": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Spc Text"
+          }
+        },
+        "type": "object",
+        "required": [
+          "species",
+          "commodity",
+          "kind"
+        ],
+        "title": "WithdrawalIn"
+      },
+      "WithdrawalOut": {
+        "properties": {
+          "species": {
+            "type": "string",
+            "title": "Species"
+          },
+          "commodity": {
+            "type": "string",
+            "title": "Commodity"
+          },
+          "route": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Route"
+          },
+          "dose_condition": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Dose Condition"
+          },
+          "kind": {
+            "type": "string",
+            "title": "Kind"
+          },
+          "value": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Value"
+          },
+          "unit": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Unit"
+          }
+        },
+        "type": "object",
+        "required": [
+          "species",
+          "commodity",
+          "route",
+          "dose_condition",
+          "kind",
+          "value",
+          "unit"
+        ],
+        "title": "WithdrawalOut"
+      },
+      "WithdrawalRequest": {
+        "properties": {
+          "species": {
+            "type": "string",
+            "title": "Species"
+          },
+          "commodity": {
+            "type": "string",
+            "title": "Commodity"
+          },
+          "route": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Route"
+          },
+          "last_administration": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Last Administration",
+            "description": "Avec fuseau horaire, ex. 2027-09-07T14:30:00+01:00"
+          },
+          "water_temperature_c": {
+            "anyOf": [
+              {
+                "type": "number",
+                "exclusiveMinimum": 0.0
+              },
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Water Temperature C"
+          }
+        },
+        "type": "object",
+        "required": [
+          "species",
+          "commodity",
+          "last_administration"
+        ],
+        "title": "WithdrawalRequest"
+      },
+      "WithdrawalResponse": {
+        "properties": {
+          "outcome": {
+            "type": "string",
+            "title": "Outcome"
+          },
+          "message": {
+            "type": "string",
+            "title": "Message"
+          },
+          "earliest": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Earliest"
+          },
+          "formula": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Formula"
+          },
+          "timezone": {
+            "type": "string",
+            "title": "Timezone"
+          },
+          "period": {
+            "$ref": "#/components/schemas/WithdrawalOut"
+          }
+        },
+        "type": "object",
+        "required": [
+          "outcome",
+          "message",
+          "earliest",
+          "formula",
+          "timezone",
+          "period"
+        ],
+        "title": "WithdrawalResponse"
+      }
+    }
+  }
+}

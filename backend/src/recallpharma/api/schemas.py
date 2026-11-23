@@ -28,6 +28,14 @@ class JurisdictionOut(BaseModel):
     members: list[str]
 
 
+class SubstanceOut(BaseModel):
+    id: str
+    inn_name: str
+    atcvet_code: str | None
+    who_category: str | None
+    woah_category: str | None
+
+
 class AssessmentOut(BaseModel):
     """Ce que tout canal doit afficher avec une AMM : statut calculé, preuve, bandeaux (RG-03, RG-14, RG-15)."""
 
