@@ -319,3 +319,22 @@ def test_question_is_masked_in_the_journal(client: TestClient, model: ScriptedMo
     content = client.get(f"/v1/copilot/conversations/{cid}", headers=PRO).json()["messages"][0]["content"]
     assert "699" not in content and "example.org" not in content
     assert "[téléphone]" in content and "[courriel]" in content
+
+
+def test_abstain_after_data_is_ignored_and_duplicates_are_not_replayed(
+    client: TestClient, model: ScriptedModel
+) -> None:
+    # Observé avec Qwen2.5 7B : lecture de la fiche, puis « abstain » pour dire que l'AMM est suspendue.
+    model.replies += [
+        Reply("", [ToolCall("a", "get_authorisation", {"ma_id": "amm-002"})]),
+        Reply(
+            "", [ToolCall("b", "get_authorisation", {"ma_id": "amm-002"}), ToolCall("c", "abstain", {"reason": "x"})]
+        ),
+    ]
+    model.draft("Le statut de [[amm-002:name]] : [[amm-002:status]].")
+    cid = conversation(client)
+    events = ask(client, cid, "Puis-je délivrer le produit de l'AMM amm-002 ?")
+    assert first(events, "records")["banners"][0]["level"] == "rouge"
+    assert first(events, "answer")["kind"] == "answer"
+    journal = client.get(f"/v1/copilot/conversations/{cid}/journal", headers=PRO).json()
+    assert [t["tool"] for t in journal[1]["tool_calls"]] == ["get_authorisation", "abstain"]

@@ -71,7 +71,8 @@ def _state(q: Question) -> str:
         return ""
     return (
         f"\nÉtat de la conversation : dernier jeu de résultats {q.result_set_id}, "
-        f"obtenu par {json.dumps(q.result_set_query or {}, ensure_ascii=False)}."
+        f"obtenu par {json.dumps(q.result_set_query or {}, ensure_ascii=False)}. "
+        "Une question qui le restreint (« lesquels… », « exclus… ») se traite par refine_result_set."
     )
 
 
@@ -158,12 +159,19 @@ class Orchestrator:
         for _ in range(MAX_PLANNING_ROUNDS):
             reply = self.model.complete(messages, tools=TOOL_SPECS, max_tokens=400)
             trace.count(reply)
-            calls = reply.tool_calls[:budget]
+            # Un appel identique à un appel déjà fait dans le tour n'est pas rejoué : rien de nouveau à apprendre.
+            done = {(t["tool"], json.dumps(t["arguments"], sort_keys=True)) for t in trace.tool_calls}
+            calls = [c for c in reply.tool_calls if (c.name, json.dumps(c.arguments, sort_keys=True)) not in done]
+            calls = calls[:budget]
             if not calls:
                 return None
             for c in calls:
                 if c.name == "abstain":
                     trace.tool_calls.append({"tool": "abstain", "arguments": c.arguments, "result": None})
+                    if self.runner.turn.records:
+                        # Abstention demandée après obtention de données : la réception a déjà écarté le hors
+                        # périmètre ; une AMM suspendue se dit avec son bandeau, elle ne justifie pas de se taire.
+                        return None
                     return str(c.arguments.get("reason") or "hors périmètre")
             budget -= len(calls)
             messages.append(
@@ -220,7 +228,12 @@ class Orchestrator:
         messages: list[dict[str, Any]] = [
             {
                 "role": "system",
-                "content": prompts.DRAFT.format(language_name="anglais" if language == "en" else "français"),
+                "content": prompts.DRAFT.format(
+                    language_name="anglais" if language == "en" else "français",
+                    forbidden=", ".join(
+                        sorted({t for t in closed if cp.normalise(t) in cp.normalise(q.text)} | set(cp.STATUS_WORDS))
+                    ),
+                ),
             },
             {
                 "role": "user",

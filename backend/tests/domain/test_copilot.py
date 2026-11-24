@@ -47,6 +47,12 @@ class TestCheck:
         assert not cp.check_draft("[[amm-023:name]] : IVERMECTINE", RECORDS, ["ivermectine"]).passed
         assert not cp.check_draft("[[amm-023:name]] florfenicol", RECORDS, ["florfénicol"]).passed
 
+    @pytest.mark.parametrize("word", ["suspendu", "suspendus", "Bovine", "bovines", "bovin", "ivermectin", "valid"])
+    def test_inflected_and_english_forms_are_caught(self, word: str) -> None:
+        # Observé avec Qwen2.5 7B : « Produit-002 est suspendu », « for bovines ».
+        closed = ["suspendue", "bovins", "ivermectine", "valide"]
+        assert not cp.check_draft(f"[[amm-023:name]] {word}.", RECORDS, closed).passed
+
     def test_closed_term_inside_another_word_is_not_flagged(self) -> None:
         # Mot entier seulement : la liste fermée est celle du D5 ; le risque résiduel est mesuré par l'évaluation.
         assert cp.check_draft("[[amm-023:name]] revalidée.", RECORDS, ["valide"]).passed

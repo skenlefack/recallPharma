@@ -22,6 +22,7 @@ CHECK_FAILED = "La réponse rédigée n'a pas passé le contrôle : seuls les en
 CHECK_FAILED_EN = "The drafted answer failed the check: only the registry records are shown."
 UNAVAILABLE = "Copilot momentanément indisponible. La recherche du registre reste disponible."
 
+STATUS_WORDS = ("valide", "suspendue", "retirée")
 REF = re.compile(r"\[\[([^\[\]:]+):([^\[\]]+)\]\]")
 EVIDENCE_ORDER = "ABCD"  # du plus fort au plus faible
 
@@ -111,9 +112,16 @@ def check_draft(draft: str, records: Records, closed_terms: Iterable[str]) -> Ch
     if re.search(r"\d", free):
         problems.append("chiffre hors référence")
     for term in sorted({normalise(t) for t in closed_terms if t.strip()}):
-        if re.search(rf"(?<![\w-]){re.escape(term)}(?![\w-])", free):
+        if re.search(_variants(term), free):
             problems.append(f"terme réservé hors référence : {term}")
     return CheckResult(not problems, tuple(problems), refs)
+
+
+def _variants(term: str) -> str:
+    """Le terme et ses accords : « suspendue » couvre suspendu, suspendus ; « bovins » couvre bovin, bovine ;
+    « ivermectine » couvre la forme anglaise ivermectin."""
+    base = term.removesuffix("s").removesuffix("e") if " " not in term else term
+    return rf"(?<![\w-]){re.escape(base)}(?:e|es|s)?(?![\w-])"
 
 
 def render(draft: str, records: Records) -> str:

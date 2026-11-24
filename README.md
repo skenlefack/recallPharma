@@ -124,6 +124,13 @@ Ce qui est garanti par construction, et testé sans modèle (modèle scénarisé
 
 Ce que les tests ne garantissent pas : que le modèle désigne le bon enregistrement pour la question posée. Ce risque se mesure avec le jeu de référence (`evaluation/copilot-reference.json`, 10 questions ; le jeu de recette en prévoit 300, puis 600).
 
+Premier passage avec le vrai modèle (Qwen2.5 7B Instruct sous Ollama, processeur seul, rapport dans `backend/evaluation-results/`) :
+- **Résultats :** 10 questions sur 10 exactes, toutes les abstentions correctes et aucune réponse rédigée refusée par le contrôle.
+- **Échantillon :** 10 questions donnent un intervalle de confiance large (72 % à 100 % pour l'exactitude) ; le seuil de recette se juge sur 300 questions.
+- **Corrections apportées par ce passage :** le contrôle reconnaît maintenant les accords et les formes anglaises (« suspendu », « bovines », « ivermectin »). La passerelle ignore une abstention demandée après obtention de données, et ne rejoue pas un appel d'outil identique.
+- **Durée :** 2 à 5 minutes par réponse sur ce poste, contre une cible de 15 s qui suppose un serveur à carte graphique (vLLM).
+- **Point restant :** les noms d'espèces en anglais (« cattle ») ne figurent pas dans les listes fermées.
+
 Écarts assumés du prototype :
 - **Jeton délégué :** l'API l'émet elle-même. L'échange de jeton RFC 8693 de Keycloak, prévu par l'ADR-08, le remplacera sans changer les points d'accès.
 - **Recherche dans les RCP :** les outils `search_spc_passages` (recherche hybride, pgvector) et `compare_jurisdictions` restent à faire.

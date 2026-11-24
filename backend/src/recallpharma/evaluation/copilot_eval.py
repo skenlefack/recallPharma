@@ -73,6 +73,8 @@ def ask(gateway: httpx.Client, question: str, state: dict[str, Any]) -> dict[str
 
 
 def main() -> int:
+    if hasattr(sys.stdout, "reconfigure"):
+        sys.stdout.reconfigure(encoding="utf-8")  # console Windows : rapport en UTF-8
     parser = argparse.ArgumentParser()
     parser.add_argument("--gateway", default="http://127.0.0.1:8001")
     parser.add_argument("--repeat", type=int, default=1)
@@ -92,7 +94,20 @@ def main() -> int:
             durations.append(time.monotonic() - t0)
             trace, answer, records = out.get("trace", {}), out.get("answer", {}), out.get("records", {})
             if trace.get("result_set_id"):
-                states[case["id"]] = {"result_set_id": trace["result_set_id"], "result_set_query": {}}
+                # Comme l'API : le jeu précédent et la requête qui l'a produit, plus l'échange précédent.
+                query: dict[str, Any] = next(
+                    (
+                        c["arguments"]
+                        for c in reversed(trace["tool_calls"])
+                        if c["tool"].endswith(("authorisations", "result_set"))
+                    ),
+                    {},
+                )
+                states[case["id"]] = {
+                    "result_set_id": trace["result_set_id"],
+                    "result_set_query": query,
+                    "history": [{"question": case["question"], "answer": answer.get("text", "")}],
+                }
             expect = case["expect"]
             got_ids = sorted(r["id"] for r in records.get("rows", []))
             ok = answer.get("kind") in (("answer", "fallback") if expect["kind"] == "answer" else ("abstention",))
@@ -102,7 +117,8 @@ def main() -> int:
                 ok = ok and any(b["level"] == expect["banner"] for b in records.get("banners", []))
             if "language" in expect:
                 ok = ok and answer.get("language") == expect["language"]
-            exact.add(ok, f"{label} → {answer.get('kind')} {got_ids} {answer.get('text', out.get('error'))!r}")
+            problems = (trace.get("check") or {}).get("problems")
+            exact.add(ok, f"{label} → {answer.get('kind')} {got_ids} {problems or trace.get('abstention')}")
             if expect["kind"] == "abstention":
                 abstain_ok.add(answer.get("kind") == "abstention", label)
             else:
