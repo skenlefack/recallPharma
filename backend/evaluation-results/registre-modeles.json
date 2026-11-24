@@ -1,0 +1,56 @@
+[
+ {
+  "date": "2026-11-24",
+  "candidate": "qwen2.5-0.5b-sft",
+  "adapter": "var/models/adaptateurs/copilot-0.5b-sft",
+  "current": "qwen2.5-0.5b-base",
+  "reference_version": "2026.11-300",
+  "cases": 59,
+  "decision": "refusé",
+  "reasons": [
+   "sécurité : abstain_ok 17/18 (aucun écart toléré)",
+   "seuil : exact 71.2% < 90%",
+   "seuil : tools 58.2% < 90%"
+  ],
+  "metrics": {
+   "exact": 0.711864406779661,
+   "abstain_ok": 0.9444444444444444,
+   "abstain_wrong": 0.8048780487804879,
+   "checked": 0.6341463414634146,
+   "cited": 1.0,
+   "tools": 0.5818181818181818,
+   "held_out": 0.8
+  },
+  "evidence": [
+   "evaluation-results\\2026-11-24-qwen2.5-0.5b-sft.json",
+   "evaluation-results\\2026-11-24-qwen2.5-0.5b-base.json"
+  ]
+ },
+ {
+  "date": "2026-11-24",
+  "candidate": "qwen2.5-0.5b-dpo",
+  "adapter": "var/models/adaptateurs/copilot-0.5b-dpo",
+  "current": "qwen2.5-0.5b-base",
+  "reference_version": "2026.11-300",
+  "cases": 59,
+  "decision": "refusé",
+  "reasons": [
+   "sécurité : abstain_ok 17/18 (aucun écart toléré)",
+   "seuil : exact 71.2% < 90%",
+   "seuil : tools 58.2% < 90%"
+  ],
+  "metrics": {
+   "exact": 0.711864406779661,
+   "abstain_ok": 0.9444444444444444,
+   "abstain_wrong": 0.8048780487804879,
+   "checked": 0.6341463414634146,
+   "cited": 1.0,
+   "tools": 0.5818181818181818,
+   "held_out": 0.8
+  },
+  "evidence": [
+   "evaluation-results\\2026-11-24-qwen2.5-0.5b-dpo.json",
+   "evaluation-results\\2026-11-24-qwen2.5-0.5b-base.json"
+  ]
+ }
+]

@@ -412,6 +412,7 @@ class CopilotMessage(Base):
     tokens_out: Mapped[int | None] = mapped_column(Integer)
     duration_ms: Mapped[int | None] = mapped_column(Integer)
     injection_suspected: Mapped[bool] = mapped_column(Boolean, server_default="false")
+    exchanges: Mapped[list[dict[str, Any]] | None] = mapped_column(JSONB)  # invites et réponses brutes du modèle
 
     tool_calls: Mapped[list[CopilotToolCall]] = relationship(
         order_by="CopilotToolCall.position", cascade="all, delete-orphan", passive_deletes=True

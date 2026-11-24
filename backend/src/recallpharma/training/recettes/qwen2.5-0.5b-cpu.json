@@ -1,0 +1,42 @@
+{
+  "name": "qwen2.5-0.5b-cpu",
+  "purpose": "Passage de validation de la chaîne sur poste sans GPU : petit modèle, sous-échantillon, une époque. Ne vise pas la qualité de production.",
+  "base_model": "var/models/Qwen2.5-0.5B-Instruct",
+  "base_model_id": "Qwen/Qwen2.5-0.5B-Instruct",
+  "licence": "Apache-2.0",
+  "load_in_4bit": false,
+  "bf16": false,
+  "gradient_checkpointing": false,
+  "max_length": 3072,
+  "seed": 20261124,
+  "lora": {
+    "r": 16,
+    "alpha": 32,
+    "dropout": 0.05,
+    "target_modules": [
+      "q_proj",
+      "k_proj",
+      "v_proj",
+      "o_proj",
+      "gate_proj",
+      "up_proj",
+      "down_proj"
+    ]
+  },
+  "sft": {
+    "max_examples": 192,
+    "epochs": 1,
+    "batch_size": 1,
+    "grad_accum": 4,
+    "learning_rate": 0.0002,
+    "warmup_ratio": 0.05
+  },
+  "dpo": {
+    "max_pairs": 24,
+    "epochs": 1,
+    "batch_size": 1,
+    "grad_accum": 4,
+    "learning_rate": 5e-06,
+    "beta": 0.1
+  }
+}

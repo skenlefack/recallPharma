@@ -25,6 +25,15 @@ dev = [
     "mypy>=1.13",
     "import-linter>=2.1",
 ]
+training = [
+    "accelerate>=1.7",
+    "bitsandbytes>=0.46 ; sys_platform == 'linux'",
+    "datasets>=3.6",
+    "peft>=0.15",
+    "torch>=2.6",
+    "transformers>=4.52,<5",
+    "trl>=0.19",
+]
 
 [build-system]
 requires = ["hatchling"]
@@ -48,12 +57,26 @@ ignore = ["RUF001", "RUF002", "RUF003"]  # textes français : apostrophes et esp
 [tool.ruff.lint.per-file-ignores]
 "migrations/versions/*.py" = ["E501"]
 "src/recallpharma/gateway/prompts.py" = ["E501"]  # invites : lignes de texte, non coupées
+"src/recallpharma/training/scenarios.py" = ["E501"]  # formulations et rédactions de référence : texte, non coupé
 
 [tool.mypy]
 strict = true
 python_version = "3.12"
 packages = ["recallpharma"]
 mypy_path = "src"
+
+[[tool.mypy.overrides]]
+# Bibliothèques d'entraînement (groupe « training ») : non typées ou absentes de l'environnement de service.
+module = ["torch.*", "transformers.*", "peft.*", "trl.*", "datasets.*", "uvicorn.*"]
+ignore_missing_imports = true
+follow_untyped_imports = false
+
+[[tool.mypy.overrides]]
+module = ["recallpharma.training.train_sft", "recallpharma.training.train_dpo", "recallpharma.training.serve"]
+disallow_untyped_calls = false
+disallow_subclassing_any = false
+warn_return_any = false
+disable_error_code = ["attr-defined"]  # trl réexporte ses classes sans __all__ explicite
 
 [tool.importlinter]
 root_package = "recallpharma"
@@ -76,3 +99,9 @@ name = "L'API ne parle jamais au modèle : elle passe par la passerelle (ADR-07)
 type = "forbidden"
 source_modules = ["recallpharma.api", "recallpharma.curation", "recallpharma.db"]
 forbidden_modules = ["recallpharma.gateway"]
+
+[[tool.importlinter.contracts]]
+name = "Le service ne dépend jamais de l'entraînement : ni code, ni bibliothèques lourdes (torch, transformers)"
+type = "forbidden"
+source_modules = ["recallpharma.api", "recallpharma.gateway", "recallpharma.domain", "recallpharma.db", "recallpharma.curation"]
+forbidden_modules = ["recallpharma.training", "torch", "transformers", "peft", "trl", "datasets"]

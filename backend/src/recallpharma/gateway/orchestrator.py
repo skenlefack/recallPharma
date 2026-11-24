@@ -55,10 +55,25 @@ class Trace:
     abstention: str | None = None
     injection_suspected: bool = False
     rules_version: str | None = None
+    # Chaque appel au modèle, invite exacte et réponse brute : matière première de l'entraînement (journal relu).
+    exchanges: list[dict[str, Any]] = field(default_factory=list)
 
     def count(self, reply: Reply) -> None:
         self.tokens_in += reply.tokens_in
         self.tokens_out += reply.tokens_out
+
+    def record(self, step: str, messages: list[dict[str, Any]], reply: Reply, **extra: Any) -> dict[str, Any]:
+        exchange = {
+            "step": step,
+            "messages": list(messages),
+            "reply": {
+                "content": reply.content,
+                "tool_calls": [{"name": c.name, "arguments": c.arguments} for c in reply.tool_calls],
+            },
+            **extra,
+        }
+        self.exchanges.append(exchange)
+        return exchange
 
 
 def _data(value: Any) -> str:
@@ -159,6 +174,7 @@ class Orchestrator:
         for _ in range(MAX_PLANNING_ROUNDS):
             reply = self.model.complete(messages, tools=TOOL_SPECS, max_tokens=400)
             trace.count(reply)
+            trace.record("planification", messages, reply)
             # Un appel identique à un appel déjà fait dans le tour n'est pas rejoué : rien de nouveau à apprendre.
             done = {(t["tool"], json.dumps(t["arguments"], sort_keys=True)) for t in trace.tool_calls}
             calls = [c for c in reply.tool_calls if (c.name, json.dumps(c.arguments, sort_keys=True)) not in done]
@@ -246,6 +262,7 @@ class Orchestrator:
             trace.count(reply)
             draft = _draft_text(reply.content)
             check = cp.check_draft(draft, records, closed)
+            trace.record("rédaction", messages, reply, check={"passed": check.passed, "problems": list(check.problems)})
             if check.passed:
                 return self._localise(cp.render(draft, records), language), check, attempt
             messages += [
@@ -372,6 +389,7 @@ class Orchestrator:
             "abstention": trace.abstention,
             "injection_suspected": trace.injection_suspected,
             "result_set_id": self.runner.turn.result_set_id,
+            "exchanges": trace.exchanges,
             "duration_ms": int((time.monotonic() - started) * 1000),
         }
 

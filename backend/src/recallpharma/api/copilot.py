@@ -417,6 +417,7 @@ def _store(
             tokens_out=t.get("tokens_out"),
             duration_ms=t.get("duration_ms"),
             injection_suspected=bool(t.get("injection_suspected")),
+            exchanges=t.get("exchanges"),
         )
         db.add(msg)
         db.flush()
