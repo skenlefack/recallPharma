@@ -33,7 +33,12 @@ def client(tmp_path_factory: pytest.TempPathFactory) -> Iterator[TestClient]:
     os.environ["RECALLPHARMA_STORAGE_DIR"] = str(tmp_path_factory.mktemp("documents"))
     os.environ["RECALLPHARMA_REFERENCE_DATE"] = "2027-09-07"
     os.environ.setdefault("RECALLPHARMA_AUTH_MODE", "dev")
+    # Plongements par hachage : recherche hybride déterministe, sans serveur de modèle.
+    os.environ["RECALLPHARMA_EMBED_BASE_URL"] = "hash:"
     get_settings.cache_clear()
+    from recallpharma.retrieval.embeddings import get_embedder
+
+    get_embedder.cache_clear()
     from recallpharma.db.session import get_engine
 
     get_engine.cache_clear()
@@ -46,6 +51,9 @@ def client(tmp_path_factory: pytest.TempPathFactory) -> Iterator[TestClient]:
 
     with session_factory()() as session, session.begin():
         load_a10(session)
+        from recallpharma.retrieval.search import index_passages
+
+        index_passages(session, get_embedder() or pytest.fail("encodeur de test absent"))
 
     from recallpharma.api.app import create_app
 
@@ -58,7 +66,9 @@ def client(tmp_path_factory: pytest.TempPathFactory) -> Iterator[TestClient]:
         "RECALLPHARMA_STORAGE_DIR",
         "RECALLPHARMA_REFERENCE_DATE",
         "RECALLPHARMA_AUTH_MODE",
+        "RECALLPHARMA_EMBED_BASE_URL",
     ):
         os.environ.pop(key, None)
     get_settings.cache_clear()
+    get_embedder.cache_clear()
     admin.dispose()

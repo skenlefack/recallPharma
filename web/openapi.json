@@ -417,6 +417,203 @@
         }
       }
     },
+    "/v1/spc-passages": {
+      "get": {
+        "tags": [
+          "rcp"
+        ],
+        "summary": "Spc Passages",
+        "operationId": "spc_passages_v1_spc_passages_get",
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 2,
+              "maxLength": 300,
+              "title": "Q"
+            }
+          },
+          {
+            "name": "jurisdiction",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Jurisdiction"
+            }
+          },
+          {
+            "name": "ma_ids",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "AMM visées, séparées par des virgules",
+              "title": "Ma Ids"
+            },
+            "description": "AMM visées, séparées par des virgules"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 20,
+              "minimum": 1,
+              "default": 10,
+              "title": "Limit"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PassagesOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/authorisations/{authorisation_id}/spc/sections": {
+      "get": {
+        "tags": [
+          "rcp"
+        ],
+        "summary": "List Sections",
+        "description": "Texte complet du RCP en vigueur, rubrique par rubrique, dans chacune de ses langues (ordre du document).",
+        "operationId": "list_sections_v1_authorisations__authorisation_id__spc_sections_get",
+        "parameters": [
+          {
+            "name": "authorisation_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Authorisation Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SectionText"
+                  },
+                  "title": "Response List Sections V1 Authorisations  Authorisation Id  Spc Sections Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/authorisations/{authorisation_id}/spc/sections/{rubric}": {
+      "get": {
+        "tags": [
+          "rcp"
+        ],
+        "summary": "Get Section",
+        "operationId": "get_section_v1_authorisations__authorisation_id__spc_sections__rubric__get",
+        "parameters": [
+          {
+            "name": "authorisation_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Authorisation Id"
+            }
+          },
+          {
+            "name": "rubric",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Rubric"
+            }
+          },
+          {
+            "name": "language",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Language"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SectionOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/v1/curation/documents": {
       "post": {
         "tags": [
@@ -2629,6 +2826,248 @@
         }
       }
     },
+    "/v1/copilot/tools/spc-passages": {
+      "get": {
+        "tags": [
+          "copilot-outils"
+        ],
+        "summary": "Search Spc Passages",
+        "operationId": "search_spc_passages_v1_copilot_tools_spc_passages_get",
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 2,
+              "maxLength": 300,
+              "title": "Q"
+            }
+          },
+          {
+            "name": "jurisdiction",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Jurisdiction"
+            }
+          },
+          {
+            "name": "ma_ids",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "AMM visées, séparées par des virgules",
+              "title": "Ma Ids"
+            },
+            "description": "AMM visées, séparées par des virgules"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 20,
+              "minimum": 1,
+              "default": 8,
+              "title": "Limit"
+            }
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PassagesOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/copilot/tools/authorisations/{authorisation_id}/spc/sections/{rubric}": {
+      "get": {
+        "tags": [
+          "copilot-outils"
+        ],
+        "summary": "Get Spc Section",
+        "operationId": "get_spc_section_v1_copilot_tools_authorisations__authorisation_id__spc_sections__rubric__get",
+        "parameters": [
+          {
+            "name": "authorisation_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Authorisation Id"
+            }
+          },
+          {
+            "name": "rubric",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Rubric"
+            }
+          },
+          {
+            "name": "language",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Language"
+            }
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SectionOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/copilot/tools/compare": {
+      "post": {
+        "tags": [
+          "copilot-outils"
+        ],
+        "summary": "Compare Jurisdictions",
+        "description": "Un produit (ou les produits d'une substance) dans plusieurs juridictions, chaque AMM avec son propre RCP.",
+        "operationId": "compare_jurisdictions_v1_copilot_tools_compare_post",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CompareIn"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CompareOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/health": {
       "get": {
         "tags": [
@@ -2980,6 +3419,95 @@
           "document_date"
         ],
         "title": "Body_upload_document_v1_curation_documents_post"
+      },
+      "CompareIn": {
+        "properties": {
+          "product_name": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 100
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Product Name"
+          },
+          "substance_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Substance Id"
+          },
+          "jurisdictions": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array",
+                "maxItems": 10
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Jurisdictions"
+          }
+        },
+        "type": "object",
+        "title": "CompareIn"
+      },
+      "CompareOut": {
+        "properties": {
+          "jurisdictions": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Jurisdictions"
+          },
+          "products": {
+            "items": {
+              "$ref": "#/components/schemas/ProductComparisonOut"
+            },
+            "type": "array",
+            "title": "Products"
+          },
+          "total": {
+            "type": "integer",
+            "title": "Total"
+          },
+          "truncated": {
+            "type": "boolean",
+            "title": "Truncated"
+          },
+          "as_of": {
+            "type": "string",
+            "format": "date",
+            "title": "As Of"
+          },
+          "rules_version": {
+            "type": "string",
+            "title": "Rules Version",
+            "default": "A2-v3"
+          }
+        },
+        "type": "object",
+        "required": [
+          "jurisdictions",
+          "products",
+          "total",
+          "truncated",
+          "as_of"
+        ],
+        "title": "CompareOut"
       },
       "ComponentIn": {
         "properties": {
@@ -3939,6 +4467,197 @@
         ],
         "title": "MessageOut"
       },
+      "PassageOut": {
+        "properties": {
+          "passage_id": {
+            "type": "integer",
+            "title": "Passage Id"
+          },
+          "authorisation_id": {
+            "type": "string",
+            "title": "Authorisation Id"
+          },
+          "ma_number": {
+            "type": "string",
+            "title": "Ma Number"
+          },
+          "product": {
+            "type": "string",
+            "title": "Product"
+          },
+          "jurisdiction": {
+            "type": "string",
+            "title": "Jurisdiction"
+          },
+          "spc_version": {
+            "type": "string",
+            "title": "Spc Version"
+          },
+          "rubric": {
+            "type": "string",
+            "title": "Rubric"
+          },
+          "language": {
+            "type": "string",
+            "title": "Language"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "rank": {
+            "type": "integer",
+            "title": "Rank"
+          },
+          "text": {
+            "type": "string",
+            "title": "Text"
+          },
+          "page": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Page"
+          },
+          "source_title": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Source Title"
+          },
+          "evidence_level": {
+            "type": "string",
+            "title": "Evidence Level"
+          },
+          "verified_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Verified At"
+          },
+          "banners": {
+            "items": {
+              "$ref": "#/components/schemas/BannerOut"
+            },
+            "type": "array",
+            "title": "Banners"
+          },
+          "score": {
+            "type": "number",
+            "title": "Score"
+          },
+          "full_text_rank": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Full Text Rank"
+          },
+          "vector_rank": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Vector Rank"
+          }
+        },
+        "type": "object",
+        "required": [
+          "passage_id",
+          "authorisation_id",
+          "ma_number",
+          "product",
+          "jurisdiction",
+          "spc_version",
+          "rubric",
+          "language",
+          "title",
+          "rank",
+          "text",
+          "page",
+          "source_title",
+          "evidence_level",
+          "verified_at",
+          "banners",
+          "score",
+          "full_text_rank",
+          "vector_rank"
+        ],
+        "title": "PassageOut"
+      },
+      "PassagesOut": {
+        "properties": {
+          "query": {
+            "type": "string",
+            "title": "Query"
+          },
+          "jurisdiction": {
+            "type": "string",
+            "title": "Jurisdiction"
+          },
+          "mode": {
+            "type": "string",
+            "title": "Mode"
+          },
+          "embedding_model": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Embedding Model"
+          },
+          "as_of": {
+            "type": "string",
+            "format": "date",
+            "title": "As Of"
+          },
+          "passages": {
+            "items": {
+              "$ref": "#/components/schemas/PassageOut"
+            },
+            "type": "array",
+            "title": "Passages"
+          }
+        },
+        "type": "object",
+        "required": [
+          "query",
+          "jurisdiction",
+          "mode",
+          "embedding_model",
+          "as_of",
+          "passages"
+        ],
+        "title": "PassagesOut"
+      },
       "PayloadIn": {
         "properties": {
           "jurisdiction": {
@@ -4037,6 +4756,61 @@
           "product"
         ],
         "title": "PayloadIn"
+      },
+      "ProductComparisonOut": {
+        "properties": {
+          "product_id": {
+            "type": "string",
+            "title": "Product Id"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "designation": {
+            "type": "string",
+            "title": "Designation"
+          },
+          "present": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Present"
+          },
+          "absent": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Absent"
+          },
+          "differences": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Differences"
+          },
+          "rows": {
+            "items": {
+              "$ref": "#/components/schemas/CopilotRow"
+            },
+            "type": "array",
+            "title": "Rows"
+          }
+        },
+        "type": "object",
+        "required": [
+          "product_id",
+          "name",
+          "designation",
+          "present",
+          "absent",
+          "differences",
+          "rows"
+        ],
+        "title": "ProductComparisonOut"
       },
       "ProductIn": {
         "properties": {
@@ -4724,6 +5498,143 @@
           "hits"
         ],
         "title": "SearchResult"
+      },
+      "SectionOut": {
+        "properties": {
+          "authorisation_id": {
+            "type": "string",
+            "title": "Authorisation Id"
+          },
+          "ma_number": {
+            "type": "string",
+            "title": "Ma Number"
+          },
+          "product": {
+            "type": "string",
+            "title": "Product"
+          },
+          "jurisdiction": {
+            "type": "string",
+            "title": "Jurisdiction"
+          },
+          "spc_version": {
+            "type": "string",
+            "title": "Spc Version"
+          },
+          "rubric": {
+            "type": "string",
+            "title": "Rubric"
+          },
+          "language": {
+            "type": "string",
+            "title": "Language"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "text": {
+            "type": "string",
+            "title": "Text"
+          },
+          "page": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Page"
+          },
+          "source_title": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Source Title"
+          },
+          "other_languages": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Other Languages"
+          }
+        },
+        "type": "object",
+        "required": [
+          "authorisation_id",
+          "ma_number",
+          "product",
+          "jurisdiction",
+          "spc_version",
+          "rubric",
+          "language",
+          "title",
+          "text",
+          "page",
+          "source_title",
+          "other_languages"
+        ],
+        "title": "SectionOut"
+      },
+      "SectionText": {
+        "properties": {
+          "rubric": {
+            "type": "string",
+            "title": "Rubric"
+          },
+          "language": {
+            "type": "string",
+            "title": "Language"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "text": {
+            "type": "string",
+            "title": "Text"
+          },
+          "page": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Page"
+          },
+          "source_title": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Source Title"
+          }
+        },
+        "type": "object",
+        "required": [
+          "rubric",
+          "language",
+          "title",
+          "text",
+          "page",
+          "source_title"
+        ],
+        "title": "SectionText"
       },
       "SetApartOut": {
         "properties": {

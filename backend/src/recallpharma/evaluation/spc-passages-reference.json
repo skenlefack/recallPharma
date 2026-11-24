@@ -1,0 +1,1590 @@
+{
+ "version": "rcp-2026.11-100",
+ "description": "Recherche de passages de RCP : 100 questions, rubriques pertinentes (D6)",
+ "threshold_recall_at_10": 0.9,
+ "cases": [
+  {
+   "id": "rcp-001",
+   "kind": "produit",
+   "question": "Are there restrictions on the use of Produit-014?",
+   "language": "en",
+   "jurisdiction": "PB",
+   "ma_ids": [
+    "amm-031"
+   ],
+   "relevant": [
+    "amm-031/3.11"
+   ],
+   "spc_languages": [
+    "fr"
+   ]
+  },
+  {
+   "id": "rcp-002",
+   "kind": "produit",
+   "question": "What does Produit-017 contain?",
+   "language": "en",
+   "jurisdiction": "PB",
+   "ma_ids": [
+    "amm-032"
+   ],
+   "relevant": [
+    "amm-032/2"
+   ],
+   "spc_languages": [
+    "fr"
+   ]
+  },
+  {
+   "id": "rcp-003",
+   "kind": "produit",
+   "question": "What precautions should the person giving Produit-020 take?",
+   "language": "en",
+   "jurisdiction": "PB",
+   "ma_ids": [
+    "amm-033"
+   ],
+   "relevant": [
+    "amm-033/3.5"
+   ],
+   "spc_languages": [
+    "fr"
+   ]
+  },
+  {
+   "id": "rcp-004",
+   "kind": "produit-nommé",
+   "question": "Are there restrictions on the use of Produit-023?",
+   "language": "en",
+   "jurisdiction": "PB",
+   "ma_ids": null,
+   "relevant": [
+    "amm-034/3.11"
+   ],
+   "spc_languages": [
+    "fr"
+   ]
+  },
+  {
+   "id": "rcp-005",
+   "kind": "produit",
+   "question": "Are there special warnings for Produit-026?",
+   "language": "en",
+   "jurisdiction": "PB",
+   "ma_ids": [
+    "amm-035"
+   ],
+   "relevant": [
+    "amm-035/3.4"
+   ],
+   "spc_languages": [
+    "fr"
+   ]
+  },
+  {
+   "id": "rcp-006",
+   "kind": "produit",
+   "question": "Which species is Produit-029 intended for?",
+   "language": "en",
+   "jurisdiction": "PB",
+   "ma_ids": [
+    "amm-036"
+   ],
+   "relevant": [
+    "amm-036/3.1"
+   ],
+   "spc_languages": [
+    "fr"
+   ]
+  },
+  {
+   "id": "rcp-007",
+   "kind": "produit",
+   "question": "What is the dosage of Produit-028?",
+   "language": "en",
+   "jurisdiction": "CC",
+   "ma_ids": [
+    "amm-049"
+   ],
+   "relevant": [
+    "amm-049/3.9"
+   ],
+   "spc_languages": [
+    "fr"
+   ]
+  },
+  {
+   "id": "rcp-008",
+   "kind": "produit-nommé",
+   "question": "Are there restrictions on the use of Produit-031?",
+   "language": "en",
+   "jurisdiction": "CC",
+   "ma_ids": null,
+   "relevant": [
+    "amm-050/3.11"
+   ],
+   "spc_languages": [
+    "fr"
+   ]
+  },
+  {
+   "id": "rcp-009",
+   "kind": "produit",
+   "question": "What is Produit-034 used for?",
+   "language": "en",
+   "jurisdiction": "CC",
+   "ma_ids": [
+    "amm-051"
+   ],
+   "relevant": [
+    "amm-051/3.2"
+   ],
+   "spc_languages": [
+    "fr"
+   ]
+  },
+  {
+   "id": "rcp-010",
+   "kind": "produit",
+   "question": "How is Produit-037 administered?",
+   "language": "en",
+   "jurisdiction": "CC",
+   "ma_ids": [
+    "amm-052"
+   ],
+   "relevant": [
+    "amm-052/3.9"
+   ],
+   "spc_languages": [
+    "fr"
+   ]
+  },
+  {
+   "id": "rcp-011",
+   "kind": "produit",
+   "question": "What is Produit-014 used for?",
+   "language": "en",
+   "jurisdiction": "PB",
+   "ma_ids": [
+    "amm-031"
+   ],
+   "relevant": [
+    "amm-031/3.2"
+   ],
+   "spc_languages": [
+    "fr"
+   ]
+  },
+  {
+   "id": "rcp-012",
+   "kind": "produit-nommé",
+   "question": "Which species is Produit-017 intended for?",
+   "language": "en",
+   "jurisdiction": "PB",
+   "ma_ids": null,
+   "relevant": [
+    "amm-032/3.1"
+   ],
+   "spc_languages": [
+    "fr"
+   ]
+  },
+  {
+   "id": "rcp-013",
+   "kind": "produit",
+   "question": "Are there restrictions on the use of Produit-020?",
+   "language": "en",
+   "jurisdiction": "PB",
+   "ma_ids": [
+    "amm-033"
+   ],
+   "relevant": [
+    "amm-033/3.11"
+   ],
+   "spc_languages": [
+    "fr"
+   ]
+  },
+  {
+   "id": "rcp-014",
+   "kind": "produit",
+   "question": "How is Produit-023 administered?",
+   "language": "en",
+   "jurisdiction": "PB",
+   "ma_ids": [
+    "amm-034"
+   ],
+   "relevant": [
+    "amm-034/3.9"
+   ],
+   "spc_languages": [
+    "fr"
+   ]
+  },
+  {
+   "id": "rcp-015",
+   "kind": "produit",
+   "question": "How long before slaughter after treating with Produit-026?",
+   "language": "en",
+   "jurisdiction": "PB",
+   "ma_ids": [
+    "amm-035"
+   ],
+   "relevant": [
+    "amm-035/3.12"
+   ],
+   "spc_languages": [
+    "fr"
+   ]
+  },
+  {
+   "id": "rcp-016",
+   "kind": "produit-nommé",
+   "question": "What is Produit-029 used for?",
+   "language": "en",
+   "jurisdiction": "PB",
+   "ma_ids": null,
+   "relevant": [
+    "amm-036/3.2"
+   ],
+   "spc_languages": [
+    "fr"
+   ]
+  },
+  {
+   "id": "rcp-017",
+   "kind": "produit",
+   "question": "What are the contraindications of Produit-028?",
+   "language": "en",
+   "jurisdiction": "CC",
+   "ma_ids": [
+    "amm-049"
+   ],
+   "relevant": [
+    "amm-049/3.3"
+   ],
+   "spc_languages": [
+    "fr"
+   ]
+  },
+  {
+   "id": "rcp-018",
+   "kind": "produit",
+   "question": "How is Produit-031 administered?",
+   "language": "en",
+   "jurisdiction": "CC",
+   "ma_ids": [
+    "amm-050"
+   ],
+   "relevant": [
+    "amm-050/3.9"
+   ],
+   "spc_languages": [
+    "fr"
+   ]
+  },
+  {
+   "id": "rcp-019",
+   "kind": "produit",
+   "question": "What does Produit-034 contain?",
+   "language": "en",
+   "jurisdiction": "CC",
+   "ma_ids": [
+    "amm-051"
+   ],
+   "relevant": [
+    "amm-051/2"
+   ],
+   "spc_languages": [
+    "fr"
+   ]
+  },
+  {
+   "id": "rcp-020",
+   "kind": "produit-nommé",
+   "question": "What does Produit-037 contain?",
+   "language": "en",
+   "jurisdiction": "CC",
+   "ma_ids": null,
+   "relevant": [
+    "amm-052/2"
+   ],
+   "spc_languages": [
+    "fr"
+   ]
+  },
+  {
+   "id": "rcp-021",
+   "kind": "produit",
+   "question": "What does Produit-014 contain?",
+   "language": "en",
+   "jurisdiction": "PB",
+   "ma_ids": [
+    "amm-031"
+   ],
+   "relevant": [
+    "amm-031/2"
+   ],
+   "spc_languages": [
+    "fr"
+   ]
+  },
+  {
+   "id": "rcp-022",
+   "kind": "produit",
+   "question": "How is Produit-017 administered?",
+   "language": "en",
+   "jurisdiction": "PB",
+   "ma_ids": [
+    "amm-032"
+   ],
+   "relevant": [
+    "amm-032/3.9"
+   ],
+   "spc_languages": [
+    "fr"
+   ]
+  },
+  {
+   "id": "rcp-023",
+   "kind": "produit",
+   "question": "Are there special warnings for Produit-020?",
+   "language": "en",
+   "jurisdiction": "PB",
+   "ma_ids": [
+    "amm-033"
+   ],
+   "relevant": [
+    "amm-033/3.4"
+   ],
+   "spc_languages": [
+    "fr"
+   ]
+  },
+  {
+   "id": "rcp-024",
+   "kind": "produit-nommé",
+   "question": "Are there special warnings for Produit-023?",
+   "language": "en",
+   "jurisdiction": "PB",
+   "ma_ids": null,
+   "relevant": [
+    "amm-034/3.4"
+   ],
+   "spc_languages": [
+    "fr"
+   ]
+  },
+  {
+   "id": "rcp-025",
+   "kind": "produit",
+   "question": "How long before slaughter after treating with Produit-026?",
+   "language": "en",
+   "jurisdiction": "PB",
+   "ma_ids": [
+    "amm-035"
+   ],
+   "relevant": [
+    "amm-035/3.12"
+   ],
+   "spc_languages": [
+    "fr"
+   ]
+  },
+  {
+   "id": "rcp-026",
+   "kind": "produit",
+   "question": "What is the withdrawal period of Produit-029?",
+   "language": "en",
+   "jurisdiction": "PB",
+   "ma_ids": [
+    "amm-036"
+   ],
+   "relevant": [
+    "amm-036/3.12"
+   ],
+   "spc_languages": [
+    "fr"
+   ]
+  },
+  {
+   "id": "rcp-027",
+   "kind": "produit",
+   "question": "Which species is Produit-028 intended for?",
+   "language": "en",
+   "jurisdiction": "CC",
+   "ma_ids": [
+    "amm-049"
+   ],
+   "relevant": [
+    "amm-049/3.1"
+   ],
+   "spc_languages": [
+    "fr"
+   ]
+  },
+  {
+   "id": "rcp-028",
+   "kind": "produit-nommé",
+   "question": "What precautions should the person giving Produit-031 take?",
+   "language": "en",
+   "jurisdiction": "CC",
+   "ma_ids": null,
+   "relevant": [
+    "amm-050/3.5"
+   ],
+   "spc_languages": [
+    "fr"
+   ]
+  },
+  {
+   "id": "rcp-029",
+   "kind": "produit",
+   "question": "What is the withdrawal period of Produit-034?",
+   "language": "en",
+   "jurisdiction": "CC",
+   "ma_ids": [
+    "amm-051"
+   ],
+   "relevant": [
+    "amm-051/3.12"
+   ],
+   "spc_languages": [
+    "fr"
+   ]
+  },
+  {
+   "id": "rcp-030",
+   "kind": "produit",
+   "question": "Are there special warnings for Produit-037?",
+   "language": "en",
+   "jurisdiction": "CC",
+   "ma_ids": [
+    "amm-052"
+   ],
+   "relevant": [
+    "amm-052/3.4"
+   ],
+   "spc_languages": [
+    "fr"
+   ]
+  },
+  {
+   "id": "rcp-031",
+   "kind": "produit",
+   "question": "Are there special warnings for Produit-014?",
+   "language": "en",
+   "jurisdiction": "PB",
+   "ma_ids": [
+    "amm-031"
+   ],
+   "relevant": [
+    "amm-031/3.4"
+   ],
+   "spc_languages": [
+    "fr"
+   ]
+  },
+  {
+   "id": "rcp-032",
+   "kind": "produit-nommé",
+   "question": "What precautions should the person giving Produit-017 take?",
+   "language": "en",
+   "jurisdiction": "PB",
+   "ma_ids": null,
+   "relevant": [
+    "amm-032/3.5"
+   ],
+   "spc_languages": [
+    "fr"
+   ]
+  },
+  {
+   "id": "rcp-033",
+   "kind": "produit",
+   "question": "What precautions should the person giving Produit-020 take?",
+   "language": "en",
+   "jurisdiction": "PB",
+   "ma_ids": [
+    "amm-033"
+   ],
+   "relevant": [
+    "amm-033/3.5"
+   ],
+   "spc_languages": [
+    "fr"
+   ]
+  },
+  {
+   "id": "rcp-034",
+   "kind": "produit",
+   "question": "Quelles sont les mises en garde pour Produit-016 ?",
+   "language": "fr",
+   "jurisdiction": "PA",
+   "ma_ids": [
+    "amm-016"
+   ],
+   "relevant": [
+    "amm-016/3.4"
+   ],
+   "spc_languages": [
+    "fr",
+    "en"
+   ]
+  },
+  {
+   "id": "rcp-035",
+   "kind": "produit",
+   "question": "Quelles précautions doit prendre la personne qui administre Produit-002 ?",
+   "language": "fr",
+   "jurisdiction": "PA",
+   "ma_ids": [
+    "amm-002"
+   ],
+   "relevant": [
+    "amm-002/3.5"
+   ],
+   "spc_languages": [
+    "fr",
+    "en"
+   ]
+  },
+  {
+   "id": "rcp-036",
+   "kind": "produit",
+   "question": "Dans quels cas ne faut-il pas utiliser Produit-018 ?",
+   "language": "fr",
+   "jurisdiction": "PA",
+   "ma_ids": [
+    "amm-018"
+   ],
+   "relevant": [
+    "amm-018/3.3"
+   ],
+   "spc_languages": [
+    "fr",
+    "en"
+   ]
+  },
+  {
+   "id": "rcp-037",
+   "kind": "produit-nommé",
+   "question": "Y a-t-il des restrictions d'utilisation pour Produit-006 ?",
+   "language": "fr",
+   "jurisdiction": "PA",
+   "ma_ids": null,
+   "relevant": [
+    "amm-006/3.11"
+   ],
+   "spc_languages": [
+    "fr",
+    "en"
+   ]
+  },
+  {
+   "id": "rcp-038",
+   "kind": "produit",
+   "question": "Quelles sont les contre-indications de Produit-029 ?",
+   "language": "fr",
+   "jurisdiction": "PB",
+   "ma_ids": [
+    "amm-036"
+   ],
+   "relevant": [
+    "amm-036/3.3"
+   ],
+   "spc_languages": [
+    "fr"
+   ]
+  },
+  {
+   "id": "rcp-039",
+   "kind": "produit",
+   "question": "Quelles sont les mises en garde pour Produit-009 ?",
+   "language": "fr",
+   "jurisdiction": "PA",
+   "ma_ids": [
+    "amm-009"
+   ],
+   "relevant": [
+    "amm-009/3.4"
+   ],
+   "spc_languages": [
+    "fr",
+    "en"
+   ]
+  },
+  {
+   "id": "rcp-040",
+   "kind": "produit",
+   "question": "Comment administrer Produit-012 ?",
+   "language": "fr",
+   "jurisdiction": "PA",
+   "ma_ids": [
+    "amm-012"
+   ],
+   "relevant": [
+    "amm-012/3.9"
+   ],
+   "spc_languages": [
+    "fr",
+    "en"
+   ]
+  },
+  {
+   "id": "rcp-041",
+   "kind": "produit-nommé",
+   "question": "Pour quelles espèces Produit-019 est-il destiné ?",
+   "language": "fr",
+   "jurisdiction": "PA",
+   "ma_ids": null,
+   "relevant": [
+    "amm-019/3.1"
+   ],
+   "spc_languages": [
+    "fr",
+    "en"
+   ]
+  },
+  {
+   "id": "rcp-042",
+   "kind": "produit",
+   "question": "Y a-t-il des restrictions d'utilisation pour Produit-003 ?",
+   "language": "fr",
+   "jurisdiction": "PA",
+   "ma_ids": [
+    "amm-003"
+   ],
+   "relevant": [
+    "amm-003/3.11"
+   ],
+   "spc_languages": [
+    "fr",
+    "en"
+   ]
+  },
+  {
+   "id": "rcp-043",
+   "kind": "produit",
+   "question": "Quelles sont les mises en garde pour Produit-008 ?",
+   "language": "fr",
+   "jurisdiction": "PA",
+   "ma_ids": [
+    "amm-008"
+   ],
+   "relevant": [
+    "amm-008/3.4"
+   ],
+   "spc_languages": [
+    "fr",
+    "en"
+   ]
+  },
+  {
+   "id": "rcp-044",
+   "kind": "produit",
+   "question": "Quelle substance active contient Produit-007 ?",
+   "language": "fr",
+   "jurisdiction": "PA",
+   "ma_ids": [
+    "amm-007"
+   ],
+   "relevant": [
+    "amm-007/2"
+   ],
+   "spc_languages": [
+    "fr",
+    "en"
+   ]
+  },
+  {
+   "id": "rcp-045",
+   "kind": "produit-nommé",
+   "question": "Quelle est la composition de Produit-034 ?",
+   "language": "fr",
+   "jurisdiction": "CC",
+   "ma_ids": null,
+   "relevant": [
+    "amm-051/2"
+   ],
+   "spc_languages": [
+    "fr"
+   ]
+  },
+  {
+   "id": "rcp-046",
+   "kind": "produit",
+   "question": "Quelles précautions doit prendre la personne qui administre Produit-011 ?",
+   "language": "fr",
+   "jurisdiction": "PA",
+   "ma_ids": [
+    "amm-011"
+   ],
+   "relevant": [
+    "amm-011/3.5"
+   ],
+   "spc_languages": [
+    "fr",
+    "en"
+   ]
+  },
+  {
+   "id": "rcp-047",
+   "kind": "produit",
+   "question": "Quelles précautions doit prendre la personne qui administre Produit-017 ?",
+   "language": "fr",
+   "jurisdiction": "PB",
+   "ma_ids": [
+    "amm-032"
+   ],
+   "relevant": [
+    "amm-032/3.5"
+   ],
+   "spc_languages": [
+    "fr"
+   ]
+  },
+  {
+   "id": "rcp-048",
+   "kind": "produit",
+   "question": "Quelles sont les mises en garde pour Produit-007 ?",
+   "language": "fr",
+   "jurisdiction": "PA",
+   "ma_ids": [
+    "amm-007"
+   ],
+   "relevant": [
+    "amm-007/3.4"
+   ],
+   "spc_languages": [
+    "fr",
+    "en"
+   ]
+  },
+  {
+   "id": "rcp-049",
+   "kind": "produit-nommé",
+   "question": "Combien de temps attendre avant l'abattage après Produit-023 ?",
+   "language": "fr",
+   "jurisdiction": "PB",
+   "ma_ids": null,
+   "relevant": [
+    "amm-034/3.12"
+   ],
+   "spc_languages": [
+    "fr"
+   ]
+  },
+  {
+   "id": "rcp-050",
+   "kind": "produit",
+   "question": "À quoi sert Produit-026 ?",
+   "language": "fr",
+   "jurisdiction": "PB",
+   "ma_ids": [
+    "amm-035"
+   ],
+   "relevant": [
+    "amm-035/3.2"
+   ],
+   "spc_languages": [
+    "fr"
+   ]
+  },
+  {
+   "id": "rcp-051",
+   "kind": "produit",
+   "question": "Dans quels cas ne faut-il pas utiliser Produit-012 ?",
+   "language": "fr",
+   "jurisdiction": "PA",
+   "ma_ids": [
+    "amm-012"
+   ],
+   "relevant": [
+    "amm-012/3.3"
+   ],
+   "spc_languages": [
+    "fr",
+    "en"
+   ]
+  },
+  {
+   "id": "rcp-052",
+   "kind": "produit",
+   "question": "Quelles sont les contre-indications de Produit-001 ?",
+   "language": "fr",
+   "jurisdiction": "PA",
+   "ma_ids": [
+    "amm-001"
+   ],
+   "relevant": [
+    "amm-001/3.3"
+   ],
+   "spc_languages": [
+    "fr",
+    "en"
+   ]
+  },
+  {
+   "id": "rcp-053",
+   "kind": "produit-nommé",
+   "question": "Quelles précautions doit prendre la personne qui administre Produit-017 ?",
+   "language": "fr",
+   "jurisdiction": "PB",
+   "ma_ids": null,
+   "relevant": [
+    "amm-032/3.5"
+   ],
+   "spc_languages": [
+    "fr"
+   ]
+  },
+  {
+   "id": "rcp-054",
+   "kind": "produit",
+   "question": "Quelles sont les mises en garde pour Produit-019 ?",
+   "language": "fr",
+   "jurisdiction": "PA",
+   "ma_ids": [
+    "amm-019"
+   ],
+   "relevant": [
+    "amm-019/3.4"
+   ],
+   "spc_languages": [
+    "fr",
+    "en"
+   ]
+  },
+  {
+   "id": "rcp-055",
+   "kind": "produit",
+   "question": "Y a-t-il des restrictions d'utilisation pour Produit-023 ?",
+   "language": "fr",
+   "jurisdiction": "PB",
+   "ma_ids": [
+    "amm-034"
+   ],
+   "relevant": [
+    "amm-034/3.11"
+   ],
+   "spc_languages": [
+    "fr"
+   ]
+  },
+  {
+   "id": "rcp-056",
+   "kind": "produit",
+   "question": "Quel est le temps d'attente de Produit-020 ?",
+   "language": "fr",
+   "jurisdiction": "PB",
+   "ma_ids": [
+    "amm-033"
+   ],
+   "relevant": [
+    "amm-033/3.12"
+   ],
+   "spc_languages": [
+    "fr"
+   ]
+  },
+  {
+   "id": "rcp-057",
+   "kind": "produit-nommé",
+   "question": "Comment administrer Produit-026 ?",
+   "language": "fr",
+   "jurisdiction": "PB",
+   "ma_ids": null,
+   "relevant": [
+    "amm-035/3.9"
+   ],
+   "spc_languages": [
+    "fr"
+   ]
+  },
+  {
+   "id": "rcp-058",
+   "kind": "produit",
+   "question": "Quelle est la composition de Produit-005 ?",
+   "language": "fr",
+   "jurisdiction": "PA",
+   "ma_ids": [
+    "amm-005"
+   ],
+   "relevant": [
+    "amm-005/2"
+   ],
+   "spc_languages": [
+    "fr",
+    "en"
+   ]
+  },
+  {
+   "id": "rcp-059",
+   "kind": "produit",
+   "question": "Quelle substance active contient Produit-023 ?",
+   "language": "fr",
+   "jurisdiction": "PB",
+   "ma_ids": [
+    "amm-034"
+   ],
+   "relevant": [
+    "amm-034/2"
+   ],
+   "spc_languages": [
+    "fr"
+   ]
+  },
+  {
+   "id": "rcp-060",
+   "kind": "produit",
+   "question": "Quelles sont les mises en garde pour Produit-002 ?",
+   "language": "fr",
+   "jurisdiction": "PA",
+   "ma_ids": [
+    "amm-002"
+   ],
+   "relevant": [
+    "amm-002/3.4"
+   ],
+   "spc_languages": [
+    "fr",
+    "en"
+   ]
+  },
+  {
+   "id": "rcp-061",
+   "kind": "produit-nommé",
+   "question": "À quoi sert Produit-012 ?",
+   "language": "fr",
+   "jurisdiction": "PA",
+   "ma_ids": null,
+   "relevant": [
+    "amm-012/3.2"
+   ],
+   "spc_languages": [
+    "fr",
+    "en"
+   ]
+  },
+  {
+   "id": "rcp-062",
+   "kind": "produit",
+   "question": "Quels animaux peut-on traiter avec Produit-029 ?",
+   "language": "fr",
+   "jurisdiction": "PB",
+   "ma_ids": [
+    "amm-036"
+   ],
+   "relevant": [
+    "amm-036/3.1"
+   ],
+   "spc_languages": [
+    "fr"
+   ]
+  },
+  {
+   "id": "rcp-063",
+   "kind": "produit",
+   "question": "À quoi sert Produit-017 ?",
+   "language": "fr",
+   "jurisdiction": "PA",
+   "ma_ids": [
+    "amm-017"
+   ],
+   "relevant": [
+    "amm-017/3.2"
+   ],
+   "spc_languages": [
+    "en"
+   ]
+  },
+  {
+   "id": "rcp-064",
+   "kind": "produit",
+   "question": "Pour quelles espèces Produit-023 est-il destiné ?",
+   "language": "fr",
+   "jurisdiction": "PB",
+   "ma_ids": [
+    "amm-034"
+   ],
+   "relevant": [
+    "amm-034/3.1"
+   ],
+   "spc_languages": [
+    "fr"
+   ]
+  },
+  {
+   "id": "rcp-065",
+   "kind": "produit-nommé",
+   "question": "Y a-t-il des restrictions d'utilisation pour Produit-011 ?",
+   "language": "fr",
+   "jurisdiction": "PA",
+   "ma_ids": null,
+   "relevant": [
+    "amm-011/3.11"
+   ],
+   "spc_languages": [
+    "fr",
+    "en"
+   ]
+  },
+  {
+   "id": "rcp-066",
+   "kind": "produit",
+   "question": "Combien de temps attendre avant l'abattage après Produit-013 ?",
+   "language": "fr",
+   "jurisdiction": "PA",
+   "ma_ids": [
+    "amm-013"
+   ],
+   "relevant": [
+    "amm-013/3.12"
+   ],
+   "spc_languages": [
+    "fr",
+    "en"
+   ]
+  },
+  {
+   "id": "rcp-067",
+   "kind": "produit",
+   "question": "Quelles précautions doit prendre la personne qui administre Produit-002 ?",
+   "language": "fr",
+   "jurisdiction": "PA",
+   "ma_ids": [
+    "amm-002"
+   ],
+   "relevant": [
+    "amm-002/3.5"
+   ],
+   "spc_languages": [
+    "fr",
+    "en"
+   ]
+  },
+  {
+   "id": "rcp-068",
+   "kind": "produit",
+   "question": "À quoi sert Produit-017 ?",
+   "language": "fr",
+   "jurisdiction": "PB",
+   "ma_ids": [
+    "amm-032"
+   ],
+   "relevant": [
+    "amm-032/3.2"
+   ],
+   "spc_languages": [
+    "fr"
+   ]
+  },
+  {
+   "id": "rcp-069",
+   "kind": "produit-nommé",
+   "question": "Quelles sont les indications de Produit-017 ?",
+   "language": "fr",
+   "jurisdiction": "PA",
+   "ma_ids": null,
+   "relevant": [
+    "amm-017/3.2"
+   ],
+   "spc_languages": [
+    "en"
+   ]
+  },
+  {
+   "id": "rcp-070",
+   "kind": "produit",
+   "question": "Quelle est la posologie de Produit-014 ?",
+   "language": "fr",
+   "jurisdiction": "PA",
+   "ma_ids": [
+    "amm-014"
+   ],
+   "relevant": [
+    "amm-014/3.9"
+   ],
+   "spc_languages": [
+    "fr",
+    "en"
+   ]
+  },
+  {
+   "id": "rcp-071",
+   "kind": "produit",
+   "question": "Quelle est la posologie de Produit-006 ?",
+   "language": "fr",
+   "jurisdiction": "PA",
+   "ma_ids": [
+    "amm-006"
+   ],
+   "relevant": [
+    "amm-006/3.9"
+   ],
+   "spc_languages": [
+    "fr",
+    "en"
+   ]
+  },
+  {
+   "id": "rcp-072",
+   "kind": "produit",
+   "question": "Y a-t-il des restrictions d'utilisation pour Produit-028 ?",
+   "language": "fr",
+   "jurisdiction": "CC",
+   "ma_ids": [
+    "amm-049"
+   ],
+   "relevant": [
+    "amm-049/3.11"
+   ],
+   "spc_languages": [
+    "fr"
+   ]
+  },
+  {
+   "id": "rcp-073",
+   "kind": "produit-nommé",
+   "question": "Quelles précautions doit prendre la personne qui administre Produit-031 ?",
+   "language": "fr",
+   "jurisdiction": "CC",
+   "ma_ids": null,
+   "relevant": [
+    "amm-050/3.5"
+   ],
+   "spc_languages": [
+    "fr"
+   ]
+  },
+  {
+   "id": "rcp-074",
+   "kind": "produit",
+   "question": "Dans quels cas ne faut-il pas utiliser Produit-023 ?",
+   "language": "fr",
+   "jurisdiction": "PB",
+   "ma_ids": [
+    "amm-034"
+   ],
+   "relevant": [
+    "amm-034/3.3"
+   ],
+   "spc_languages": [
+    "fr"
+   ]
+  },
+  {
+   "id": "rcp-075",
+   "kind": "produit",
+   "question": "Quelle est la posologie de Produit-011 ?",
+   "language": "fr",
+   "jurisdiction": "PA",
+   "ma_ids": [
+    "amm-011"
+   ],
+   "relevant": [
+    "amm-011/3.9"
+   ],
+   "spc_languages": [
+    "fr",
+    "en"
+   ]
+  },
+  {
+   "id": "rcp-076",
+   "kind": "produit",
+   "question": "Quel est le temps d'attente de Produit-010 ?",
+   "language": "fr",
+   "jurisdiction": "PA",
+   "ma_ids": [
+    "amm-010"
+   ],
+   "relevant": [
+    "amm-010/3.12"
+   ],
+   "spc_languages": [
+    "fr",
+    "en"
+   ]
+  },
+  {
+   "id": "rcp-077",
+   "kind": "produit",
+   "question": "What precautions should the person giving Produit-015 take?",
+   "language": "en",
+   "jurisdiction": "PA",
+   "ma_ids": [
+    "amm-015"
+   ],
+   "relevant": [
+    "amm-015/3.5"
+   ],
+   "spc_languages": [
+    "fr",
+    "en"
+   ]
+  },
+  {
+   "id": "rcp-078",
+   "kind": "produit",
+   "question": "What precautions should the person giving Produit-011 take?",
+   "language": "en",
+   "jurisdiction": "PA",
+   "ma_ids": [
+    "amm-011"
+   ],
+   "relevant": [
+    "amm-011/3.5"
+   ],
+   "spc_languages": [
+    "fr",
+    "en"
+   ]
+  },
+  {
+   "id": "rcp-079",
+   "kind": "produit",
+   "question": "What precautions should the person giving Produit-011 take?",
+   "language": "en",
+   "jurisdiction": "PA",
+   "ma_ids": [
+    "amm-011"
+   ],
+   "relevant": [
+    "amm-011/3.5"
+   ],
+   "spc_languages": [
+    "fr",
+    "en"
+   ]
+  },
+  {
+   "id": "rcp-080",
+   "kind": "produit-nommé",
+   "question": "What is Produit-017 used for?",
+   "language": "en",
+   "jurisdiction": "PA",
+   "ma_ids": null,
+   "relevant": [
+    "amm-017/3.2"
+   ],
+   "spc_languages": [
+    "en"
+   ]
+  },
+  {
+   "id": "rcp-081",
+   "kind": "produit",
+   "question": "How long before slaughter after treating with Produit-010?",
+   "language": "en",
+   "jurisdiction": "PA",
+   "ma_ids": [
+    "amm-010"
+   ],
+   "relevant": [
+    "amm-010/3.12"
+   ],
+   "spc_languages": [
+    "fr",
+    "en"
+   ]
+  },
+  {
+   "id": "rcp-082",
+   "kind": "produit",
+   "question": "What does Produit-020 contain?",
+   "language": "en",
+   "jurisdiction": "PA",
+   "ma_ids": [
+    "amm-020"
+   ],
+   "relevant": [
+    "amm-020/2"
+   ],
+   "spc_languages": [
+    "fr",
+    "en"
+   ]
+  },
+  {
+   "id": "rcp-083",
+   "kind": "produit",
+   "question": "When should Produit-016 not be used?",
+   "language": "en",
+   "jurisdiction": "PA",
+   "ma_ids": [
+    "amm-016"
+   ],
+   "relevant": [
+    "amm-016/3.3"
+   ],
+   "spc_languages": [
+    "fr",
+    "en"
+   ]
+  },
+  {
+   "id": "rcp-084",
+   "kind": "produit-nommé",
+   "question": "What are the contraindications of Produit-013?",
+   "language": "en",
+   "jurisdiction": "PA",
+   "ma_ids": null,
+   "relevant": [
+    "amm-013/3.3"
+   ],
+   "spc_languages": [
+    "fr",
+    "en"
+   ]
+  },
+  {
+   "id": "rcp-085",
+   "kind": "produit",
+   "question": "What precautions should the person giving Produit-010 take?",
+   "language": "en",
+   "jurisdiction": "PA",
+   "ma_ids": [
+    "amm-010"
+   ],
+   "relevant": [
+    "amm-010/3.5"
+   ],
+   "spc_languages": [
+    "fr",
+    "en"
+   ]
+  },
+  {
+   "id": "rcp-086",
+   "kind": "produit",
+   "question": "Are there special warnings for Produit-001?",
+   "language": "en",
+   "jurisdiction": "PA",
+   "ma_ids": [
+    "amm-001"
+   ],
+   "relevant": [
+    "amm-001/3.4"
+   ],
+   "spc_languages": [
+    "fr",
+    "en"
+   ]
+  },
+  {
+   "id": "rcp-087",
+   "kind": "produit",
+   "question": "Which species is Produit-014 intended for?",
+   "language": "en",
+   "jurisdiction": "PA",
+   "ma_ids": [
+    "amm-014"
+   ],
+   "relevant": [
+    "amm-014/3.1"
+   ],
+   "spc_languages": [
+    "fr",
+    "en"
+   ]
+  },
+  {
+   "id": "rcp-088",
+   "kind": "produit-nommé",
+   "question": "What is Produit-012 used for?",
+   "language": "en",
+   "jurisdiction": "PA",
+   "ma_ids": null,
+   "relevant": [
+    "amm-012/3.2"
+   ],
+   "spc_languages": [
+    "fr",
+    "en"
+   ]
+  },
+  {
+   "id": "rcp-089",
+   "kind": "produit",
+   "question": "What is Produit-013 used for?",
+   "language": "en",
+   "jurisdiction": "PA",
+   "ma_ids": [
+    "amm-013"
+   ],
+   "relevant": [
+    "amm-013/3.2"
+   ],
+   "spc_languages": [
+    "fr",
+    "en"
+   ]
+  },
+  {
+   "id": "rcp-090",
+   "kind": "produit",
+   "question": "Are there restrictions on the use of Produit-010?",
+   "language": "en",
+   "jurisdiction": "PA",
+   "ma_ids": [
+    "amm-010"
+   ],
+   "relevant": [
+    "amm-010/3.11"
+   ],
+   "spc_languages": [
+    "fr",
+    "en"
+   ]
+  },
+  {
+   "id": "rcp-091",
+   "kind": "produit",
+   "question": "Are there restrictions on the use of Produit-017?",
+   "language": "en",
+   "jurisdiction": "PA",
+   "ma_ids": [
+    "amm-017"
+   ],
+   "relevant": [
+    "amm-017/3.11"
+   ],
+   "spc_languages": [
+    "en"
+   ]
+  },
+  {
+   "id": "rcp-092",
+   "kind": "produit-nommé",
+   "question": "What precautions should the person giving Produit-002 take?",
+   "language": "en",
+   "jurisdiction": "PA",
+   "ma_ids": null,
+   "relevant": [
+    "amm-002/3.5"
+   ],
+   "spc_languages": [
+    "fr",
+    "en"
+   ]
+  },
+  {
+   "id": "rcp-093",
+   "kind": "registre",
+   "question": "Quels médicaments ne faut-il pas utiliser chez les poules pondeuses ?",
+   "language": "fr",
+   "jurisdiction": "PA",
+   "ma_ids": null,
+   "relevant": [
+    "amm-004/3.11",
+    "amm-011/3.11",
+    "amm-020/3.11"
+   ],
+   "spc_languages": []
+  },
+  {
+   "id": "rcp-094",
+   "kind": "registre",
+   "question": "Which medicines must not be used in laying hens?",
+   "language": "en",
+   "jurisdiction": "PA",
+   "ma_ids": null,
+   "relevant": [
+    "amm-004/3.11",
+    "amm-011/3.11",
+    "amm-020/3.11"
+   ],
+   "spc_languages": []
+  },
+  {
+   "id": "rcp-095",
+   "kind": "registre",
+   "question": "Quels produits sont interdits chez les femelles laitières ?",
+   "language": "fr",
+   "jurisdiction": "PA",
+   "ma_ids": null,
+   "relevant": [
+    "amm-006/3.11",
+    "amm-007/3.11"
+   ],
+   "spc_languages": []
+  },
+  {
+   "id": "rcp-096",
+   "kind": "registre",
+   "question": "Which products cannot be used in dairy animals?",
+   "language": "en",
+   "jurisdiction": "PA",
+   "ma_ids": null,
+   "relevant": [
+    "amm-006/3.11",
+    "amm-007/3.11"
+   ],
+   "spc_languages": []
+  },
+  {
+   "id": "rcp-097",
+   "kind": "registre",
+   "question": "Quels produits ne doivent pas être donnés aux animaux producteurs de denrées ?",
+   "language": "fr",
+   "jurisdiction": "PA",
+   "ma_ids": null,
+   "relevant": [
+    "amm-014/3.11"
+   ],
+   "spc_languages": []
+  },
+  {
+   "id": "rcp-098",
+   "kind": "registre",
+   "question": "Which products must not be given to food-producing animals?",
+   "language": "en",
+   "jurisdiction": "PA",
+   "ma_ids": null,
+   "relevant": [
+    "amm-014/3.11"
+   ],
+   "spc_languages": []
+  },
+  {
+   "id": "rcp-099",
+   "kind": "registre",
+   "question": "Quelles substances sont d'importance critique ?",
+   "language": "fr",
+   "jurisdiction": "PA",
+   "ma_ids": null,
+   "relevant": [
+    "amm-003/3.4",
+    "amm-004/3.4",
+    "amm-005/3.4",
+    "amm-009/3.4",
+    "amm-012/3.4",
+    "amm-016/3.4",
+    "amm-019/3.4",
+    "amm-020/3.4"
+   ],
+   "spc_languages": []
+  },
+  {
+   "id": "rcp-100",
+   "kind": "registre",
+   "question": "Which substances are critically important antimicrobials?",
+   "language": "en",
+   "jurisdiction": "PA",
+   "ma_ids": null,
+   "relevant": [
+    "amm-003/3.4",
+    "amm-004/3.4",
+    "amm-005/3.4",
+    "amm-009/3.4",
+    "amm-012/3.4",
+    "amm-016/3.4",
+    "amm-019/3.4",
+    "amm-020/3.4"
+   ],
+   "spc_languages": []
+  }
+ ]
+}

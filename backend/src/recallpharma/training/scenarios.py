@@ -166,6 +166,19 @@ ALERT_FR = (
     "Alerte en cours dans cette juridiction : [[{alerte}:text]]",
 )
 ALERT_EN = ("The registry has published this alert: [[{alerte}:text]] ([[{alerte}:type]]).",)
+# Texte du RCP : l'extrait est inséré tel quel par la passerelle, dans sa langue, avec sa source.
+SPC_FR = (
+    "Le RCP de [[{ligne1}:name]] indique, rubrique [[{section}:rubric]] : [[{section}:text]]",
+    "Extrait du RCP de [[{ligne1}:name]] : [[{section}:text]]",
+)
+SPC_EN = ("The SPC of [[{ligne1}:name]] states, section [[{section}:rubric]]: [[{section}:text]]",)
+PASSAGE_FR = ("Le registre contient notamment ce passage du RCP de [[{passage}:product]] : [[{passage}:text]]",)
+PASSAGE_EN = ("The registry holds this passage from the SPC of [[{passage}:product]]: [[{passage}:text]]",)
+COMPARE_FR = (
+    "Pour [[{comparaison}:name]], les juridictions diffèrent sur : [[{comparaison}:differences]].",
+    "Comparaison de [[{comparaison}:name]] : présent dans [[{comparaison}:present]], absent de "
+    "[[{comparaison}:absent]] ; écarts : [[{comparaison}:differences]].",
+)
 
 
 # --- Formulations : entraînement / évaluation ----------------------------------------------------------------------
@@ -265,6 +278,56 @@ DELAY = {
 DELAY_EN_Q = {
     TRAIN: ("What is the {com} withdrawal period of {prod} in {sp}?",),
     EVAL: ("How long is the {com} withdrawal for {prod} in {sp}?",),
+}
+SPC_Q: dict[str, dict[str, tuple[str, ...]]] = {
+    TRAIN: {
+        "3.2": ("À quoi sert le {prod} ?",),
+        "3.3": ("Quelles sont les contre-indications du {prod} ?", "Quand ne faut-il pas utiliser le {prod} ?"),
+        "3.5": ("Quelles précautions pour la personne qui administre le {prod} ?",),
+        "3.9": ("Quelle est la posologie du {prod} ?", "Comment s'administre le {prod} ?"),
+        "3.11": ("Le {prod} a-t-il des restrictions d'utilisation ?",),
+    },
+    EVAL: {
+        "3.2": ("Quelles sont les indications du {prod} ?",),
+        "3.3": ("Dans quels cas le {prod} est-il contre-indiqué ?",),
+        "3.5": ("Quelles précautions d'emploi pour le {prod} ?",),
+        "3.9": ("Que dit le RCP du {prod} sur la posologie ?",),
+        "3.11": ("Y a-t-il des usages interdits pour le {prod} ?",),
+    },
+}
+SPC_Q_EN: dict[str, dict[str, tuple[str, ...]]] = {
+    TRAIN: {
+        "3.2": ("What is {prod} used for?",),
+        "3.3": ("What are the contraindications of {prod}?",),
+        "3.5": ("What precautions apply to the person giving {prod}?",),
+        "3.9": ("How is {prod} administered?",),
+        "3.11": ("Are there restrictions on the use of {prod}?",),
+    },
+    EVAL: {
+        "3.2": ("What are the indications of {prod}?",),
+        "3.3": ("When must {prod} not be used?",),
+        "3.5": ("Which precautions should be taken with {prod}?",),
+        "3.9": ("What does the SPC say about the dosage of {prod}?",),
+        "3.11": ("Is the use of {prod} restricted in any way?",),
+    },
+}
+SPC_REGISTRY = {
+    TRAIN: (
+        "Quels RCP interdisent l'usage chez les poules pondeuses ?",
+        "Quels médicaments sont interdits chez les femelles laitières ?",
+        "Which SPCs forbid use in food-producing animals?",
+    ),
+    EVAL: (
+        "Quels produits ne faut-il pas donner aux animaux producteurs de denrées ?",
+        "Which medicines are banned in laying hens?",
+    ),
+}
+COMPARE = {
+    TRAIN: (
+        "Compare le {prod} entre les juridictions.",
+        "Quelles différences pour le {prod} d'une juridiction à l'autre ?",
+    ),
+    EVAL: ("Comment le {prod} se présente-t-il dans les autres juridictions ?",),
 }
 END = {
     TRAIN: (
@@ -396,6 +459,10 @@ def build_scenarios(registry: Registry | None = None, seed: int = 20261124) -> l
     reg = registry or Registry.load()
     b = _Builder(reg, random.Random(seed))
     conversation_codes = ("PA", "PB", "CC")
+    by_product: dict[str, set[str]] = {}
+    for a in reg.authorisations:
+        by_product.setdefault(a["product_id"], set()).add(a["jurisdiction"])
+    multi = {p for p, codes in by_product.items() if len(codes) > 1}
 
     for code in conversation_codes:
         jname = reg.jurisdictions[code]["name"]
@@ -522,6 +589,33 @@ def build_scenarios(registry: Registry | None = None, seed: int = 20261124) -> l
                 drafts=SHEET_FR,
                 tags=(ma["expected"]["status"],),
             )
+            # Texte du RCP : deux rubriques précises d'une AMM connue (get_spc_section).
+            rubrics = b.rng.sample(sorted(SPC_Q[sheet_split]), k=2) if ma.get("spc") else []
+            for rubric in rubrics:
+                english = b.rng.random() < 0.25
+                b.add(
+                    "rcp",
+                    sheet_split,
+                    b.pick((SPC_Q_EN if english else SPC_Q)[sheet_split][rubric]).format(prod=prod["name"]),
+                    code,
+                    rounds=(
+                        (Call("search_authorisations", {"product_name": prod["name"]}),),
+                        (Call("get_spc_section", {"ma_id": FIRST_ROW, "rubric": rubric}),),
+                    ),
+                    drafts=SPC_EN if english else SPC_FR,
+                    language="en" if english else "fr",
+                    tags=(f"rubrique:{rubric}", *(("anglais",) if english else ())),
+                )
+            # Comparaison entre juridictions, pour un produit autorisé dans plusieurs (RG-06).
+            if prod["id"] in multi and b.rng.random() < 0.4:
+                b.add(
+                    "comparaison",
+                    sheet_split,
+                    b.pick(COMPARE[sheet_split]).format(prod=prod["name"]),
+                    code,
+                    rounds=((Call("compare_jurisdictions", {"product_name": prod["name"]}),),),
+                    drafts=COMPARE_FR,
+                )
             # Délais d'attente lus sur le RCP, puis calcul d'une date de fin (RG-21).
             periods = (ma.get("spc") or {}).get("withdrawal_periods", [])
             for w in periods:
@@ -598,6 +692,19 @@ def build_scenarios(registry: Registry | None = None, seed: int = 20261124) -> l
             language="en",
             tags=("anglais",),
         )
+
+        for split in (TRAIN, EVAL):
+            for q in SPC_REGISTRY[split]:
+                b.add(
+                    "rcp-registre",
+                    split,
+                    q,
+                    code,
+                    rounds=((Call("search_spc_passages", {"query": q}),),),
+                    drafts=PASSAGE_EN if cp.detect_language(q) == "en" else PASSAGE_FR,
+                    language=cp.detect_language(q),
+                    tags=("rubrique:3.11",),
+                )
 
         mas = reg.in_jurisdiction(code)
         for split in (TRAIN, EVAL):

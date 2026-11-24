@@ -1,0 +1,12 @@
+Jeu rcp-2026.11-100 · mode hybride · plongements bge-m3
+                                    n  rappel@10  rappel@3  1er rang    MRR
+  tous                            100      1.000     0.967     0.790  0.884
+  anglais sur RCP en français      33      1.000     0.970     0.727  0.856
+  produit connu (ma_ids)           70      1.000     1.000     0.857  0.926
+  produit nommé seulement          22      1.000     0.864     0.500  0.706
+  registre                          8      1.000     0.958     1.000  1.000
+Seuil 0.90 : atteint
+  hors des 3 premiers : rcp-016 produit-nommé en · tête ['amm-036/1', 'amm-035/1', 'amm-036/3.3']
+  hors des 3 premiers : rcp-080 produit-nommé en · tête ['amm-017/3.11', 'amm-001/3.11', 'amm-017/1']
+  hors des 3 premiers : rcp-088 produit-nommé en · tête ['amm-012/3.11', 'amm-002/3.11', 'amm-001/3.11']
+  hors des 3 premiers : rcp-094 registre en · tête ['amm-004/3.11', 'amm-020/3.11', 'amm-007/3.11']

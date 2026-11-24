@@ -25,7 +25,7 @@ from recallpharma.training.scenarios import (
 
 _DATA = re.compile(r"<donnees_outil>\n(.*)\n</donnees_outil>", re.S)
 _RECORD = re.compile(r"^([^\s:]+) : (\{.*\})$", re.M)
-_PLACEHOLDER = re.compile(r"\{(liste|ligne1|ligne2|delai|calcul|alerte)\}")
+_PLACEHOLDER = re.compile(r"\{(liste|ligne1|ligne2|delai|calcul|alerte|section|passage|comparaison)\}")
 
 
 def tool_results(messages: list[dict[str, Any]]) -> list[dict[str, Any]]:
@@ -53,7 +53,14 @@ def slots(records: dict[str, dict[str, str]]) -> dict[str, str]:
         found["liste"] = lists[-1]
     for n, rid in enumerate(rows[:2], start=1):
         found[f"ligne{n}"] = rid
-    for key, prefix in (("delai", "#delai"), ("calcul", "calcul"), ("alerte", "alr-")):
+    for key, prefix in (
+        ("delai", "#delai"),
+        ("calcul", "calcul"),
+        ("alerte", "alr-"),
+        ("section", "#rcp-"),
+        ("passage", "#rcp-"),
+        ("comparaison", "comparaison"),
+    ):
         match = next((i for i in ids if prefix in i), None)
         if match:
             found[key] = match
@@ -85,6 +92,10 @@ def choose_draft(sc: Scenario, records: dict[str, dict[str, str]]) -> str | None
         absent = [t for t in candidates if "ne donne pas" in t or "gives no" in t]
         has_delay = any("#delai" in rid for rid in records)
         candidates = [t for t in candidates if t not in absent] if has_delay else absent
+    rubric = next((t.split(":", 1)[1] for t in sc.tags if t.startswith("rubrique:")), None)
+    if rubric:  # l'extrait de la rubrique visée d'abord, s'il a été trouvé ; sinon le premier extrait rendu
+        wanted = [rid for rid, r in records.items() if "#rcp-" in rid and r.get("rubric", "").startswith(rubric + " ")]
+        records = {**{rid: records[rid] for rid in wanted}, **records}
     for template in candidates:
         text = fill(template, records)
         if text:

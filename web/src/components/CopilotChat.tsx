@@ -19,6 +19,9 @@ type RecordsEvent = {
   elsewhere: Row[];
   notices: string[];
   jurisdiction: string;
+  // Extraits de RCP : affichés tels quels, dans leur langue, avec leur source (CT-COP-02).
+  passages?: { id: string; ma_id: string; text: string; rubric: string; language: string; product: string; source: string }[];
+  comparisons?: { id: string; name: string; present: string[]; absent: string[]; differences: string[] }[];
 };
 type AnswerEvent = {
   kind: "answer" | "fallback" | "abstention";
@@ -252,6 +255,7 @@ export function CopilotChat({ jurisdictions, defaultJurisdiction }: { jurisdicti
 }
 
 function RecordsView({ records }: { records: RecordsEvent }) {
+  const compared = (records.comparisons ?? []).length > 0;
   return (
     <div className="stack">
       <Banners banners={records.banners} />
@@ -269,6 +273,7 @@ function RecordsView({ records }: { records: RecordsEvent }) {
             <thead>
               <tr>
                 <th>Produit</th>
+                {compared && <th>Juridiction</th>}
                 <th>Désignation</th>
                 <th>N° d&apos;AMM</th>
                 <th>Statut</th>
@@ -282,6 +287,7 @@ function RecordsView({ records }: { records: RecordsEvent }) {
                   <td>
                     <Link href={`/amm/${r.id}`}>{r.name}</Link>
                   </td>
+                  {compared && <td className="small">{r.jurisdiction}</td>}
                   <td className="small">{r.designation}</td>
                   <td className="mono small">{r.ma_number}</td>
                   <td>
@@ -295,6 +301,24 @@ function RecordsView({ records }: { records: RecordsEvent }) {
           </table>
         </div>
       )}
+      {(records.comparisons ?? []).map((c) => (
+        <p key={c.id} className="small">
+          {c.name} : présent dans {c.present.join(", ") || "aucune juridiction"}
+          {c.absent.length > 0 && <> ; absent de {c.absent.join(", ")}</>} ; écarts :{" "}
+          {c.differences.join(", ") || "aucun"}. Chaque AMM est lue avec son propre RCP.
+        </p>
+      ))}
+      {(records.passages ?? []).map((p) => (
+        <figure key={p.id} className="card" style={{ margin: 0 }}>
+          <blockquote lang={p.language} style={{ margin: 0 }}>
+            {p.text}
+          </blockquote>
+          <figcaption className="small muted">
+            <Link href={`/amm/${p.ma_id}`}>{p.product}</Link> · rubrique {p.rubric} · {p.source}
+            {p.language !== "fr" && <> · texte en {p.language === "en" ? "anglais" : p.language}</>}
+          </figcaption>
+        </figure>
+      ))}
       {records.apart.length > 0 && (
         <p className="small">
           Listés à part (délai non comparable) :{" "}

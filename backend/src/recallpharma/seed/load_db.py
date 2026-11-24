@@ -17,11 +17,50 @@ from recallpharma.db import models as m
 from recallpharma.db.audit import record
 from recallpharma.db.session import session_factory
 from recallpharma.domain.identifiers import normalise_ma_number
+from recallpharma.domain.passages import split_section
 from recallpharma.seed.a10 import DEFAULT_PATH, load
+from recallpharma.seed.spc_texts import SPECIMEN, spc_sections
 
 
 def _source_key(src: dict[str, Any]) -> tuple[str, str, str, bool]:
     return (src["nature"], src["title"], src["document_date"], src["latest_edition"])
+
+
+def load_spc_texts(session: Session, raw: dict[str, Any]) -> int:
+    """Rubriques et passages des RCP fictifs (sans plongements : voir recallpharma.retrieval.search). Les RCP qui ont
+    déjà leurs rubriques sont laissés tels quels : la commande se rejoue sans doublon sur une base déjà chargée."""
+    products = {p["id"]: p for p in raw["products"]}
+    substances = {x["id"]: x for x in raw["substances"]}
+    added = 0
+    for a in raw["authorisations"]:
+        if not a.get("spc"):
+            continue
+        version = session.scalar(
+            select(m.SpcVersion).where(
+                m.SpcVersion.authorisation_id == a["id"], m.SpcVersion.version_label == a["spc"]["version_label"]
+            )
+        )
+        if version is None or version.sections:
+            continue
+        product = products[a["product_id"]]
+        version.sections = [
+            m.SpcSection(
+                rubric=t.rubric,
+                language=t.language,
+                title=t.title,
+                text=t.text,
+                page=t.page,
+                source_title=f"RCP de {product['name']}, {a['ma_number']} ({SPECIMEN})",
+                passages=[
+                    m.SpcPassage(rank=c.rank, heading=f"{product['name']} — {t.title}", text=c.text)
+                    for c in split_section(t.text)
+                ],
+            )
+            for t in spc_sections(a, product, substances)
+        ]
+        added += len(version.sections)
+    session.flush()
+    return added
 
 
 def load_a10(session: Session) -> int:
@@ -160,6 +199,7 @@ def load_a10(session: Session) -> int:
             ma.spc_versions = [version]
         session.add(ma)
     session.flush()
+    load_spc_texts(session, raw)
 
     for al in raw["alerts"]:
         session.add(
@@ -191,6 +231,9 @@ def load_a10(session: Session) -> int:
 
 def main() -> None:
     with session_factory()() as session, session.begin():
+        if "--rcp" in sys.argv:  # base déjà chargée : ajoute seulement les textes de RCP manquants
+            print(f"{load_spc_texts(session, load(DEFAULT_PATH).raw)} rubriques de RCP ajoutées.", file=sys.stderr)
+            return
         count = load_a10(session)
     print(f"{count} AMM fictives chargées.", file=sys.stderr)
 

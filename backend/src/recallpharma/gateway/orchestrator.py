@@ -123,6 +123,7 @@ class Orchestrator:
             yield from self._unavailable(trace, started, "modèle")
             return
         turn = self.runner.turn
+        trace.injection_suspected = trace.injection_suspected or turn.injection_in_data
         yield "records", self._records_event(q, language)
 
         if abstained is not None:
@@ -264,7 +265,7 @@ class Orchestrator:
             check = cp.check_draft(draft, records, closed)
             trace.record("rédaction", messages, reply, check={"passed": check.passed, "problems": list(check.problems)})
             if check.passed:
-                return self._localise(cp.render(draft, records), language), check, attempt
+                return cp.render(draft, self._localise(records, language)), check, attempt
             messages += [
                 {"role": "assistant", "content": reply.content},
                 {"role": "user", "content": prompts.RETRY.format(problems="; ".join(check.problems))},
@@ -272,12 +273,14 @@ class Orchestrator:
         return None, check, 2
 
     @staticmethod
-    def _localise(text: str, language: str) -> str:
+    def _localise(records: cp.Records, language: str) -> cp.Records:
+        """Statuts traduits dans la langue de la réponse ; un extrait de RCP reste dans sa langue (CT-COP-02)."""
         if language != "en":
-            return text
-        for fr, en in STATUS_EN.items():
-            text = text.replace(fr, en)
-        return text
+            return records
+        return {
+            rid: {k: STATUS_EN.get(v, v) if k == "status" else v for k, v in fields.items()}
+            for rid, fields in records.items()
+        }
 
     # --- Composition (RG-15, RG-26) ---------------------------------------------------------------
 
@@ -293,6 +296,8 @@ class Orchestrator:
             "notices": t.notices,
             "result_set_id": t.result_set_id,
             "jurisdiction": q.jurisdiction,
+            "passages": t.passages,
+            "comparisons": t.comparisons,
         }
 
     def _context(self, q: Question, cited: list[str], language: str) -> dict[str, Any]:
@@ -302,7 +307,12 @@ class Orchestrator:
         expanded: list[str] = []
         for rid in cited:
             base = rid.split("#")[0]
-            expanded += [r["id"] for r in turn.rows] if base.startswith("liste") else [base]
+            if base.startswith("liste"):
+                expanded += [r["id"] for r in turn.rows]
+            elif base.startswith("comparaison"):
+                expanded += next((c["rows"] for c in turn.comparisons if c["id"] == base), [])
+            else:
+                expanded.append(base)
         ids = [i for i in dict.fromkeys(expanded) if i in meta]
         ctx = cp.context(
             q.jurisdiction_name,
@@ -352,6 +362,8 @@ class Orchestrator:
                     "notices": [],
                     "result_set_id": None,
                     "jurisdiction": q.jurisdiction,
+                    "passages": [],
+                    "comparisons": [],
                 },
             )
         en = language == "en"

@@ -14,6 +14,7 @@ dependencies = [
     "tzdata>=2024.2",
     "python-multipart>=0.0.12",
     "pyjwt[crypto]>=2.10",
+    "pgvector>=0.3",
 ]
 
 [dependency-groups]
@@ -97,11 +98,18 @@ forbidden_modules = ["sqlalchemy", "psycopg", "recallpharma.db", "recallpharma.a
 [[tool.importlinter.contracts]]
 name = "L'API ne parle jamais au modèle : elle passe par la passerelle (ADR-07)"
 type = "forbidden"
-source_modules = ["recallpharma.api", "recallpharma.curation", "recallpharma.db"]
+source_modules = ["recallpharma.api", "recallpharma.curation", "recallpharma.db", "recallpharma.retrieval"]
 forbidden_modules = ["recallpharma.gateway"]
 
 [[tool.importlinter.contracts]]
 name = "Le service ne dépend jamais de l'entraînement : ni code, ni bibliothèques lourdes (torch, transformers)"
 type = "forbidden"
-source_modules = ["recallpharma.api", "recallpharma.gateway", "recallpharma.domain", "recallpharma.db", "recallpharma.curation"]
+source_modules = [
+    "recallpharma.api",
+    "recallpharma.gateway",
+    "recallpharma.domain",
+    "recallpharma.db",
+    "recallpharma.curation",
+    "recallpharma.retrieval",
+]
 forbidden_modules = ["recallpharma.training", "torch", "transformers", "peft", "trl", "datasets"]

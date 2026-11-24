@@ -31,6 +31,11 @@ export default async function SheetPage({ params, searchParams }: Props) {
     throw e;
   }
   const { identity, regulation, assessment, spc } = sheet;
+  // Texte d'origine du RCP, rubrique par rubrique : affiché dans sa langue, jamais traduit ni transposé (RG-06).
+  const sections = spc
+    ? await api<Schemas["SectionText"][]>(`/v1/authorisations/${encodeURIComponent(id)}/spc/sections`).catch(() => [])
+    : [];
+  const languages = [...new Set(sections.map((s) => s.language))];
 
   return (
     <>
@@ -195,6 +200,29 @@ export default async function SheetPage({ params, searchParams }: Props) {
               </div>
             </div>
             {spc.withdrawal_periods.length > 0 && <WithdrawalCalculator authorisationId={sheet.authorisation_id} periods={spc.withdrawal_periods} />}
+            {languages.map((lang) => (
+              <details key={lang} className="card" open={lang === languages[0]}>
+                <summary>
+                  Texte du RCP ({lang === "fr" ? "français" : lang === "en" ? "anglais" : lang}) ·{" "}
+                  <span className="small muted">{sections.find((s) => s.language === lang)?.source_title}</span>
+                </summary>
+                <dl lang={lang}>
+                  {sections
+                    .filter((s) => s.language === lang)
+                    .map((s) => (
+                      <div key={s.rubric}>
+                        <dt>
+                          <strong>
+                            {s.rubric}. {s.title}
+                          </strong>{" "}
+                          <span className="small muted">page {s.page ?? "—"}</span>
+                        </dt>
+                        <dd style={{ marginLeft: 0, marginBottom: 8 }}>{s.text}</dd>
+                      </div>
+                    ))}
+                </dl>
+              </details>
+            ))}
           </div>
         )}
       </section>

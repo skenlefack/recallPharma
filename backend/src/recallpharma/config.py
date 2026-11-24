@@ -35,6 +35,12 @@ class Settings(BaseSettings):
     llm_model: str = "qwen2.5:7b-instruct"
     llm_api_key: str | None = None
     llm_timeout_s: float = 120.0
+    # Plongements des passages de RCP (D4) : serveur compatible OpenAI (/embeddings). « hash: » = encodeur lexical
+    # déterministe (tests, poste sans modèle) ; vide = plein texte seul.
+    embed_base_url: str = "http://localhost:11434/v1"
+    embed_model: str = "bge-m3"
+    embed_api_key: str | None = None
+    embed_timeout_s: float = 5.0  # délai d'un outil (D5)
 
 
 @lru_cache

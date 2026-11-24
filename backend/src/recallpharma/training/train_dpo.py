@@ -2,7 +2,7 @@
 
 Usage :
     uv run --group training python -m recallpharma.training.train_dpo --recipe qwen2.5-0.5b-cpu \
-        --data var/training/copilot-donnees-2026.11-1 --sft var/models/adaptateurs/copilot-0.5b-sft \
+        --data var/training/copilot-donnees-2026.11-2 --sft var/models/adaptateurs/copilot-0.5b-sft \
         --out var/models/adaptateurs/copilot-0.5b-dpo
 
 Fautes enseignées comme refusées : valeurs écrites en clair (RG-23), réponse de mémoire sans outil, recherche relancée

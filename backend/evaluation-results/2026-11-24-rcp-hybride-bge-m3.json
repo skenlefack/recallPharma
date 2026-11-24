@@ -1,0 +1,1445 @@
+{
+ "reference_version": "rcp-2026.11-100",
+ "mode": "hybride",
+ "embedding_model": "bge-m3",
+ "details": [
+  {
+   "id": "rcp-001",
+   "kind": "produit",
+   "language": "en",
+   "cross_lingual": true,
+   "recall": 1.0,
+   "recall_at_3": 1.0,
+   "reciprocal_rank": 1.0,
+   "top": [
+    "amm-031/3.11",
+    "amm-031/3.3",
+    "amm-031/3.5"
+   ]
+  },
+  {
+   "id": "rcp-002",
+   "kind": "produit",
+   "language": "en",
+   "cross_lingual": true,
+   "recall": 1.0,
+   "recall_at_3": 1.0,
+   "reciprocal_rank": 1.0,
+   "top": [
+    "amm-032/2",
+    "amm-032/1",
+    "amm-032/3.5"
+   ]
+  },
+  {
+   "id": "rcp-003",
+   "kind": "produit",
+   "language": "en",
+   "cross_lingual": true,
+   "recall": 1.0,
+   "recall_at_3": 1.0,
+   "reciprocal_rank": 1.0,
+   "top": [
+    "amm-033/3.5",
+    "amm-033/3.4",
+    "amm-033/3.11"
+   ]
+  },
+  {
+   "id": "rcp-004",
+   "kind": "produit-nommé",
+   "language": "en",
+   "cross_lingual": true,
+   "recall": 1.0,
+   "recall_at_3": 1.0,
+   "reciprocal_rank": 1.0,
+   "top": [
+    "amm-034/3.11",
+    "amm-035/3.11",
+    "amm-034/1"
+   ]
+  },
+  {
+   "id": "rcp-005",
+   "kind": "produit",
+   "language": "en",
+   "cross_lingual": true,
+   "recall": 1.0,
+   "recall_at_3": 1.0,
+   "reciprocal_rank": 0.5,
+   "top": [
+    "amm-035/3.5",
+    "amm-035/3.4",
+    "amm-035/3.3"
+   ]
+  },
+  {
+   "id": "rcp-006",
+   "kind": "produit",
+   "language": "en",
+   "cross_lingual": true,
+   "recall": 1.0,
+   "recall_at_3": 1.0,
+   "reciprocal_rank": 1.0,
+   "top": [
+    "amm-036/3.1",
+    "amm-036/3.2",
+    "amm-036/3.3"
+   ]
+  },
+  {
+   "id": "rcp-007",
+   "kind": "produit",
+   "language": "en",
+   "cross_lingual": true,
+   "recall": 1.0,
+   "recall_at_3": 1.0,
+   "reciprocal_rank": 0.5,
+   "top": [
+    "amm-049/2",
+    "amm-049/3.9",
+    "amm-049/1"
+   ]
+  },
+  {
+   "id": "rcp-008",
+   "kind": "produit-nommé",
+   "language": "en",
+   "cross_lingual": true,
+   "recall": 1.0,
+   "recall_at_3": 1.0,
+   "reciprocal_rank": 1.0,
+   "top": [
+    "amm-050/3.11",
+    "amm-051/3.11",
+    "amm-050/1"
+   ]
+  },
+  {
+   "id": "rcp-009",
+   "kind": "produit",
+   "language": "en",
+   "cross_lingual": true,
+   "recall": 1.0,
+   "recall_at_3": 1.0,
+   "reciprocal_rank": 1.0,
+   "top": [
+    "amm-051/3.2",
+    "amm-051/3.4",
+    "amm-051/3.9"
+   ]
+  },
+  {
+   "id": "rcp-010",
+   "kind": "produit",
+   "language": "en",
+   "cross_lingual": true,
+   "recall": 1.0,
+   "recall_at_3": 1.0,
+   "reciprocal_rank": 1.0,
+   "top": [
+    "amm-052/3.9",
+    "amm-052/3.2",
+    "amm-052/3.5"
+   ]
+  },
+  {
+   "id": "rcp-011",
+   "kind": "produit",
+   "language": "en",
+   "cross_lingual": true,
+   "recall": 1.0,
+   "recall_at_3": 1.0,
+   "reciprocal_rank": 1.0,
+   "top": [
+    "amm-031/3.2",
+    "amm-031/3.11",
+    "amm-031/3.4"
+   ]
+  },
+  {
+   "id": "rcp-012",
+   "kind": "produit-nommé",
+   "language": "en",
+   "cross_lingual": true,
+   "recall": 1.0,
+   "recall_at_3": 1.0,
+   "reciprocal_rank": 0.5,
+   "top": [
+    "amm-032/1",
+    "amm-032/3.1",
+    "amm-032/3.2"
+   ]
+  },
+  {
+   "id": "rcp-013",
+   "kind": "produit",
+   "language": "en",
+   "cross_lingual": true,
+   "recall": 1.0,
+   "recall_at_3": 1.0,
+   "reciprocal_rank": 1.0,
+   "top": [
+    "amm-033/3.11",
+    "amm-033/3.5",
+    "amm-033/3.3"
+   ]
+  },
+  {
+   "id": "rcp-014",
+   "kind": "produit",
+   "language": "en",
+   "cross_lingual": true,
+   "recall": 1.0,
+   "recall_at_3": 1.0,
+   "reciprocal_rank": 1.0,
+   "top": [
+    "amm-034/3.9",
+    "amm-034/3.5",
+    "amm-034/3.2"
+   ]
+  },
+  {
+   "id": "rcp-015",
+   "kind": "produit",
+   "language": "en",
+   "cross_lingual": true,
+   "recall": 1.0,
+   "recall_at_3": 1.0,
+   "reciprocal_rank": 1.0,
+   "top": [
+    "amm-035/3.12",
+    "amm-035/3.9",
+    "amm-035/3.5"
+   ]
+  },
+  {
+   "id": "rcp-016",
+   "kind": "produit-nommé",
+   "language": "en",
+   "cross_lingual": true,
+   "recall": 1.0,
+   "recall_at_3": 0.0,
+   "reciprocal_rank": 0.25,
+   "top": [
+    "amm-036/1",
+    "amm-035/1",
+    "amm-036/3.3"
+   ]
+  },
+  {
+   "id": "rcp-017",
+   "kind": "produit",
+   "language": "en",
+   "cross_lingual": true,
+   "recall": 1.0,
+   "recall_at_3": 1.0,
+   "reciprocal_rank": 1.0,
+   "top": [
+    "amm-049/3.3",
+    "amm-049/3.5",
+    "amm-049/3.4"
+   ]
+  },
+  {
+   "id": "rcp-018",
+   "kind": "produit",
+   "language": "en",
+   "cross_lingual": true,
+   "recall": 1.0,
+   "recall_at_3": 1.0,
+   "reciprocal_rank": 1.0,
+   "top": [
+    "amm-050/3.9",
+    "amm-050/3.5",
+    "amm-050/3.4"
+   ]
+  },
+  {
+   "id": "rcp-019",
+   "kind": "produit",
+   "language": "en",
+   "cross_lingual": true,
+   "recall": 1.0,
+   "recall_at_3": 1.0,
+   "reciprocal_rank": 1.0,
+   "top": [
+    "amm-051/2",
+    "amm-051/1",
+    "amm-051/6"
+   ]
+  },
+  {
+   "id": "rcp-020",
+   "kind": "produit-nommé",
+   "language": "en",
+   "cross_lingual": true,
+   "recall": 1.0,
+   "recall_at_3": 1.0,
+   "reciprocal_rank": 0.5,
+   "top": [
+    "amm-052/1",
+    "amm-052/2",
+    "amm-052/3.1"
+   ]
+  },
+  {
+   "id": "rcp-021",
+   "kind": "produit",
+   "language": "en",
+   "cross_lingual": true,
+   "recall": 1.0,
+   "recall_at_3": 1.0,
+   "reciprocal_rank": 1.0,
+   "top": [
+    "amm-031/2",
+    "amm-031/1",
+    "amm-031/3.5"
+   ]
+  },
+  {
+   "id": "rcp-022",
+   "kind": "produit",
+   "language": "en",
+   "cross_lingual": true,
+   "recall": 1.0,
+   "recall_at_3": 1.0,
+   "reciprocal_rank": 1.0,
+   "top": [
+    "amm-032/3.9",
+    "amm-032/3.5",
+    "amm-032/3.4"
+   ]
+  },
+  {
+   "id": "rcp-023",
+   "kind": "produit",
+   "language": "en",
+   "cross_lingual": true,
+   "recall": 1.0,
+   "recall_at_3": 1.0,
+   "reciprocal_rank": 0.5,
+   "top": [
+    "amm-033/3.5",
+    "amm-033/3.4",
+    "amm-033/3.11"
+   ]
+  },
+  {
+   "id": "rcp-024",
+   "kind": "produit-nommé",
+   "language": "en",
+   "cross_lingual": true,
+   "recall": 1.0,
+   "recall_at_3": 1.0,
+   "reciprocal_rank": 1.0,
+   "top": [
+    "amm-034/3.4",
+    "amm-034/3.3",
+    "amm-034/3.5"
+   ]
+  },
+  {
+   "id": "rcp-025",
+   "kind": "produit",
+   "language": "en",
+   "cross_lingual": true,
+   "recall": 1.0,
+   "recall_at_3": 1.0,
+   "reciprocal_rank": 1.0,
+   "top": [
+    "amm-035/3.12",
+    "amm-035/3.9",
+    "amm-035/3.5"
+   ]
+  },
+  {
+   "id": "rcp-026",
+   "kind": "produit",
+   "language": "en",
+   "cross_lingual": true,
+   "recall": 1.0,
+   "recall_at_3": 1.0,
+   "reciprocal_rank": 1.0,
+   "top": [
+    "amm-036/3.12",
+    "amm-036/3.5",
+    "amm-036/2"
+   ]
+  },
+  {
+   "id": "rcp-027",
+   "kind": "produit",
+   "language": "en",
+   "cross_lingual": true,
+   "recall": 1.0,
+   "recall_at_3": 1.0,
+   "reciprocal_rank": 0.5,
+   "top": [
+    "amm-049/3.2",
+    "amm-049/3.1",
+    "amm-049/1"
+   ]
+  },
+  {
+   "id": "rcp-028",
+   "kind": "produit-nommé",
+   "language": "en",
+   "cross_lingual": true,
+   "recall": 1.0,
+   "recall_at_3": 1.0,
+   "reciprocal_rank": 1.0,
+   "top": [
+    "amm-050/3.5",
+    "amm-052/3.5",
+    "amm-051/3.5"
+   ]
+  },
+  {
+   "id": "rcp-029",
+   "kind": "produit",
+   "language": "en",
+   "cross_lingual": true,
+   "recall": 1.0,
+   "recall_at_3": 1.0,
+   "reciprocal_rank": 1.0,
+   "top": [
+    "amm-051/3.12",
+    "amm-051/3.3",
+    "amm-051/3.5"
+   ]
+  },
+  {
+   "id": "rcp-030",
+   "kind": "produit",
+   "language": "en",
+   "cross_lingual": true,
+   "recall": 1.0,
+   "recall_at_3": 1.0,
+   "reciprocal_rank": 0.5,
+   "top": [
+    "amm-052/3.5",
+    "amm-052/3.4",
+    "amm-052/3.3"
+   ]
+  },
+  {
+   "id": "rcp-031",
+   "kind": "produit",
+   "language": "en",
+   "cross_lingual": true,
+   "recall": 1.0,
+   "recall_at_3": 1.0,
+   "reciprocal_rank": 0.5,
+   "top": [
+    "amm-031/3.5",
+    "amm-031/3.4",
+    "amm-031/3.11"
+   ]
+  },
+  {
+   "id": "rcp-032",
+   "kind": "produit-nommé",
+   "language": "en",
+   "cross_lingual": true,
+   "recall": 1.0,
+   "recall_at_3": 1.0,
+   "reciprocal_rank": 1.0,
+   "top": [
+    "amm-032/3.5",
+    "amm-031/3.5",
+    "amm-035/3.5"
+   ]
+  },
+  {
+   "id": "rcp-033",
+   "kind": "produit",
+   "language": "en",
+   "cross_lingual": true,
+   "recall": 1.0,
+   "recall_at_3": 1.0,
+   "reciprocal_rank": 1.0,
+   "top": [
+    "amm-033/3.5",
+    "amm-033/3.4",
+    "amm-033/3.11"
+   ]
+  },
+  {
+   "id": "rcp-034",
+   "kind": "produit",
+   "language": "fr",
+   "cross_lingual": false,
+   "recall": 1.0,
+   "recall_at_3": 1.0,
+   "reciprocal_rank": 1.0,
+   "top": [
+    "amm-016/3.4",
+    "amm-016/7",
+    "amm-016/6"
+   ]
+  },
+  {
+   "id": "rcp-035",
+   "kind": "produit",
+   "language": "fr",
+   "cross_lingual": false,
+   "recall": 1.0,
+   "recall_at_3": 1.0,
+   "reciprocal_rank": 1.0,
+   "top": [
+    "amm-002/3.5",
+    "amm-002/3.4",
+    "amm-002/3.9"
+   ]
+  },
+  {
+   "id": "rcp-036",
+   "kind": "produit",
+   "language": "fr",
+   "cross_lingual": false,
+   "recall": 1.0,
+   "recall_at_3": 1.0,
+   "reciprocal_rank": 1.0,
+   "top": [
+    "amm-018/3.3",
+    "amm-018/3.5",
+    "amm-018/3.4"
+   ]
+  },
+  {
+   "id": "rcp-037",
+   "kind": "produit-nommé",
+   "language": "fr",
+   "cross_lingual": false,
+   "recall": 1.0,
+   "recall_at_3": 1.0,
+   "reciprocal_rank": 0.3333333333333333,
+   "top": [
+    "amm-002/3.11",
+    "amm-003/3.11",
+    "amm-006/3.11"
+   ]
+  },
+  {
+   "id": "rcp-038",
+   "kind": "produit",
+   "language": "fr",
+   "cross_lingual": false,
+   "recall": 1.0,
+   "recall_at_3": 1.0,
+   "reciprocal_rank": 1.0,
+   "top": [
+    "amm-036/3.3",
+    "amm-036/3.2",
+    "amm-036/3.5"
+   ]
+  },
+  {
+   "id": "rcp-039",
+   "kind": "produit",
+   "language": "fr",
+   "cross_lingual": false,
+   "recall": 1.0,
+   "recall_at_3": 1.0,
+   "reciprocal_rank": 1.0,
+   "top": [
+    "amm-009/3.4",
+    "amm-009/6",
+    "amm-009/7"
+   ]
+  },
+  {
+   "id": "rcp-040",
+   "kind": "produit",
+   "language": "fr",
+   "cross_lingual": false,
+   "recall": 1.0,
+   "recall_at_3": 1.0,
+   "reciprocal_rank": 1.0,
+   "top": [
+    "amm-012/3.9",
+    "amm-012/3.5",
+    "amm-012/3.4"
+   ]
+  },
+  {
+   "id": "rcp-041",
+   "kind": "produit-nommé",
+   "language": "fr",
+   "cross_lingual": false,
+   "recall": 1.0,
+   "recall_at_3": 1.0,
+   "reciprocal_rank": 0.5,
+   "top": [
+    "amm-019/3.2",
+    "amm-019/3.1",
+    "amm-019/1"
+   ]
+  },
+  {
+   "id": "rcp-042",
+   "kind": "produit",
+   "language": "fr",
+   "cross_lingual": false,
+   "recall": 1.0,
+   "recall_at_3": 1.0,
+   "reciprocal_rank": 1.0,
+   "top": [
+    "amm-003/3.11",
+    "amm-003/3.3",
+    "amm-003/3.4"
+   ]
+  },
+  {
+   "id": "rcp-043",
+   "kind": "produit",
+   "language": "fr",
+   "cross_lingual": false,
+   "recall": 1.0,
+   "recall_at_3": 1.0,
+   "reciprocal_rank": 1.0,
+   "top": [
+    "amm-008/3.4",
+    "amm-008/7",
+    "amm-008/6"
+   ]
+  },
+  {
+   "id": "rcp-044",
+   "kind": "produit",
+   "language": "fr",
+   "cross_lingual": false,
+   "recall": 1.0,
+   "recall_at_3": 1.0,
+   "reciprocal_rank": 1.0,
+   "top": [
+    "amm-007/2",
+    "amm-007/3.2",
+    "amm-007/3.5"
+   ]
+  },
+  {
+   "id": "rcp-045",
+   "kind": "produit-nommé",
+   "language": "fr",
+   "cross_lingual": false,
+   "recall": 1.0,
+   "recall_at_3": 1.0,
+   "reciprocal_rank": 0.5,
+   "top": [
+    "amm-051/1",
+    "amm-051/2",
+    "amm-050/2"
+   ]
+  },
+  {
+   "id": "rcp-046",
+   "kind": "produit",
+   "language": "fr",
+   "cross_lingual": false,
+   "recall": 1.0,
+   "recall_at_3": 1.0,
+   "reciprocal_rank": 1.0,
+   "top": [
+    "amm-011/3.5",
+    "amm-011/3.9",
+    "amm-011/3.3"
+   ]
+  },
+  {
+   "id": "rcp-047",
+   "kind": "produit",
+   "language": "fr",
+   "cross_lingual": false,
+   "recall": 1.0,
+   "recall_at_3": 1.0,
+   "reciprocal_rank": 1.0,
+   "top": [
+    "amm-032/3.5",
+    "amm-032/3.4",
+    "amm-032/3.9"
+   ]
+  },
+  {
+   "id": "rcp-048",
+   "kind": "produit",
+   "language": "fr",
+   "cross_lingual": false,
+   "recall": 1.0,
+   "recall_at_3": 1.0,
+   "reciprocal_rank": 1.0,
+   "top": [
+    "amm-007/3.4",
+    "amm-007/6",
+    "amm-007/7"
+   ]
+  },
+  {
+   "id": "rcp-049",
+   "kind": "produit-nommé",
+   "language": "fr",
+   "cross_lingual": false,
+   "recall": 1.0,
+   "recall_at_3": 1.0,
+   "reciprocal_rank": 1.0,
+   "top": [
+    "amm-034/3.12",
+    "amm-034/1",
+    "amm-033/3.12"
+   ]
+  },
+  {
+   "id": "rcp-050",
+   "kind": "produit",
+   "language": "fr",
+   "cross_lingual": false,
+   "recall": 1.0,
+   "recall_at_3": 1.0,
+   "reciprocal_rank": 1.0,
+   "top": [
+    "amm-035/3.2",
+    "amm-035/3.3",
+    "amm-035/3.11"
+   ]
+  },
+  {
+   "id": "rcp-051",
+   "kind": "produit",
+   "language": "fr",
+   "cross_lingual": false,
+   "recall": 1.0,
+   "recall_at_3": 1.0,
+   "reciprocal_rank": 1.0,
+   "top": [
+    "amm-012/3.3",
+    "amm-012/3.5",
+    "amm-012/3.4"
+   ]
+  },
+  {
+   "id": "rcp-052",
+   "kind": "produit",
+   "language": "fr",
+   "cross_lingual": false,
+   "recall": 1.0,
+   "recall_at_3": 1.0,
+   "reciprocal_rank": 1.0,
+   "top": [
+    "amm-001/3.3",
+    "amm-001/3.2",
+    "amm-001/3.5"
+   ]
+  },
+  {
+   "id": "rcp-053",
+   "kind": "produit-nommé",
+   "language": "fr",
+   "cross_lingual": false,
+   "recall": 1.0,
+   "recall_at_3": 1.0,
+   "reciprocal_rank": 1.0,
+   "top": [
+    "amm-032/3.5",
+    "amm-031/3.5",
+    "amm-032/1"
+   ]
+  },
+  {
+   "id": "rcp-054",
+   "kind": "produit",
+   "language": "fr",
+   "cross_lingual": false,
+   "recall": 1.0,
+   "recall_at_3": 1.0,
+   "reciprocal_rank": 1.0,
+   "top": [
+    "amm-019/3.4",
+    "amm-019/6",
+    "amm-019/7"
+   ]
+  },
+  {
+   "id": "rcp-055",
+   "kind": "produit",
+   "language": "fr",
+   "cross_lingual": false,
+   "recall": 1.0,
+   "recall_at_3": 1.0,
+   "reciprocal_rank": 1.0,
+   "top": [
+    "amm-034/3.11",
+    "amm-034/3.3",
+    "amm-034/3.2"
+   ]
+  },
+  {
+   "id": "rcp-056",
+   "kind": "produit",
+   "language": "fr",
+   "cross_lingual": false,
+   "recall": 1.0,
+   "recall_at_3": 1.0,
+   "reciprocal_rank": 1.0,
+   "top": [
+    "amm-033/3.12",
+    "amm-033/3.5",
+    "amm-033/3.4"
+   ]
+  },
+  {
+   "id": "rcp-057",
+   "kind": "produit-nommé",
+   "language": "fr",
+   "cross_lingual": false,
+   "recall": 1.0,
+   "recall_at_3": 1.0,
+   "reciprocal_rank": 0.5,
+   "top": [
+    "amm-035/1",
+    "amm-035/3.9",
+    "amm-035/3.2"
+   ]
+  },
+  {
+   "id": "rcp-058",
+   "kind": "produit",
+   "language": "fr",
+   "cross_lingual": false,
+   "recall": 1.0,
+   "recall_at_3": 1.0,
+   "reciprocal_rank": 1.0,
+   "top": [
+    "amm-005/2",
+    "amm-005/3.12",
+    "amm-005/1"
+   ]
+  },
+  {
+   "id": "rcp-059",
+   "kind": "produit",
+   "language": "fr",
+   "cross_lingual": false,
+   "recall": 1.0,
+   "recall_at_3": 1.0,
+   "reciprocal_rank": 1.0,
+   "top": [
+    "amm-034/2",
+    "amm-034/3.2",
+    "amm-034/3.3"
+   ]
+  },
+  {
+   "id": "rcp-060",
+   "kind": "produit",
+   "language": "fr",
+   "cross_lingual": false,
+   "recall": 1.0,
+   "recall_at_3": 1.0,
+   "reciprocal_rank": 1.0,
+   "top": [
+    "amm-002/3.4",
+    "amm-002/7",
+    "amm-002/6"
+   ]
+  },
+  {
+   "id": "rcp-061",
+   "kind": "produit-nommé",
+   "language": "fr",
+   "cross_lingual": false,
+   "recall": 1.0,
+   "recall_at_3": 1.0,
+   "reciprocal_rank": 0.5,
+   "top": [
+    "amm-012/1",
+    "amm-012/3.2",
+    "amm-002/1"
+   ]
+  },
+  {
+   "id": "rcp-062",
+   "kind": "produit",
+   "language": "fr",
+   "cross_lingual": false,
+   "recall": 1.0,
+   "recall_at_3": 1.0,
+   "reciprocal_rank": 0.3333333333333333,
+   "top": [
+    "amm-036/3.2",
+    "amm-036/3.5",
+    "amm-036/3.1"
+   ]
+  },
+  {
+   "id": "rcp-063",
+   "kind": "produit",
+   "language": "fr",
+   "cross_lingual": false,
+   "recall": 1.0,
+   "recall_at_3": 1.0,
+   "reciprocal_rank": 1.0,
+   "top": [
+    "amm-017/3.2",
+    "amm-017/3.11",
+    "amm-017/3.1"
+   ]
+  },
+  {
+   "id": "rcp-064",
+   "kind": "produit",
+   "language": "fr",
+   "cross_lingual": false,
+   "recall": 1.0,
+   "recall_at_3": 1.0,
+   "reciprocal_rank": 0.5,
+   "top": [
+    "amm-034/3.2",
+    "amm-034/3.1",
+    "amm-034/3.11"
+   ]
+  },
+  {
+   "id": "rcp-065",
+   "kind": "produit-nommé",
+   "language": "fr",
+   "cross_lingual": false,
+   "recall": 1.0,
+   "recall_at_3": 1.0,
+   "reciprocal_rank": 0.5,
+   "top": [
+    "amm-001/3.11",
+    "amm-011/3.11",
+    "amm-010/3.11"
+   ]
+  },
+  {
+   "id": "rcp-066",
+   "kind": "produit",
+   "language": "fr",
+   "cross_lingual": false,
+   "recall": 1.0,
+   "recall_at_3": 1.0,
+   "reciprocal_rank": 1.0,
+   "top": [
+    "amm-013/3.12",
+    "amm-013/3.5",
+    "amm-013/3.9"
+   ]
+  },
+  {
+   "id": "rcp-067",
+   "kind": "produit",
+   "language": "fr",
+   "cross_lingual": false,
+   "recall": 1.0,
+   "recall_at_3": 1.0,
+   "reciprocal_rank": 1.0,
+   "top": [
+    "amm-002/3.5",
+    "amm-002/3.4",
+    "amm-002/3.9"
+   ]
+  },
+  {
+   "id": "rcp-068",
+   "kind": "produit",
+   "language": "fr",
+   "cross_lingual": false,
+   "recall": 1.0,
+   "recall_at_3": 1.0,
+   "reciprocal_rank": 1.0,
+   "top": [
+    "amm-032/3.2",
+    "amm-032/3.4",
+    "amm-032/3.3"
+   ]
+  },
+  {
+   "id": "rcp-069",
+   "kind": "produit-nommé",
+   "language": "fr",
+   "cross_lingual": false,
+   "recall": 1.0,
+   "recall_at_3": 1.0,
+   "reciprocal_rank": 1.0,
+   "top": [
+    "amm-017/3.2",
+    "amm-017/1",
+    "amm-001/3.2"
+   ]
+  },
+  {
+   "id": "rcp-070",
+   "kind": "produit",
+   "language": "fr",
+   "cross_lingual": false,
+   "recall": 1.0,
+   "recall_at_3": 1.0,
+   "reciprocal_rank": 1.0,
+   "top": [
+    "amm-014/3.9",
+    "amm-014/3.5",
+    "amm-014/3.4"
+   ]
+  },
+  {
+   "id": "rcp-071",
+   "kind": "produit",
+   "language": "fr",
+   "cross_lingual": false,
+   "recall": 1.0,
+   "recall_at_3": 1.0,
+   "reciprocal_rank": 1.0,
+   "top": [
+    "amm-006/3.9",
+    "amm-006/3.5",
+    "amm-006/3.4"
+   ]
+  },
+  {
+   "id": "rcp-072",
+   "kind": "produit",
+   "language": "fr",
+   "cross_lingual": false,
+   "recall": 1.0,
+   "recall_at_3": 1.0,
+   "reciprocal_rank": 1.0,
+   "top": [
+    "amm-049/3.11",
+    "amm-049/3.3",
+    "amm-049/3.4"
+   ]
+  },
+  {
+   "id": "rcp-073",
+   "kind": "produit-nommé",
+   "language": "fr",
+   "cross_lingual": false,
+   "recall": 1.0,
+   "recall_at_3": 1.0,
+   "reciprocal_rank": 1.0,
+   "top": [
+    "amm-050/3.5",
+    "amm-049/3.5",
+    "amm-051/3.5"
+   ]
+  },
+  {
+   "id": "rcp-074",
+   "kind": "produit",
+   "language": "fr",
+   "cross_lingual": false,
+   "recall": 1.0,
+   "recall_at_3": 1.0,
+   "reciprocal_rank": 1.0,
+   "top": [
+    "amm-034/3.3",
+    "amm-034/3.11",
+    "amm-034/3.5"
+   ]
+  },
+  {
+   "id": "rcp-075",
+   "kind": "produit",
+   "language": "fr",
+   "cross_lingual": false,
+   "recall": 1.0,
+   "recall_at_3": 1.0,
+   "reciprocal_rank": 1.0,
+   "top": [
+    "amm-011/3.9",
+    "amm-011/3.5",
+    "amm-011/6"
+   ]
+  },
+  {
+   "id": "rcp-076",
+   "kind": "produit",
+   "language": "fr",
+   "cross_lingual": false,
+   "recall": 1.0,
+   "recall_at_3": 1.0,
+   "reciprocal_rank": 1.0,
+   "top": [
+    "amm-010/3.12",
+    "amm-010/3.9",
+    "amm-010/3.5"
+   ]
+  },
+  {
+   "id": "rcp-077",
+   "kind": "produit",
+   "language": "en",
+   "cross_lingual": false,
+   "recall": 1.0,
+   "recall_at_3": 1.0,
+   "reciprocal_rank": 1.0,
+   "top": [
+    "amm-015/3.5",
+    "amm-015/3.4",
+    "amm-015/3.3"
+   ]
+  },
+  {
+   "id": "rcp-078",
+   "kind": "produit",
+   "language": "en",
+   "cross_lingual": false,
+   "recall": 1.0,
+   "recall_at_3": 1.0,
+   "reciprocal_rank": 1.0,
+   "top": [
+    "amm-011/3.5",
+    "amm-011/3.3",
+    "amm-011/3.9"
+   ]
+  },
+  {
+   "id": "rcp-079",
+   "kind": "produit",
+   "language": "en",
+   "cross_lingual": false,
+   "recall": 1.0,
+   "recall_at_3": 1.0,
+   "reciprocal_rank": 1.0,
+   "top": [
+    "amm-011/3.5",
+    "amm-011/3.3",
+    "amm-011/3.9"
+   ]
+  },
+  {
+   "id": "rcp-080",
+   "kind": "produit-nommé",
+   "language": "en",
+   "cross_lingual": false,
+   "recall": 1.0,
+   "recall_at_3": 0.0,
+   "reciprocal_rank": 0.25,
+   "top": [
+    "amm-017/3.11",
+    "amm-001/3.11",
+    "amm-017/1"
+   ]
+  },
+  {
+   "id": "rcp-081",
+   "kind": "produit",
+   "language": "en",
+   "cross_lingual": false,
+   "recall": 1.0,
+   "recall_at_3": 1.0,
+   "reciprocal_rank": 0.5,
+   "top": [
+    "amm-010/3.5",
+    "amm-010/3.12",
+    "amm-010/3.2"
+   ]
+  },
+  {
+   "id": "rcp-082",
+   "kind": "produit",
+   "language": "en",
+   "cross_lingual": false,
+   "recall": 1.0,
+   "recall_at_3": 1.0,
+   "reciprocal_rank": 1.0,
+   "top": [
+    "amm-020/2",
+    "amm-020/1",
+    "amm-020/6"
+   ]
+  },
+  {
+   "id": "rcp-083",
+   "kind": "produit",
+   "language": "en",
+   "cross_lingual": false,
+   "recall": 1.0,
+   "recall_at_3": 1.0,
+   "reciprocal_rank": 1.0,
+   "top": [
+    "amm-016/3.3",
+    "amm-016/3.4",
+    "amm-016/3.12"
+   ]
+  },
+  {
+   "id": "rcp-084",
+   "kind": "produit-nommé",
+   "language": "en",
+   "cross_lingual": false,
+   "recall": 1.0,
+   "recall_at_3": 1.0,
+   "reciprocal_rank": 1.0,
+   "top": [
+    "amm-013/3.3",
+    "amm-003/3.3",
+    "amm-001/3.3"
+   ]
+  },
+  {
+   "id": "rcp-085",
+   "kind": "produit",
+   "language": "en",
+   "cross_lingual": false,
+   "recall": 1.0,
+   "recall_at_3": 1.0,
+   "reciprocal_rank": 1.0,
+   "top": [
+    "amm-010/3.5",
+    "amm-010/3.3",
+    "amm-010/3.9"
+   ]
+  },
+  {
+   "id": "rcp-086",
+   "kind": "produit",
+   "language": "en",
+   "cross_lingual": false,
+   "recall": 1.0,
+   "recall_at_3": 1.0,
+   "reciprocal_rank": 1.0,
+   "top": [
+    "amm-001/3.4",
+    "amm-001/3.5",
+    "amm-001/3.11"
+   ]
+  },
+  {
+   "id": "rcp-087",
+   "kind": "produit",
+   "language": "en",
+   "cross_lingual": false,
+   "recall": 1.0,
+   "recall_at_3": 1.0,
+   "reciprocal_rank": 1.0,
+   "top": [
+    "amm-014/3.1",
+    "amm-014/3.2",
+    "amm-014/3.11"
+   ]
+  },
+  {
+   "id": "rcp-088",
+   "kind": "produit-nommé",
+   "language": "en",
+   "cross_lingual": false,
+   "recall": 1.0,
+   "recall_at_3": 0.0,
+   "reciprocal_rank": 0.2,
+   "top": [
+    "amm-012/3.11",
+    "amm-002/3.11",
+    "amm-001/3.11"
+   ]
+  },
+  {
+   "id": "rcp-089",
+   "kind": "produit",
+   "language": "en",
+   "cross_lingual": false,
+   "recall": 1.0,
+   "recall_at_3": 1.0,
+   "reciprocal_rank": 0.5,
+   "top": [
+    "amm-013/3.11",
+    "amm-013/3.2",
+    "amm-013/3.9"
+   ]
+  },
+  {
+   "id": "rcp-090",
+   "kind": "produit",
+   "language": "en",
+   "cross_lingual": false,
+   "recall": 1.0,
+   "recall_at_3": 1.0,
+   "reciprocal_rank": 1.0,
+   "top": [
+    "amm-010/3.11",
+    "amm-010/3.5",
+    "amm-010/3.3"
+   ]
+  },
+  {
+   "id": "rcp-091",
+   "kind": "produit",
+   "language": "en",
+   "cross_lingual": false,
+   "recall": 1.0,
+   "recall_at_3": 1.0,
+   "reciprocal_rank": 1.0,
+   "top": [
+    "amm-017/3.11",
+    "amm-017/3.3",
+    "amm-017/3.5"
+   ]
+  },
+  {
+   "id": "rcp-092",
+   "kind": "produit-nommé",
+   "language": "en",
+   "cross_lingual": false,
+   "recall": 1.0,
+   "recall_at_3": 1.0,
+   "reciprocal_rank": 1.0,
+   "top": [
+    "amm-002/3.5",
+    "amm-001/3.5",
+    "amm-005/3.5"
+   ]
+  },
+  {
+   "id": "rcp-093",
+   "kind": "registre",
+   "language": "fr",
+   "cross_lingual": false,
+   "recall": 1.0,
+   "recall_at_3": 1.0,
+   "reciprocal_rank": 1.0,
+   "top": [
+    "amm-004/3.11",
+    "amm-020/3.11",
+    "amm-011/3.11"
+   ]
+  },
+  {
+   "id": "rcp-094",
+   "kind": "registre",
+   "language": "en",
+   "cross_lingual": false,
+   "recall": 1.0,
+   "recall_at_3": 0.6666666666666666,
+   "reciprocal_rank": 1.0,
+   "top": [
+    "amm-004/3.11",
+    "amm-020/3.11",
+    "amm-007/3.11"
+   ]
+  },
+  {
+   "id": "rcp-095",
+   "kind": "registre",
+   "language": "fr",
+   "cross_lingual": false,
+   "recall": 1.0,
+   "recall_at_3": 1.0,
+   "reciprocal_rank": 1.0,
+   "top": [
+    "amm-007/3.11",
+    "amm-006/3.11",
+    "amm-004/3.12"
+   ]
+  },
+  {
+   "id": "rcp-096",
+   "kind": "registre",
+   "language": "en",
+   "cross_lingual": false,
+   "recall": 1.0,
+   "recall_at_3": 1.0,
+   "reciprocal_rank": 1.0,
+   "top": [
+    "amm-006/3.11",
+    "amm-007/3.11",
+    "amm-007/3.12"
+   ]
+  },
+  {
+   "id": "rcp-097",
+   "kind": "registre",
+   "language": "fr",
+   "cross_lingual": false,
+   "recall": 1.0,
+   "recall_at_3": 1.0,
+   "reciprocal_rank": 1.0,
+   "top": [
+    "amm-014/3.11",
+    "amm-001/1",
+    "amm-001/3.3"
+   ]
+  },
+  {
+   "id": "rcp-098",
+   "kind": "registre",
+   "language": "en",
+   "cross_lingual": false,
+   "recall": 1.0,
+   "recall_at_3": 1.0,
+   "reciprocal_rank": 1.0,
+   "top": [
+    "amm-014/3.11",
+    "amm-006/3.11",
+    "amm-004/3.11"
+   ]
+  },
+  {
+   "id": "rcp-099",
+   "kind": "registre",
+   "language": "fr",
+   "cross_lingual": false,
+   "recall": 1.0,
+   "recall_at_3": 1.0,
+   "reciprocal_rank": 1.0,
+   "top": [
+    "amm-003/3.4",
+    "amm-004/3.4",
+    "amm-019/3.4"
+   ]
+  },
+  {
+   "id": "rcp-100",
+   "kind": "registre",
+   "language": "en",
+   "cross_lingual": false,
+   "recall": 1.0,
+   "recall_at_3": 1.0,
+   "reciprocal_rank": 1.0,
+   "top": [
+    "amm-003/3.4",
+    "amm-004/3.4",
+    "amm-012/3.4"
+   ]
+  }
+ ],
+ "summary": {
+  "tous": {
+   "n": 100,
+   "recall_at_10": 1.0,
+   "recall_at_3": 0.9666666666666667,
+   "first_rank_ok": 0.79,
+   "mrr": 0.8836666666666666
+  },
+  "anglais sur RCP en français": {
+   "n": 33,
+   "recall_at_10": 1.0,
+   "recall_at_3": 0.9696969696969697,
+   "first_rank_ok": 0.7272727272727273,
+   "mrr": 0.8560606060606061
+  },
+  "produit connu (ma_ids)": {
+   "n": 70,
+   "recall_at_10": 1.0,
+   "recall_at_3": 1.0,
+   "first_rank_ok": 0.8571428571428571,
+   "mrr": 0.9261904761904761
+  },
+  "produit nommé seulement": {
+   "n": 22,
+   "recall_at_10": 1.0,
+   "recall_at_3": 0.8636363636363636,
+   "first_rank_ok": 0.5,
+   "mrr": 0.706060606060606
+  },
+  "registre": {
+   "n": 8,
+   "recall_at_10": 1.0,
+   "recall_at_3": 0.9583333333333334,
+   "first_rank_ok": 1.0,
+   "mrr": 1.0
+  }
+ },
+ "threshold": 0.9
+}

@@ -2,7 +2,7 @@
 
 Usage :
     uv run --group training python -m recallpharma.training.train_sft --recipe qwen2.5-0.5b-cpu \
-        --data var/training/copilot-donnees-2026.11-1 --out var/models/adaptateurs/copilot-0.5b-sft
+        --data var/training/copilot-donnees-2026.11-2 --out var/models/adaptateurs/copilot-0.5b-sft
 
 Le modèle de base n'est jamais modifié : on produit un adaptateur (quelques dizaines de Mo), servi tel quel par
 vLLM (--enable-lora) ou par serve.py, et retiré en un geste si l'évaluation ou l'exploitation le désavoue.

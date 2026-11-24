@@ -11,10 +11,12 @@ from datetime import date, datetime
 from decimal import Decimal
 from typing import Any
 
+from pgvector.sqlalchemy import Vector
 from sqlalchemy import (
     BigInteger,
     Boolean,
     CheckConstraint,
+    Computed,
     Date,
     DateTime,
     ForeignKey,
@@ -27,7 +29,7 @@ from sqlalchemy import (
     func,
     text,
 )
-from sqlalchemy.dialects.postgresql import ARRAY, JSONB, UUID
+from sqlalchemy.dialects.postgresql import ARRAY, JSONB, TSVECTOR, UUID
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
 
 NAMING = {
@@ -220,6 +222,52 @@ class SpcVersion(Base):
     proposal_id: Mapped[int | None] = mapped_column(ForeignKey("reg.proposal.id"))
 
     withdrawal_periods: Mapped[list[WithdrawalPeriod]] = relationship(lazy="selectin")
+    sections: Mapped[list[SpcSection]] = relationship(lazy="selectin", order_by="SpcSection.id")
+
+
+# Racines françaises et anglaises, sans accents : une question dans l'une ou l'autre langue trouve ses mots.
+TSV_EXPRESSION = (
+    "to_tsvector('french'::regconfig, reg.f_unaccent(heading || ' ' || text)) || "
+    "to_tsvector('english'::regconfig, reg.f_unaccent(heading || ' ' || text))"
+)
+EMBEDDING_DIMS = 1024  # dimension du modèle de plongements en service (bge-m3) ; un changement impose la réindexation
+
+
+class SpcSection(Base):
+    """Rubrique d'un RCP dans une langue : texte d'origine, page du document source (D5)."""
+
+    __tablename__ = "spc_section"
+    __table_args__ = (UniqueConstraint("spc_version_id", "rubric", "language", name="rubric"), REG)
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    spc_version_id: Mapped[int] = mapped_column(ForeignKey("reg.spc_version.id"), index=True)
+    rubric: Mapped[str] = mapped_column(Text)
+    language: Mapped[str] = mapped_column(String(2))
+    title: Mapped[str] = mapped_column(Text)
+    text: Mapped[str] = mapped_column(Text)
+    page: Mapped[int | None] = mapped_column(Integer)
+    source_title: Mapped[str | None] = mapped_column(Text)
+
+    passages: Mapped[list[SpcPassage]] = relationship(lazy="selectin", order_by="SpcPassage.rank")
+
+
+class SpcPassage(Base):
+    """Passage de 300 mots au plus, indexé en plein texte (colonne calculée par la base) et par plongement."""
+
+    __tablename__ = "spc_passage"
+    __table_args__ = (UniqueConstraint("section_id", "rank", name="rank"), REG)
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    section_id: Mapped[int] = mapped_column(ForeignKey("reg.spc_section.id"), index=True)
+    rank: Mapped[int] = mapped_column(Integer)
+    # Produit et titre de rubrique : un passage isolé dit de quoi il parle (« Chiens et chats » seul ne dit pas
+    # qu'il s'agit des espèces cibles). Indexé avec le texte, jamais affiché comme une citation.
+    heading: Mapped[str] = mapped_column(Text)
+    text: Mapped[str] = mapped_column(Text)
+    # Calculée par PostgreSQL dans la transaction d'écriture : l'index ne peut pas diverger du texte (D4).
+    tsv: Mapped[Any] = mapped_column(TSVECTOR, Computed(TSV_EXPRESSION, persisted=True), deferred=True)
+    embedding: Mapped[list[float] | None] = mapped_column(Vector(EMBEDDING_DIMS))
+    embedding_model: Mapped[str | None] = mapped_column(Text)
 
 
 class WithdrawalPeriod(Base):

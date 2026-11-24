@@ -6,13 +6,17 @@ et traduit chaque résultat en enregistrements adressables [[identifiant:champ]]
 
 from __future__ import annotations
 
+import re
 from dataclasses import dataclass, field
 from decimal import Decimal
 from typing import Any
 
 import httpx
 
-TOOLS_VERSION = "outils-2026.11-1"
+from recallpharma.domain import copilot as cp
+
+TOOLS_VERSION = "outils-2026.11-2"
+_AMM_ID = re.compile(r"amm-[0-9a-z]+")  # forme des identifiants du registre (D5)
 WRITE_TOOLS: frozenset[str] = frozenset()  # aucun outil d'écriture n'existe (ENF-SEC-05)
 
 
@@ -79,6 +83,34 @@ TOOL_SPECS: list[dict[str, Any]] = [
     ),
     _fn("list_alerts", "Alertes publiées (rappels, suspensions) d'une juridiction.", {"jurisdiction": _S}),
     _fn(
+        "search_spc_passages",
+        "Cherche dans le texte des RCP (indications, contre-indications, posologie, précautions, restrictions). "
+        "Renvoie des extraits d'origine avec leur AMM, leur rubrique et leur source.",
+        {
+            "query": {**_S, "description": "La question ou ses mots clés, dans la langue de l'utilisateur"},
+            "jurisdiction": {**_S, "description": "Défaut : celle de la conversation"},
+            "product_name": {**_S, "description": "Nom du produit, si la question en nomme un"},
+            "ma_ids": {"type": "array", "items": _S, "description": "Identifiants d'AMM (amm-…), si déjà connus"},
+        },
+        ["query"],
+    ),
+    _fn(
+        "get_spc_section",
+        "Une rubrique du RCP d'une AMM, texte d'origine : 3.1 espèces cibles, 3.2 indications, 3.3 contre-indications, "
+        "3.4 mises en garde, 3.5 précautions, 3.9 voies et posologie, 3.11 restrictions, 3.12 temps d'attente.",
+        {"ma_id": _S, "rubric": {**_S, "description": "Numéro de rubrique, ex. 3.3"}},
+        ["ma_id", "rubric"],
+    ),
+    _fn(
+        "compare_jurisdictions",
+        "Compare un produit ou une substance entre juridictions : statut, numéro, espèces, délais d'attente.",
+        {
+            "product_name": _S,
+            "substance": {**_S, "description": "Nom de la substance active"},
+            "jurisdictions": {"type": "array", "items": _S, "description": "Codes ; défaut : toutes"},
+        },
+    ),
+    _fn(
         "abstain",
         "S'abstenir : diagnostic, choix thérapeutique, médicament humain ou question hors du registre.",
         {"reason": _S},
@@ -127,6 +159,9 @@ class Turn:
     lists: int = 0
     calcs: int = 0
     meta: dict[str, dict[str, Any]] = field(default_factory=dict)  # dates de vérification, niveaux, sources
+    passages: list[dict[str, Any]] = field(default_factory=list)  # extraits de RCP affichés tels quels, avec source
+    comparisons: list[dict[str, Any]] = field(default_factory=list)
+    injection_in_data: bool = False  # instruction trouvée dans un texte renvoyé par un outil (CT-COP-08)
 
     def add_banners(self, banners: list[dict[str, str]]) -> None:
         for b in banners:
@@ -366,3 +401,117 @@ class ToolRunner:
             }
             self.turn.meta[a["id"]] = {"verified_at": None, "evidence": None, "source": None}
         return {"alertes": [{"id": a["id"], "type": a["type"], "level": a["level"]} for a in alerts]}
+
+    # --- Texte des RCP et comparaison -------------------------------------------------------------
+
+    def _passage(self, p: dict[str, Any], rid: str) -> dict[str, str]:
+        """Un extrait devient un enregistrement : le texte est inséré tel quel, dans sa langue, avec sa source."""
+        record = {
+            "text": p["text"],
+            "rubric": f"{p['rubric']} {p['title']}",
+            "language": p["language"],
+            "product": p["product"],
+            "ma_number": p["ma_number"],
+            "source": f"{p['source_title']}, page {p['page']}" if p.get("page") else str(p.get("source_title")),
+        }
+        self.turn.records[rid] = record
+        ma_id = p["authorisation_id"]
+        self.turn.meta.setdefault(
+            ma_id, {"verified_at": p.get("verified_at"), "evidence": p.get("evidence_level"), "source": None}
+        )
+        self.turn.add_banners(p.get("banners", []))
+        if not any(x["id"] == rid for x in self.turn.passages):
+            self.turn.passages.append({"id": rid, "ma_id": ma_id, **record})
+        if cp.looks_like_injection(p["text"]):
+            self.turn.injection_in_data = True  # donnée suspecte : signalée au journal, jamais suivie
+        return record
+
+    def _tool_search_spc_passages(self, args: dict[str, Any]) -> dict[str, Any]:
+        params: dict[str, Any] = {
+            "q": str(args.get("query") or "")[:300],
+            "jurisdiction": str(args.get("jurisdiction") or self._jurisdiction),
+        }
+        given = args.get("ma_ids") or []
+        given = [str(i) for i in ([given] if isinstance(given, str) else given)]
+        # Un nom de produit glissé dans ma_ids (faute fréquente du modèle) est traité comme un nom de produit.
+        ids = [i for i in given if _AMM_ID.fullmatch(i)]
+        names = [i for i in given if not _AMM_ID.fullmatch(i)] + (
+            [str(args["product_name"])] if args.get("product_name") else []
+        )
+        for name in dict.fromkeys(names):
+            listing = self._tool_search_authorisations({"product_name": name, "jurisdiction": params["jurisdiction"]})
+            ids += [row["id"] for row in listing["lignes"]]
+            if not listing["lignes"]:
+                return {"passages": [], "avis": f"aucune AMM de « {name} » dans cette juridiction"}
+        if ids:
+            params["ma_ids"] = ",".join(dict.fromkeys(ids))
+        data = self._call("GET", "/spc-passages", params=params)
+        found = []
+        for p in data["passages"]:
+            rid = f"{p['authorisation_id']}#rcp-{p['rubric']}-{p['language']}-{p['rank']}"
+            self._passage(p, rid)
+            found.append(
+                {
+                    "id": rid,
+                    "ma_id": p["authorisation_id"],
+                    "produit": p["product"],
+                    "rubrique": p["rubric"],
+                    "titre": p["title"],
+                    "langue": p["language"],
+                    "texte": p["text"],
+                }
+            )
+        return {"passages": found, "mode": data["mode"], "avis": None if found else "aucun passage trouvé"}
+
+    def _tool_get_spc_section(self, args: dict[str, Any]) -> dict[str, Any]:
+        ma_id, rubric = str(args.get("ma_id", "")), str(args.get("rubric", "")).strip()
+        self._sheet(ma_id)  # statut, bandeaux et niveau de preuve de l'AMM citée (RG-15, RG-26)
+        data = self._call("GET", f"/authorisations/{ma_id}/spc/sections/{rubric}")
+        rid = f"{ma_id}#rcp-{data['rubric']}-{data['language']}"
+        self._passage({**data, "rank": 0}, rid)
+        return {"enregistrement": rid, "titre": data["title"], "langue": data["language"], "texte": data["text"]}
+
+    def _tool_compare_jurisdictions(self, args: dict[str, Any]) -> dict[str, Any]:
+        body: dict[str, Any] = {}
+        if args.get("product_name"):
+            body["product_name"] = str(args["product_name"])
+        if args.get("substance"):
+            body["substance_id"] = self._substance_id(str(args["substance"]))
+        codes = args.get("jurisdictions")
+        if codes:
+            body["jurisdictions"] = [str(c) for c in ([codes] if isinstance(codes, str) else codes)]
+        data = self._call("POST", "/compare", json=body)
+        t = self.turn
+        t.rows, t.total = [], data["total"]
+        summary = []
+        for i, product in enumerate(data["products"], start=1):
+            rid = f"comparaison{i}"
+            for row in product["rows"]:
+                t.add_row_record(row)
+                t.rows.append(row)
+                for k, w in enumerate(row["withdrawal"], start=1):
+                    t.records[f"{row['id']}#delai{k}"] = {
+                        "species": w["species"],
+                        "commodity": w["commodity"],
+                        "route": w["route"] or "toutes voies",
+                        "value": withdrawal_text(w),
+                        "jurisdiction": row["jurisdiction"],
+                    }
+            t.records[rid] = {
+                "name": product["name"],
+                "present": ", ".join(product["present"]) or "aucune",
+                "absent": ", ".join(product["absent"]) or "aucune",
+                "differences": ", ".join(product["differences"]) or "aucune différence",
+            }
+            t.comparisons.append({"id": rid, **product, "rows": [r["id"] for r in product["rows"]]})
+            summary.append(
+                {
+                    "enregistrement": rid,
+                    "lignes": [
+                        {"id": r["id"], "jurisdiction": r["jurisdiction"], "status": r["status"]}
+                        for r in product["rows"]
+                    ],
+                    **{k: t.records[rid][k] for k in ("present", "absent", "differences")},
+                }
+            )
+        return {"comparaisons": summary, "total": data["total"]}

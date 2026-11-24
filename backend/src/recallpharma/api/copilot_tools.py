@@ -16,7 +16,7 @@ from pydantic import BaseModel, Field
 from sqlalchemy import func, select
 from sqlalchemy.orm import Session
 
-from recallpharma.api import registry
+from recallpharma.api import registry, spc
 from recallpharma.api import schemas as s
 from recallpharma.api.auth import DelegationDep
 from recallpharma.api.problems import Problem
@@ -24,6 +24,7 @@ from recallpharma.db import mapping
 from recallpharma.db import models as m
 from recallpharma.db.session import get_session
 from recallpharma.domain.banners import NOT_AUTHORISED_HERE
+from recallpharma.domain.comparison import Entry, compare
 from recallpharma.domain.evaluation import applies_in
 from recallpharma.domain.model import Status
 from recallpharma.domain.selection import Candidate, Filters, WithdrawalCriterion, refine
@@ -315,3 +316,105 @@ def compute_withdrawal_end(
 def list_alerts(db: DB, _: DelegationDep, jurisdiction: str) -> list[s.AlertOut]:
     _jurisdiction(db, jurisdiction)
     return registry.list_alerts(db, jurisdiction)
+
+
+@router.get("/spc-passages", response_model=spc.PassagesOut)
+def search_spc_passages(
+    db: DB,
+    _: DelegationDep,
+    q: Annotated[str, Query(min_length=2, max_length=300)],
+    jurisdiction: str,
+    ma_ids: spc.Ids = None,
+    limit: Annotated[int, Query(ge=1, le=spc.MAX_PASSAGES)] = 8,
+) -> spc.PassagesOut:
+    return spc.find_passages(db, q, jurisdiction, spc._ids(ma_ids), limit)
+
+
+@router.get("/authorisations/{authorisation_id}/spc/sections/{rubric}", response_model=spc.SectionOut)
+def get_spc_section(
+    db: DB, _: DelegationDep, authorisation_id: str, rubric: str, language: str | None = None
+) -> spc.SectionOut:
+    return spc.section(db, authorisation_id, rubric, language)
+
+
+class CompareIn(BaseModel):
+    product_name: str | None = Field(None, max_length=100)
+    substance_id: str | None = None
+    jurisdictions: list[str] | None = Field(None, max_length=10)
+
+
+class ProductComparisonOut(BaseModel):
+    product_id: str
+    name: str
+    designation: str
+    present: list[str]
+    absent: list[str]
+    differences: list[str]
+    rows: list[CopilotRow]
+
+
+class CompareOut(BaseModel):
+    jurisdictions: list[str]
+    products: list[ProductComparisonOut]
+    total: int
+    truncated: bool
+    as_of: date
+    rules_version: str = RULES_VERSION
+
+
+MAX_COMPARED = 10
+
+
+@router.post("/compare", response_model=CompareOut)
+def compare_jurisdictions(db: DB, _: DelegationDep, body: CompareIn) -> CompareOut:
+    """Un produit (ou les produits d'une substance) dans plusieurs juridictions, chaque AMM avec son propre RCP."""
+    if not body.product_name and not body.substance_id:
+        raise Problem(422, "too_broad", "Préciser un produit ou une substance")
+    codes = body.jurisdictions or [j.code for j in db.scalars(select(m.Jurisdiction).order_by(m.Jurisdiction.code))]
+    for code in codes:
+        _jurisdiction(db, code)
+    day = _today()
+    name = body.product_name.casefold() if body.product_name else None
+    rows = [
+        r
+        for r in _published(db)
+        if (name is None or name in r.product.name.casefold() or name in r.product.designation.casefold())
+        and (body.substance_id is None or any(c.substance_id == body.substance_id for c in r.product.components))
+    ]
+    out_rows = {r.id: _row(r, day, r.jurisdiction_code) for r in rows}
+    entries = [
+        Entry(
+            record_id=r.id,
+            product_id=r.product_id,
+            jurisdiction=r.jurisdiction_code,
+            status=out_rows[r.id].status,
+            species=frozenset(r.product.target_species),
+            withdrawal=frozenset(
+                (w.species, w.commodity, w.route or "", f"{w.kind} {w.value or ''} {w.unit or ''}".strip())
+                for w in _periods(r)
+            )
+            if r.spc_versions
+            else None,
+        )
+        for r in rows
+    ]
+    compared = [c for c in compare(entries, codes) if c.present]
+    products = {r.product_id: r.product for r in rows}
+    return CompareOut(
+        jurisdictions=codes,
+        products=[
+            ProductComparisonOut(
+                product_id=c.product_id,
+                name=products[c.product_id].name,
+                designation=products[c.product_id].designation,
+                present=list(c.present),
+                absent=list(c.absent),
+                differences=list(c.differences),
+                rows=[out_rows[i] for i in c.record_ids],
+            )
+            for c in compared[:MAX_COMPARED]
+        ],
+        total=len(compared),
+        truncated=len(compared) > MAX_COMPARED,
+        as_of=day,
+    )

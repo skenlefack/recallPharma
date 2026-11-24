@@ -129,6 +129,60 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/spc-passages": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Spc Passages */
+        get: operations["spc_passages_v1_spc_passages_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/authorisations/{authorisation_id}/spc/sections": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Sections
+         * @description Texte complet du RCP en vigueur, rubrique par rubrique, dans chacune de ses langues (ordre du document).
+         */
+        get: operations["list_sections_v1_authorisations__authorisation_id__spc_sections_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/authorisations/{authorisation_id}/spc/sections/{rubric}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get Section */
+        get: operations["get_section_v1_authorisations__authorisation_id__spc_sections__rubric__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/curation/documents": {
         parameters: {
             query?: never;
@@ -548,6 +602,60 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/copilot/tools/spc-passages": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Search Spc Passages */
+        get: operations["search_spc_passages_v1_copilot_tools_spc_passages_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/copilot/tools/authorisations/{authorisation_id}/spc/sections/{rubric}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get Spc Section */
+        get: operations["get_spc_section_v1_copilot_tools_authorisations__authorisation_id__spc_sections__rubric__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/copilot/tools/compare": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Compare Jurisdictions
+         * @description Un produit (ou les produits d'une substance) dans plusieurs juridictions, chaque AMM avec son propre RCP.
+         */
+        post: operations["compare_jurisdictions_v1_copilot_tools_compare_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/health": {
         parameters: {
             query?: never;
@@ -687,6 +795,36 @@ export interface components {
             latest_edition: boolean;
             /** Replaces Document Id */
             replaces_document_id?: number | null;
+        };
+        /** CompareIn */
+        CompareIn: {
+            /** Product Name */
+            product_name?: string | null;
+            /** Substance Id */
+            substance_id?: string | null;
+            /** Jurisdictions */
+            jurisdictions?: string[] | null;
+        };
+        /** CompareOut */
+        CompareOut: {
+            /** Jurisdictions */
+            jurisdictions: string[];
+            /** Products */
+            products: components["schemas"]["ProductComparisonOut"][];
+            /** Total */
+            total: number;
+            /** Truncated */
+            truncated: boolean;
+            /**
+             * As Of
+             * Format: date
+             */
+            as_of: string;
+            /**
+             * Rules Version
+             * @default A2-v3
+             */
+            rules_version: string;
         };
         /** ComponentIn */
         ComponentIn: {
@@ -997,6 +1135,65 @@ export interface components {
              */
             known_at: string;
         };
+        /** PassageOut */
+        PassageOut: {
+            /** Passage Id */
+            passage_id: number;
+            /** Authorisation Id */
+            authorisation_id: string;
+            /** Ma Number */
+            ma_number: string;
+            /** Product */
+            product: string;
+            /** Jurisdiction */
+            jurisdiction: string;
+            /** Spc Version */
+            spc_version: string;
+            /** Rubric */
+            rubric: string;
+            /** Language */
+            language: string;
+            /** Title */
+            title: string;
+            /** Rank */
+            rank: number;
+            /** Text */
+            text: string;
+            /** Page */
+            page: number | null;
+            /** Source Title */
+            source_title: string | null;
+            /** Evidence Level */
+            evidence_level: string;
+            /** Verified At */
+            verified_at: string | null;
+            /** Banners */
+            banners: components["schemas"]["BannerOut"][];
+            /** Score */
+            score: number;
+            /** Full Text Rank */
+            full_text_rank: number | null;
+            /** Vector Rank */
+            vector_rank: number | null;
+        };
+        /** PassagesOut */
+        PassagesOut: {
+            /** Query */
+            query: string;
+            /** Jurisdiction */
+            jurisdiction: string;
+            /** Mode */
+            mode: string;
+            /** Embedding Model */
+            embedding_model: string | null;
+            /**
+             * As Of
+             * Format: date
+             */
+            as_of: string;
+            /** Passages */
+            passages: components["schemas"]["PassageOut"][];
+        };
         /** PayloadIn */
         PayloadIn: {
             /** Jurisdiction */
@@ -1034,6 +1231,23 @@ export interface components {
             events: components["schemas"]["EventIn"][];
             product: components["schemas"]["ProductIn"];
             spc?: components["schemas"]["SpcIn"] | null;
+        };
+        /** ProductComparisonOut */
+        ProductComparisonOut: {
+            /** Product Id */
+            product_id: string;
+            /** Name */
+            name: string;
+            /** Designation */
+            designation: string;
+            /** Present */
+            present: string[];
+            /** Absent */
+            absent: string[];
+            /** Differences */
+            differences: string[];
+            /** Rows */
+            rows: components["schemas"]["CopilotRow"][];
         };
         /** ProductIn */
         ProductIn: {
@@ -1240,6 +1454,48 @@ export interface components {
             hits: components["schemas"]["SearchHit"][];
             /** Notice */
             notice?: string | null;
+        };
+        /** SectionOut */
+        SectionOut: {
+            /** Authorisation Id */
+            authorisation_id: string;
+            /** Ma Number */
+            ma_number: string;
+            /** Product */
+            product: string;
+            /** Jurisdiction */
+            jurisdiction: string;
+            /** Spc Version */
+            spc_version: string;
+            /** Rubric */
+            rubric: string;
+            /** Language */
+            language: string;
+            /** Title */
+            title: string;
+            /** Text */
+            text: string;
+            /** Page */
+            page: number | null;
+            /** Source Title */
+            source_title: string | null;
+            /** Other Languages */
+            other_languages: string[];
+        };
+        /** SectionText */
+        SectionText: {
+            /** Rubric */
+            rubric: string;
+            /** Language */
+            language: string;
+            /** Title */
+            title: string;
+            /** Text */
+            text: string;
+            /** Page */
+            page: number | null;
+            /** Source Title */
+            source_title: string | null;
         };
         /** SetApartOut */
         SetApartOut: {
@@ -1729,6 +1985,106 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["BatchCheckResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    spc_passages_v1_spc_passages_get: {
+        parameters: {
+            query: {
+                q: string;
+                jurisdiction: string;
+                /** @description AMM visées, séparées par des virgules */
+                ma_ids?: string | null;
+                limit?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PassagesOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_sections_v1_authorisations__authorisation_id__spc_sections_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                authorisation_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SectionText"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_section_v1_authorisations__authorisation_id__spc_sections__rubric__get: {
+        parameters: {
+            query?: {
+                language?: string | null;
+            };
+            header?: never;
+            path: {
+                authorisation_id: string;
+                rubric: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SectionOut"];
                 };
             };
             /** @description Validation Error */
@@ -2785,6 +3141,114 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["AlertOut"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    search_spc_passages_v1_copilot_tools_spc_passages_get: {
+        parameters: {
+            query: {
+                q: string;
+                jurisdiction: string;
+                /** @description AMM visées, séparées par des virgules */
+                ma_ids?: string | null;
+                limit?: number;
+            };
+            header?: {
+                authorization?: string | null;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PassagesOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_spc_section_v1_copilot_tools_authorisations__authorisation_id__spc_sections__rubric__get: {
+        parameters: {
+            query?: {
+                language?: string | null;
+            };
+            header?: {
+                authorization?: string | null;
+            };
+            path: {
+                authorisation_id: string;
+                rubric: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SectionOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    compare_jurisdictions_v1_copilot_tools_compare_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                authorization?: string | null;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CompareIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CompareOut"];
                 };
             };
             /** @description Validation Error */

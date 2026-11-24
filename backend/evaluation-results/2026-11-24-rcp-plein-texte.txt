@@ -1,0 +1,45 @@
+Jeu rcp-2026.11-100 · mode plein texte · plongements aucun
+                                    n  rappel@10  rappel@3  1er rang    MRR
+  tous                            100      0.692     0.648     0.500  0.585
+  anglais sur RCP en français      33      0.364     0.242     0.121  0.197
+  produit connu (ma_ids)           70      0.614     0.614     0.571  0.593
+  produit nommé seulement          22      0.864     0.682     0.136  0.432
+  registre                          8      0.896     0.854     0.875  0.938
+Seuil 0.90 : non atteint
+  hors des 3 premiers : rcp-002 produit en · tête []
+  hors des 3 premiers : rcp-005 produit en · tête []
+  hors des 3 premiers : rcp-006 produit en · tête []
+  hors des 3 premiers : rcp-007 produit en · tête []
+  hors des 3 premiers : rcp-009 produit en · tête []
+  hors des 3 premiers : rcp-010 produit en · tête []
+  hors des 3 premiers : rcp-011 produit en · tête []
+  hors des 3 premiers : rcp-012 produit-nommé en · tête ['amm-032/1', 'amm-031/1', 'amm-032/2']
+  hors des 3 premiers : rcp-014 produit en · tête []
+  hors des 3 premiers : rcp-015 produit en · tête []
+  hors des 3 premiers : rcp-016 produit-nommé en · tête ['amm-036/1', 'amm-031/1', 'amm-032/1']
+  hors des 3 premiers : rcp-017 produit en · tête []
+  hors des 3 premiers : rcp-018 produit en · tête []
+  hors des 3 premiers : rcp-019 produit en · tête []
+  hors des 3 premiers : rcp-020 produit-nommé en · tête ['amm-052/1', 'amm-049/1', 'amm-050/1']
+  hors des 3 premiers : rcp-021 produit en · tête []
+  hors des 3 premiers : rcp-022 produit en · tête []
+  hors des 3 premiers : rcp-023 produit en · tête []
+  hors des 3 premiers : rcp-024 produit-nommé en · tête ['amm-034/1', 'amm-031/1', 'amm-032/1']
+  hors des 3 premiers : rcp-025 produit en · tête []
+  hors des 3 premiers : rcp-026 produit en · tête []
+  hors des 3 premiers : rcp-027 produit en · tête []
+  hors des 3 premiers : rcp-029 produit en · tête []
+  hors des 3 premiers : rcp-030 produit en · tête []
+  hors des 3 premiers : rcp-031 produit en · tête []
+  hors des 3 premiers : rcp-050 produit fr · tête []
+  hors des 3 premiers : rcp-061 produit-nommé fr · tête ['amm-012/1', 'amm-001/1', 'amm-002/1']
+  hors des 3 premiers : rcp-062 produit fr · tête ['amm-036/3.2', 'amm-036/3.5']
+  hors des 3 premiers : rcp-063 produit fr · tête []
+  hors des 3 premiers : rcp-068 produit fr · tête []
+  hors des 3 premiers : rcp-080 produit-nommé en · tête ['amm-004/3.11', 'amm-006/3.11', 'amm-011/3.11']
+  hors des 3 premiers : rcp-081 produit en · tête ['amm-010/3.5']
+  hors des 3 premiers : rcp-082 produit en · tête []
+  hors des 3 premiers : rcp-088 produit-nommé en · tête ['amm-004/3.11', 'amm-006/3.11', 'amm-011/3.11']
+  hors des 3 premiers : rcp-093 registre fr · tête ['amm-004/3.11', 'amm-020/3.11', 'amm-001/3.3']
+  hors des 3 premiers : rcp-094 registre en · tête ['amm-004/3.11', 'amm-020/3.11', 'amm-002/3.12']
+  hors des 3 premiers : rcp-095 registre fr · tête ['amm-007/3.11', 'amm-001/1', 'amm-002/1']

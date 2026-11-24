@@ -29,8 +29,8 @@ from recallpharma.gateway.tools import TOOL_SPECS, TOOLS_VERSION, ToolRunner
 from recallpharma.training import scenarios as scn
 from recallpharma.training.gold import GoldModel, records_in
 
-DATASET_VERSION = "copilot-donnees-2026.11-1"
-EVAL_VERSION = "2026.11-300"
+DATASET_VERSION = "copilot-donnees-2026.11-2"
+EVAL_VERSION = "2026.11-300-2"
 EVAL_SIZE = 300
 EVALUATION_DIR = pathlib.Path(__file__).parents[1] / "evaluation"
 SOCLE = EVALUATION_DIR / "copilot-reference.json"
