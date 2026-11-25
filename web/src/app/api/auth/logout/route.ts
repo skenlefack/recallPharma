@@ -1,6 +1,6 @@
 import { type NextRequest, NextResponse } from "next/server";
 
-import { SESSION_COOKIE, type Session, endSession, unseal } from "@/lib/oidc";
+import { SESSION_COOKIE, type Session, endSession, unseal, siteUrl } from "@/lib/oidc";
 
 /** Déconnexion (POST, même origine) : session Keycloak close côté serveur, cookie effacé. */
 export async function POST(req: NextRequest) {
@@ -10,7 +10,7 @@ export async function POST(req: NextRequest) {
   }
   const session = await unseal<Session>(req.cookies.get(SESSION_COOKIE)?.value);
   if (session) await endSession(session);
-  const res = NextResponse.redirect(new URL("/", req.url), 303);
+  const res = NextResponse.redirect(siteUrl("/", req), 303);
   res.cookies.delete(SESSION_COOKIE);
   return res;
 }

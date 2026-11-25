@@ -27,6 +27,26 @@ Les données sont **entièrement fictives** (annexe A10). Aucune AMM réelle n'e
 
 ## Démarrer
 
+### Tout en conteneurs
+
+Prérequis : Docker seul.
+
+```sh
+docker compose --profile ia --profile app up -d --build
+docker compose exec ollama ollama pull qwen2.5:7b-instruct   # premier démarrage seulement
+docker compose exec ollama ollama pull bge-m3
+docker compose --profile app restart init                     # indexe les passages de RCP une fois bge-m3 présent
+```
+
+- **Web :** http://localhost:3100. Les comptes fictifs sont listés sur `/connexion`, mot de passe `demo-recallpharma`.
+- **API :** http://localhost:8100/docs.
+- **Passerelle d'IA :** http://localhost:8101/docs.
+- **Keycloak :** http://localhost:8280.
+
+Le service `init` met le schéma à jour, charge le jeu A10 si la base est vide et indexe les passages manquants, puis s'arrête. Le navigateur et les conteneurs ne joignent pas Keycloak par la même adresse : les jetons portent l'émetteur `localhost:8280`, et les échanges serveur passent par `keycloak:8080` (`RECALLPHARMA_OIDC_BACKCHANNEL_URL`, `RECALLPHARMA_OIDC_JWKS_URL`). Sur processeur, une réponse du Copilot avec le modèle 7B prend environ un quart d'heure.
+
+### En développement
+
 Prérequis : Docker et [uv](https://docs.astral.sh/uv/).
 
 ```sh

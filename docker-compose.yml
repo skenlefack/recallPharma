@@ -46,6 +46,60 @@ services:
     volumes:
       - ollama:/root/.ollama
 
+  # Application conteneurisée (profil « app ») : docker compose --profile ia --profile app up -d --build
+  # Web http://localhost:3100 (comptes fictifs du royaume), API http://localhost:8100/docs, passerelle :8101.
+  init:
+    build: ./backend
+    profiles: ["app"]
+    command: ["recallpharma-init"]
+    environment: &backend-env
+      RECALLPHARMA_DATABASE_URL: postgresql+psycopg://recallpharma:recallpharma@db:5432/recallpharma
+      RECALLPHARMA_REFERENCE_DATE: "2027-09-07"  # date du jeu A10
+      RECALLPHARMA_OIDC_ISSUER: http://localhost:8280/realms/recallpharma  # émetteur vu du navigateur
+      RECALLPHARMA_OIDC_JWKS_URL: http://keycloak:8080/realms/recallpharma/protocol/openid-connect/certs
+      RECALLPHARMA_GATEWAY_URL: http://gateway:8001
+      RECALLPHARMA_API_URL: http://api:8000
+      RECALLPHARMA_LLM_BASE_URL: http://ollama:11434/v1
+      RECALLPHARMA_EMBED_BASE_URL: http://ollama:11434/v1
+      RECALLPHARMA_LLM_TIMEOUT_S: "900"  # modèle 7B sur processeur
+      RECALLPHARMA_STORAGE_DIR: /app/var/documents
+    depends_on:
+      db: {condition: service_healthy}
+
+  api:
+    build: ./backend
+    profiles: ["app"]
+    environment: *backend-env
+    ports:
+      - "8100:8000"
+    volumes:
+      - documents:/app/var/documents
+    depends_on:
+      init: {condition: service_completed_successfully}
+      keycloak: {condition: service_healthy}
+
+  gateway:
+    build: ./backend
+    profiles: ["app"]
+    command: ["uvicorn", "recallpharma.gateway.app:app", "--host", "0.0.0.0", "--port", "8001"]
+    environment: *backend-env
+    ports:
+      - "8101:8001"
+
+  web:
+    build: ./web
+    profiles: ["app"]
+    environment:
+      RECALLPHARMA_API_URL: http://api:8000
+      RECALLPHARMA_OIDC_ISSUER: http://localhost:8280/realms/recallpharma
+      RECALLPHARMA_OIDC_BACKCHANNEL_URL: http://keycloak:8080/realms/recallpharma
+      RECALLPHARMA_PUBLIC_URL: http://localhost:3100
+    ports:
+      - "3100:3000"  # adresse de retour déclarée dans le royaume
+    depends_on:
+      - api
+
 volumes:
   pgdata:
   ollama:
+  documents:

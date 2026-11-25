@@ -17,7 +17,11 @@ export const TOKEN_HEADER = "x-rp-access-token";
 export type Session = { at: string; rt: string; exp: number };
 export type PendingLogin = { state: string; verifier: string; nonce: string; next: string };
 
-const endpoint = (name: "auth" | "token" | "logout") => `${ISSUER}/protocol/openid-connect/${name}`;
+// Adresse de Keycloak vue du serveur (jeton, déconnexion), si elle diffère de celle du navigateur (conteneurs).
+const BACKCHANNEL = process.env.RECALLPHARMA_OIDC_BACKCHANNEL_URL ?? ISSUER;
+
+const endpoint = (name: "auth" | "token" | "logout") =>
+  `${name === "auth" ? ISSUER : BACKCHANNEL}/protocol/openid-connect/${name}`;
 
 export const cookieOptions = (maxAge: number) => ({
   httpOnly: true,
@@ -128,6 +132,14 @@ export async function endSession(session: Session): Promise<void> {
     body: new URLSearchParams({ client_id: CLIENT_ID, client_secret: CLIENT_SECRET, refresh_token: session.rt }),
     cache: "no-store",
   }).catch(() => undefined);
+}
+
+/**
+ * Adresse absolue d'un chemin du site, vue du navigateur. Derrière un conteneur, l'URL de la requête porte l'adresse
+ * d'écoute interne (0.0.0.0:3000) : RECALLPHARMA_PUBLIC_URL donne alors l'adresse publique, déclarée dans le royaume.
+ */
+export function siteUrl(path: string, req: { url: string }): URL {
+  return new URL(path, process.env.RECALLPHARMA_PUBLIC_URL ?? req.url);
 }
 
 /** Chemin interne uniquement : pas de redirection ouverte vers un autre site. */
