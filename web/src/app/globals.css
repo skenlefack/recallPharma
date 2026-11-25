@@ -7,15 +7,15 @@
   --muted: #566673;
   --border: #d9e3ea;
   --border-strong: #c1d0db;
-  --accent: #34a2c3;
-  --accent-ink: #1f7d99;
-  --accent-hover: #2a8daa;
-  --accent-soft: #e3f3f8;
+  --accent: #00a9f7;
+  --accent-ink: #0076ad;
+  --accent-hover: #0094d8;
+  --accent-soft: #e0f4fe;
   --accent-text: #ffffff;
-  --brand-bg: #0e3a4a;
-  --brand-bg-2: #17586d;
-  --brand-fg: #e6f5f9;
-  --brand-muted: #9cccdb;
+  --brand-bg: #05324d;
+  --brand-bg-2: #0a5079;
+  --brand-fg: #e5f5fe;
+  --brand-muted: #9ccfee;
   --brand-mark: #00c89e;
   --brand-mark-fg: #ffffff;
   --red-bg: #fdecea;
@@ -35,14 +35,14 @@
   --blue-border: #aac8ea;
   --radius: 12px;
   --radius-sm: 8px;
-  --shadow-sm: 0 1px 2px rgb(10 50 64 / 6%);
-  --shadow: 0 1px 2px rgb(10 50 64 / 5%), 0 4px 14px rgb(10 50 64 / 6%);
-  --shadow-lg: 0 2px 4px rgb(10 50 64 / 6%), 0 12px 32px rgb(10 50 64 / 10%);
+  --shadow-sm: 0 1px 2px rgb(6 46 72 / 6%);
+  --shadow: 0 1px 2px rgb(6 46 72 / 5%), 0 4px 14px rgb(6 46 72 / 6%);
+  --shadow-lg: 0 2px 4px rgb(6 46 72 / 6%), 0 12px 32px rgb(6 46 72 / 10%);
   --sans: var(--font-text), "Segoe UI", system-ui, -apple-system, Roboto, sans-serif;
   --text-font: var(--font-text), "Segoe UI", system-ui, sans-serif;
   --title: var(--font-title), var(--font-text), "Segoe UI", system-ui, sans-serif;
   --warm: #00c89e;
-  --warm-text: #06323d;
+  --warm-text: #04324a;
   --warm-hover: #00ad89;
   --warm-light: #7fe8cf;
   --ribbon-h: 22px;
@@ -64,13 +64,13 @@
     --muted: #9aafbf;
     --border: #283642;
     --border-strong: #384a59;
-    --accent: #34a2c3;
-    --accent-ink: #6cc3dd;
-    --accent-hover: #4db3d1;
-    --accent-soft: #133744;
+    --accent: #00a9f7;
+    --accent-ink: #5cc8fa;
+    --accent-hover: #2bb8f8;
+    --accent-soft: #0f3550;
     --accent-text: #ffffff;
-    --brand-bg: #0a2731;
-    --brand-bg-2: #103a48;
+    --brand-bg: #04253a;
+    --brand-bg-2: #083b5a;
     --brand-fg: #e3eff8;
     --brand-muted: #8db4d1;
     --brand-mark: #00c89e;
@@ -316,7 +316,7 @@ button.icon-button:hover {
 }
 
 .site-footer {
-  background: #0c3140;
+  background: #042c45;
   color: #b6c7d6;
   font-size: 0.875rem;
 }
@@ -416,7 +416,7 @@ button.icon-button:hover {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgb(5 30 40 / 35%), rgb(5 30 40 / 55%));
+  background: linear-gradient(180deg, rgb(3 28 46 / 35%), rgb(3 28 46 / 55%));
 }
 .home-hero-inner {
   position: relative;
@@ -561,14 +561,14 @@ button.icon-button:hover {
   border-radius: 4px;
   background-size: cover;
   background-position: center;
-  box-shadow: 0 10px 24px rgb(10 50 64 / 18%);
+  box-shadow: 0 10px 24px rgb(6 46 72 / 18%);
   transition:
     transform 0.25s,
     box-shadow 0.25s;
 }
 .offer:hover .offer-img {
   transform: translateY(-4px);
-  box-shadow: 0 16px 32px rgb(10 50 64 / 24%);
+  box-shadow: 0 16px 32px rgb(6 46 72 / 24%);
 }
 .offer-title {
   font-family: var(--title);
@@ -593,7 +593,7 @@ button.icon-button:hover {
   content: "";
   position: absolute;
   inset: 0;
-  background: rgb(6 34 44 / 45%);
+  background: rgb(4 32 52 / 45%);
 }
 .why .wrap {
   position: relative;
@@ -680,13 +680,13 @@ button.icon-button:hover {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(90deg, rgb(6 34 44 / 15%), rgb(6 34 44 / 60%));
+  background: linear-gradient(90deg, rgb(4 32 52 / 15%), rgb(4 32 52 / 60%));
 }
 .cta .wave {
   z-index: 1;
 }
 .cta .wave path {
-  fill: #0c3140;
+  fill: #042c45;
 }
 .cta-inner {
   position: relative;
@@ -718,7 +718,7 @@ button.icon-button:hover {
   content: "";
   position: absolute;
   inset: 0;
-  background: rgb(5 30 40 / 40%);
+  background: rgb(3 28 46 / 40%);
 }
 .page-banner-inner {
   position: relative;
