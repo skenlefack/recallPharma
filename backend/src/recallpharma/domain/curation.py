@@ -39,6 +39,8 @@ class Role(StrEnum):
 
 #: Rôles qui peuvent préparer et valider des données (RG-32 : jamais l'administrateur technique).
 CURATOR_ROLES = frozenset({Role.VALIDATOR, Role.REGULATORY_LEAD})
+#: Rôles soumis à la double authentification obligatoire : ceux qui valident ou administrent.
+MFA_REQUIRED_ROLES = (Role.VALIDATOR, Role.REGULATORY_LEAD, Role.TECH_ADMIN, Role.FUNCTIONAL_ADMIN)
 
 
 @dataclass(frozen=True, slots=True)

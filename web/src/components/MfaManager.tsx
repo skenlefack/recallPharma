@@ -1,15 +1,23 @@
 "use client";
 
 import QRCode from "qrcode";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-import { CheckShieldIcon, KeyIcon, LockIcon } from "@/components/icons";
+import { AlertTriangleIcon, ArrowRightIcon, CheckShieldIcon, KeyIcon, LockIcon } from "@/components/icons";
 import { bff, describe } from "@/lib/bff";
 
 type Setup = { secret: string; otpauth_uri: string };
 
-/** Activation de la double authentification : QR code à scanner, puis premier code pour confirmer. */
-export function MfaManager({ enabled: initial }: { enabled: boolean }) {
+type Props = { enabled: boolean; required?: boolean; next?: string };
+
+/**
+ * Activation de la double authentification : QR code à scanner, puis premier code pour confirmer. Obligatoire pour les
+ * validateurs et les administrateurs (`required`) : elle ne peut alors pas être désactivée.
+ */
+export function MfaManager({ enabled: initial, required = false, next }: Props) {
+  const router = useRouter();
   const [enabled, setEnabled] = useState(initial);
   const [setup, setSetup] = useState<(Setup & { qr: string }) | null>(null);
   const [code, setCode] = useState("");
@@ -44,6 +52,7 @@ export function MfaManager({ enabled: initial }: { enabled: boolean }) {
       setSetup(null);
       setCode("");
       setMessage({ tone: "ok", text: "Double authentification activée : le code sera demandé à chaque connexion." });
+      router.refresh(); // l'en-tête cesse de rediriger vers cette page
     });
   };
 
@@ -75,6 +84,18 @@ export function MfaManager({ enabled: initial }: { enabled: boolean }) {
 
   return (
     <div className="mfa">
+      {required && !enabled && (
+        <div className="mfa-required" role="alert">
+          <AlertTriangleIcon size={20} />
+          <div>
+            <strong>Activation obligatoire pour votre rôle</strong>
+            <p>
+              Les validateurs et les administrateurs protègent leur compte par un second facteur. L&apos;accès au
+              back-office et à l&apos;administration s&apos;ouvre dès l&apos;activation.
+            </p>
+          </div>
+        </div>
+      )}
       {message && (
         <div className={`admin-flash ${message.tone}`} role="status">
           <span>{message.text}</span>
@@ -131,7 +152,20 @@ export function MfaManager({ enabled: initial }: { enabled: boolean }) {
         </form>
       )}
 
-      {enabled && (
+      {enabled && next && (
+        <Link href={next} className="auth-submit">
+          Continuer <ArrowRightIcon size={16} />
+        </Link>
+      )}
+
+      {enabled && required && (
+        <p className="small muted">
+          Obligatoire pour votre rôle : elle ne peut pas être désactivée. Téléphone perdu ? Votre administrateur peut la
+          réinitialiser.
+        </p>
+      )}
+
+      {enabled && !required && (
         <form className="mfa-setup" onSubmit={disable}>
           <p className="small muted">Pour désactiver la double authentification, confirmez avec un code de l&apos;application.</p>
           {codeField}

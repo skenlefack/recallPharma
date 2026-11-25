@@ -16,7 +16,9 @@ import {
 /**
  * Formulaire de connexion du site (POST, même origine) : identifiant et mot de passe vérifiés par Keycloak côté serveur.
  * Si le compte a activé la double authentification, les jetons restent dans un cookie scellé de 5 minutes et la
- * session ne s'ouvre qu'après le code (route /api/auth/mfa). En cas de refus, retour au formulaire avec le message.
+ * session ne s'ouvre qu'après le code (route /api/auth/mfa). Un validateur ou un administrateur qui ne l'a pas encore
+ * activée est conduit à « Sécurité du compte » : l'API lui refuse tout le reste tant qu'elle n'est pas active.
+ * En cas de refus, retour au formulaire avec le message.
  */
 export async function POST(req: NextRequest) {
   const origin = req.headers.get("origin");
@@ -37,13 +39,17 @@ export async function POST(req: NextRequest) {
     const session = await passwordLogin(username, password);
     const me = await fetch(`${API_URL}/v1/me`, { headers: { authorization: `Bearer ${session.at}` }, cache: "no-store" });
     if (!me.ok) return fail("Compte inconnu ou désactivé dans RecallPharma.");
-    if (((await me.json()) as { mfa_enabled?: boolean }).mfa_enabled) {
+    const account = (await me.json()) as { mfa_enabled?: boolean; mfa_required?: boolean };
+    if (account.mfa_enabled) {
       const pending: PendingMfa = { session, next, until: Math.floor(Date.now() / 1000) + 300 };
       const res = NextResponse.redirect(siteUrl(`/connexion?${new URLSearchParams({ etape: "code", next })}`, req), 303);
       res.cookies.set(MFA_COOKIE, await seal(pending), cookieOptions(300));
       return res;
     }
-    const res = NextResponse.redirect(siteUrl(next, req), 303);
+    const target = account.mfa_required
+      ? `/compte/securite?${new URLSearchParams({ obligatoire: "1", next })}`
+      : next;
+    const res = NextResponse.redirect(siteUrl(target, req), 303);
     res.cookies.set(SESSION_COOKIE, await seal(session), cookieOptions(8 * 3600));
     return res;
   } catch (e) {

@@ -134,10 +134,12 @@ Les comptes vivent dans Keycloak : l'API les pilote par le compte de service `re
 
 Gérée par l'application (TOTP, RFC 6238), compatible avec FreeOTP, Google Authenticator et Microsoft Authenticator :
 
+- **Obligatoire pour les validateurs et les administrateurs** (Validateur, Responsable réglementaire, Administrateur technique, Administrateur fonctionnel) : à la connexion, ils sont conduits à l'activation ; tant qu'elle n'est pas faite, l'API leur refuse tout sauf leur compte (`403 mfa_required`), et ils ne peuvent pas la désactiver. Les autres rôles peuvent l'activer librement.
 - **Activation :** chaque utilisateur, depuis « Sécurité du compte » (clic sur son avatar, page `/compte/securite`) : QR code à scanner, puis un premier code pour confirmer.
 - **Connexion :** après le mot de passe (vérifié par Keycloak), le site demande le code ; la session ne s'ouvre qu'ensuite. Les jetons restent entre-temps dans un cookie scellé de 5 minutes.
 - **Protections :** secret chiffré en base (AES-GCM, `RECALLPHARMA_MFA_ENCRYPTION_KEY`, propre à chaque environnement), un code ne sert qu'une fois, blocage de 15 minutes après 5 codes faux. Activation, désactivation, blocage et réinitialisation sont tracés dans le journal d'audit.
-- **Téléphone perdu :** un administrateur réinitialise la double authentification depuis « Comptes et rôles ».
+- **Téléphone perdu :** un administrateur réinitialise la double authentification depuis « Comptes et rôles » ; pour un rôle soumis à l'obligation, l'activation est redemandée à la connexion suivante.
+- **Tests de bout en bout :** les comptes validateurs et administrateurs s'inscrivent au premier passage ; leurs secrets sont gardés dans `web/e2e/.mfa.json` (ignoré par git). Si la base est réinitialisée, supprimer ce fichier.
 
 ## Copilot
 

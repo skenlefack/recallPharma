@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 import { AppNav } from "@/components/AppNav";
@@ -9,7 +9,7 @@ import { LogoutIcon } from "@/components/icons";
 import { Logo } from "@/components/Logo";
 import { canAdmin } from "@/lib/admin";
 
-type Me = { display_name: string; roles: string[] } | null;
+type Me = { display_name: string; roles: string[]; mfa_pending?: boolean } | null;
 
 const initials = (name: string) =>
   name
@@ -23,7 +23,13 @@ const initials = (name: string) =>
 /** En-tête : transparent sur l'image d'accueil, plein dès qu'on défile ou sur les autres pages. */
 export function SiteHeader({ me }: { me: Me }) {
   const path = usePathname() ?? "/";
+  const router = useRouter();
   const [scrolled, setScrolled] = useState(false);
+  // Double authentification obligatoire pour ce rôle et pas encore activée : seule la page de sécurité reste ouverte.
+  const mfaPending = Boolean(me?.mfa_pending) && path !== "/compte/securite";
+  useEffect(() => {
+    if (mfaPending) router.replace(`/compte/securite?${new URLSearchParams({ obligatoire: "1", next: path })}`);
+  }, [mfaPending, path, router]);
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
     onScroll();

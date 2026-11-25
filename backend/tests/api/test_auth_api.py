@@ -4,13 +4,14 @@ from __future__ import annotations
 
 import time
 from collections.abc import Iterator
+from datetime import UTC, datetime
 from typing import Any
 
 import jwt
 import pytest
 from cryptography.hazmat.primitives.asymmetric import rsa
 from fastapi.testclient import TestClient
-from sqlalchemy import select
+from sqlalchemy import delete, select
 
 from recallpharma.api import auth
 from recallpharma.config import get_settings
@@ -64,6 +65,7 @@ def test_valid_token_identifies_account_and_roles(oidc: TestClient) -> None:
         "roles": ["Validateur"],
         "can_curate": True,
         "mfa_enabled": False,
+        "mfa_required": True,
     }
 
 
@@ -114,6 +116,37 @@ def test_token_roles_prevail_and_change_is_audited(oidc: TestClient) -> None:
     oidc.get("/v1/me", headers=restore)
     with session_factory()() as s:
         assert len(s.scalars(select(m.AuditEvent).where(m.AuditEvent.action == "account.roles_synced")).all()) == 2
+
+
+def test_validators_must_enable_mfa(oidc: TestClient) -> None:
+    from recallpharma.api.mfa import seal
+    from recallpharma.db import models as m
+    from recallpharma.db.session import session_factory
+    from recallpharma.domain import totp
+
+    headers = token("demo06@recallpharma.example", ["validateur"])
+    r = oidc.get("/v1/curation/proposals", headers=headers)
+    assert r.status_code == 403 and r.json()["type"].endswith("/mfa_required")
+    assert oidc.get("/v1/me/mfa", headers=headers).status_code == 200  # le compte reste accessible pour l'activer
+    # Un professionnel vérifié n'y est pas soumis.
+    assert (
+        oidc.get("/v1/me", headers=token("demo03@recallpharma.example", ["professionnel-verifie"])).json()[
+            "mfa_required"
+        ]
+        is False
+    )
+
+    secret = totp.new_secret()
+    with session_factory()() as s, s.begin():
+        s.add(m.AccountMfa(account_id="cpt-06", secret=seal(secret, "cpt-06"), enabled_at=datetime.now(UTC)))
+    try:
+        assert oidc.get("/v1/curation/proposals", headers=headers).status_code == 200
+        code = totp.code_at(secret, time.time())
+        r = oidc.post("/v1/me/mfa/disable", headers=headers, json={"code": code})
+        assert r.status_code == 403  # obligatoire : pas de désactivation par l'utilisateur
+    finally:
+        with session_factory()() as s, s.begin():
+            s.execute(delete(m.AccountMfa).where(m.AccountMfa.account_id == "cpt-06"))
 
 
 def test_public_registry_needs_no_token(oidc: TestClient) -> None:

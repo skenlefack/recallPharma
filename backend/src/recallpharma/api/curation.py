@@ -7,7 +7,7 @@ from datetime import UTC, date, datetime
 from pathlib import Path
 from typing import Annotated, Any, Literal
 
-from fastapi import APIRouter, Depends, File, Form, UploadFile
+from fastapi import APIRouter, Depends, File, Form, Request, UploadFile
 from pydantic import BaseModel, Field
 from sqlalchemy import select
 from sqlalchemy.orm import Session
@@ -33,13 +33,31 @@ def get_db(session: Annotated[Session, Depends(get_session)]) -> Any:
 DB = Annotated[Session, Depends(get_db)]
 
 
-def current_actor(db: DB, identity: IdentityDep) -> c.Actor:
+def mfa_enabled(db: Session, account_id: str) -> bool:
+    return bool((row := db.get(m.AccountMfa, account_id)) and row.enabled_at)
+
+
+def mfa_required(actor: c.Actor) -> bool:
+    """Validateurs et administrateurs : double authentification obligatoire (hors mode « dev » des tests)."""
+    return get_settings().auth_mode == "oidc" and actor.has(*c.MFA_REQUIRED_ROLES)
+
+
+def current_actor(request: Request, db: DB, identity: IdentityDep) -> c.Actor:
     """Le compte vient du jeton Keycloak vérifié (ou de l'en-tête en mode dev) ; les contrôles de rôle restent ceux
-    du domaine."""
+    du domaine. Un compte soumis à la double authentification sans l'avoir activée n'accède qu'à son compte
+    (`/v1/me`), le temps de l'activer."""
     if identity.account_id is not None:
-        return service.actor_for(db, identity.account_id)
-    assert identity.login is not None
-    return service.actor_for_login(db, identity.login, identity.roles)
+        actor = service.actor_for(db, identity.account_id)
+    else:
+        assert identity.login is not None
+        actor = service.actor_for_login(db, identity.login, identity.roles)
+    if mfa_required(actor) and not request.url.path.startswith("/v1/me") and not mfa_enabled(db, actor.id):
+        raise Problem(
+            403,
+            "mfa_required",
+            "Double authentification obligatoire pour votre rôle : l'activer dans « Sécurité du compte »",
+        )
+    return actor
 
 
 ActorDep = Annotated[c.Actor, Depends(current_actor)]
@@ -53,6 +71,7 @@ class MeOut(BaseModel):
     roles: list[str]
     can_curate: bool
     mfa_enabled: bool = False
+    mfa_required: bool = False
 
 
 @me_router.get("/v1/me", response_model=MeOut)
@@ -64,7 +83,8 @@ def me(db: DB, actor: ActorDep) -> MeOut:
         display_name=account.display_name,
         roles=sorted(actor.roles),
         can_curate=actor.has(*c.CURATOR_ROLES) and not actor.has(c.Role.TECH_ADMIN),
-        mfa_enabled=bool((mfa := db.get(m.AccountMfa, actor.id)) and mfa.enabled_at),
+        mfa_enabled=mfa_enabled(db, actor.id),
+        mfa_required=mfa_required(actor),
     )
 
 

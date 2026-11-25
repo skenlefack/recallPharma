@@ -1,15 +1,54 @@
 import { createHmac } from "node:crypto";
+import { existsSync, readFileSync, writeFileSync } from "node:fs";
+import path from "node:path";
 
 import { type Page, expect, test } from "@playwright/test";
 
-/** Connexion réelle par Keycloak (royaume de développement). Effacer les cookies ferme aussi la session Keycloak. */
+/**
+ * Connexion réelle par le formulaire du site (Keycloak derrière). Validateurs et administrateurs doivent activer la
+ * double authentification : à la première connexion, le parcours l'active et garde le secret dans e2e/.mfa.json ;
+ * ensuite il saisit le code, sans jamais réutiliser un pas de 30 s déjà consommé (anti-rejeu).
+ */
 async function login(page: Page, account: string) {
   await page.context().clearCookies();
   await page.goto("/connexion?next=/validation");
   await page.getByLabel("Adresse e-mail").fill(`demo${account.slice(-2)}@recallpharma.example`);
   await page.getByLabel("Mot de passe", { exact: true }).fill("demo-recallpharma");
   await page.getByRole("button", { name: "Se connecter" }).click();
+  await page.waitForURL(/\/(validation|compte\/securite|connexion\?etape=code)/);
+  const store = readMfa();
+  if (page.url().includes("etape=code")) {
+    const secret = store[account]?.secret;
+    if (!secret) throw new Error(`Secret TOTP inconnu pour ${account} : réinitialiser sa double authentification.`);
+    await page.getByLabel("Code à 6 chiffres").fill(await nextCode(store, account));
+    await page.getByRole("button", { name: "Vérifier" }).click();
+  } else if (page.url().includes("/compte/securite")) {
+    await page.getByRole("button", { name: "Activer la double authentification" }).click();
+    const secret = (await page.locator(".mfa-secret").innerText()).trim();
+    store[account] = { secret, step: 0 };
+    await page.getByLabel("Code à 6 chiffres").fill(await nextCode(store, account));
+    await page.getByRole("button", { name: "Confirmer et activer" }).click();
+    await page.getByRole("link", { name: "Continuer" }).click();
+  }
   await expect(page).toHaveURL(/localhost:3100\/validation/);
+}
+
+type MfaStore = Record<string, { secret: string; step: number }>;
+const MFA_FILE = path.join(__dirname, ".mfa.json");
+const readMfa = (): MfaStore => (existsSync(MFA_FILE) ? JSON.parse(readFileSync(MFA_FILE, "utf8")) : {});
+
+/** Code du pas courant, ou du suivant s'il a déjà servi (attente au besoin) ; le pas consommé est mémorisé. */
+async function nextCode(store: MfaStore, account: string): Promise<string> {
+  const entry = store[account];
+  let step = Math.floor(Date.now() / 30_000);
+  if (step <= entry.step) {
+    step = entry.step + 1;
+    const wait = step * 30_000 - Date.now() - 25_000; // la fenêtre de l'API accepte le pas suivant
+    if (wait > 0) await new Promise((r) => setTimeout(r, wait));
+  }
+  entry.step = step;
+  writeFileSync(MFA_FILE, JSON.stringify(store, null, 2));
+  return totp(entry.secret, step * 30_000);
 }
 
 const card = (page: Page, title: string) => page.locator(".card", { has: page.getByRole("heading", { name: title, exact: true }) });
@@ -165,6 +204,7 @@ test("copilot : tableau du registre, réponse contrôlée, affinage, abstention,
 });
 
 test("administration : tableau de bord pour l'administrateur, accès refusé au visiteur", async ({ page }) => {
+  test.setTimeout(90_000);
   await login(page, "cpt-09");
   await page.goto("/admin");
   await expect(page.getByRole("heading", { name: "Tableau de bord" })).toBeVisible();

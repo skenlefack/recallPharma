@@ -135,6 +135,7 @@ export default async function SearchPage({ searchParams }: Props) {
             </button>
           </form>
           <nav className="hero-categories" aria-label="Catégories de médicaments">
+            <span className="hero-categories-label">Parcourir</span>
             {categories.map((c) => {
               const Icon = CATEGORY_ICONS[c.code] ?? PillIcon;
               const current = c.code === category;
@@ -143,16 +144,15 @@ export default async function SearchPage({ searchParams }: Props) {
                   key={c.code}
                   href={`/${query({ category: current ? "" : c.code, jurisdiction, as_of })}`}
                   className="hero-category"
+                  title={c.description}
                   aria-current={current ? "true" : undefined}
                 >
-                  <span className="hero-category-icon">
-                    <Icon size={22} />
+                  <span className="hero-category-icon" aria-hidden>
+                    <Icon size={15} />
                   </span>
-                  <span className="hero-category-text">
-                    <strong>{c.label}</strong>
-                    <span>
-                      {c.count} AMM · {c.description}
-                    </span>
+                  {c.label}
+                  <span className="hero-category-count" aria-label={`${c.count} AMM`}>
+                    {c.count}
                   </span>
                 </Link>
               );

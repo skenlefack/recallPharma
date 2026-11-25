@@ -43,3 +43,6 @@ next-env.d.ts
 # Playwright
 /test-results/
 /playwright-report/
+
+# Secrets TOTP des comptes de test (parcours e2e)
+/e2e/.mfa.json

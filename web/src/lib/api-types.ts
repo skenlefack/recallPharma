@@ -1636,6 +1636,11 @@ export interface components {
              * @default false
              */
             mfa_enabled: boolean;
+            /**
+             * Mfa Required
+             * @default false
+             */
+            mfa_required: boolean;
         };
         /** MessageIn */
         MessageIn: {

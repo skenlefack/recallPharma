@@ -22,7 +22,17 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   return (
     <html lang="fr" className={`${lato.variable} ${ubuntu.variable}`}>
       <body>
-        <SiteHeader me={me ? { display_name: me.display_name, roles: me.roles } : null} />
+        <SiteHeader
+          me={
+            me
+              ? {
+                  display_name: me.display_name,
+                  roles: me.roles,
+                  mfa_pending: Boolean(me.mfa_required && !me.mfa_enabled),
+                }
+              : null
+          }
+        />
         <main>
           <div className="wrap">{children}</div>
         </main>

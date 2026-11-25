@@ -17,7 +17,7 @@ from cryptography.hazmat.primitives.ciphers.aead import AESGCM
 from fastapi import APIRouter
 from pydantic import BaseModel, Field
 
-from recallpharma.api.curation import DB, ActorDep
+from recallpharma.api.curation import DB, ActorDep, mfa_required
 from recallpharma.api.problems import Problem
 from recallpharma.config import get_settings
 from recallpharma.db import models as m
@@ -125,6 +125,10 @@ def disable(db: DB, actor: ActorDep, body: CodeIn) -> MfaStatus:
     row = db.get(m.AccountMfa, actor.id)
     if row is None or row.enabled_at is None:
         raise Problem(409, "mfa_disabled", "Double authentification non activée")
+    if mfa_required(actor):
+        raise Problem(
+            403, "mfa_required", "Double authentification obligatoire pour votre rôle : désactivation impossible"
+        )
     _check(db, row, actor.id, body.code)
     db.delete(row)
     record(db, actor=actor.id, action="mfa.disabled", object_type="account", object_id=actor.id)

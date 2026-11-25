@@ -6477,6 +6477,11 @@
             "type": "boolean",
             "title": "Mfa Enabled",
             "default": false
+          },
+          "mfa_required": {
+            "type": "boolean",
+            "title": "Mfa Required",
+            "default": false
           }
         },
         "type": "object",
