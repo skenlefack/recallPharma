@@ -63,6 +63,7 @@ def test_valid_token_identifies_account_and_roles(oidc: TestClient) -> None:
         "display_name": "Validateur (cpt-06)",
         "roles": ["Validateur"],
         "can_curate": True,
+        "mfa_enabled": False,
     }
 
 

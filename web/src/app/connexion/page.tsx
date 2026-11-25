@@ -1,13 +1,13 @@
 import Link from "next/link";
 
-import { AlertTriangleIcon, ArrowRightIcon, BellIcon, ChatIcon, CheckShieldIcon, MailIcon } from "@/components/icons";
+import { AlertTriangleIcon, ArrowRightIcon, BellIcon, ChatIcon, CheckShieldIcon, KeyIcon, MailIcon } from "@/components/icons";
 import { Logo } from "@/components/Logo";
 import { PasswordField } from "@/components/PasswordField";
 import { currentAccount } from "@/lib/api";
 import { IMAGES } from "@/lib/images";
 import { safeNext } from "@/lib/oidc";
 
-type Props = { searchParams: Promise<{ next?: string; erreur?: string; identifiant?: string }> };
+type Props = { searchParams: Promise<{ next?: string; erreur?: string; identifiant?: string; etape?: string }> };
 
 const POINTS = [
   { icon: CheckShieldIcon, text: "Chaque information avec son niveau de preuve et sa source" },
@@ -16,7 +16,7 @@ const POINTS = [
 ];
 
 export default async function LoginPage({ searchParams }: Props) {
-  const { next, erreur, identifiant } = await searchParams;
+  const { next, erreur, identifiant, etape } = await searchParams;
   const me = await currentAccount();
   return (
     <div className="auth">
@@ -56,6 +56,43 @@ export default async function LoginPage({ searchParams }: Props) {
               </button>
             </form>
           </div>
+        ) : etape === "code" ? (
+          <form method="post" action="/api/auth/mfa" className="auth-form">
+            <span className="section-kicker">Double authentification</span>
+            <h1>Code de vérification</h1>
+            <p className="muted">
+              Saisissez le code à 6 chiffres affiché par votre application d&apos;authentification (FreeOTP, Google
+              Authenticator, Microsoft Authenticator…).
+            </p>
+            {erreur && (
+              <div className="auth-error" role="alert">
+                <AlertTriangleIcon size={18} />
+                <span>{erreur}</span>
+              </div>
+            )}
+            <label htmlFor="code">Code à 6 chiffres</label>
+            <div className="auth-input auth-code">
+              <KeyIcon size={18} />
+              <input
+                id="code"
+                name="code"
+                inputMode="numeric"
+                autoComplete="one-time-code"
+                pattern="[0-9 ]{6,7}"
+                maxLength={7}
+                placeholder="123 456"
+                autoFocus
+                required
+              />
+            </div>
+            <button type="submit" className="auth-submit">
+              Vérifier <ArrowRightIcon size={16} />
+            </button>
+            <p className="auth-help">
+              Le code change toutes les 30 secondes. Téléphone perdu ? Votre administrateur peut réinitialiser la double
+              authentification. <Link href={`/connexion${next ? `?next=${encodeURIComponent(next)}` : ""}`}>Recommencer la connexion</Link>
+            </p>
+          </form>
         ) : (
           <form method="post" action="/api/auth/login" className="auth-form">
             <span className="section-kicker">Espace professionnel</span>

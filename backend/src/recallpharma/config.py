@@ -26,6 +26,10 @@ class Settings(BaseSettings):
     keycloak_realm: str = "recallpharma"
     keycloak_admin_client_id: str = "recallpharma-admin"
     keycloak_admin_client_secret: str = "dev-only-admin-secret"
+    # Double authentification : clé de chiffrement des secrets TOTP (obligatoire et propre à chaque environnement).
+    mfa_encryption_key: str = "dev-only-mfa-encryption-key"
+    mfa_max_failures: int = 5
+    mfa_lock_minutes: int = 15
 
     # Copilot (D6). Jeton délégué : émis par l'API pour la passerelle, accepté sur les seuls outils de lecture (ADR-08).
     copilot_token_secret: str = "dev-only-copilot-delegation-secret"

@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from fastapi import FastAPI
 
-from recallpharma.api import admin, copilot, copilot_tools, curation, problems, registry, spc
+from recallpharma.api import admin, copilot, copilot_tools, curation, mfa, problems, registry, spc
 
 
 def create_app() -> FastAPI:
@@ -17,6 +17,7 @@ def create_app() -> FastAPI:
     app.include_router(curation.router)
     app.include_router(curation.me_router)
     app.include_router(admin.router)
+    app.include_router(mfa.router)
     app.include_router(copilot.router)
     app.include_router(copilot_tools.router)
 

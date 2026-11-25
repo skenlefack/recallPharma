@@ -52,6 +52,7 @@ class MeOut(BaseModel):
     display_name: str
     roles: list[str]
     can_curate: bool
+    mfa_enabled: bool = False
 
 
 @me_router.get("/v1/me", response_model=MeOut)
@@ -63,6 +64,7 @@ def me(db: DB, actor: ActorDep) -> MeOut:
         display_name=account.display_name,
         roles=sorted(actor.roles),
         can_curate=actor.has(*c.CURATOR_ROLES) and not actor.has(c.Role.TECH_ADMIN),
+        mfa_enabled=bool((mfa := db.get(m.AccountMfa, actor.id)) and mfa.enabled_at),
     )
 
 

@@ -147,6 +147,7 @@ class AccountOut(BaseModel):
     display_name: str
     roles: list[str]
     active: bool
+    mfa_enabled: bool = False
 
 
 class AccountIn(BaseModel):
@@ -171,8 +172,19 @@ class PasswordOut(BaseModel):
     temporary_password: str
 
 
-def _account_out(a: m.Account) -> AccountOut:
-    return AccountOut(id=a.id, login=a.login, display_name=a.display_name, roles=sorted(a.roles), active=a.active)
+def _account_out(a: m.Account, mfa: set[str] | None = None) -> AccountOut:
+    return AccountOut(
+        id=a.id,
+        login=a.login,
+        display_name=a.display_name,
+        roles=sorted(a.roles),
+        active=a.active,
+        mfa_enabled=a.id in (mfa or set()),
+    )
+
+
+def _mfa_enabled(db: DB) -> set[str]:
+    return set(db.scalars(select(m.AccountMfa.account_id).where(m.AccountMfa.enabled_at.is_not(None))))
 
 
 def _check_roles(roles: list[str]) -> list[str]:
@@ -205,7 +217,8 @@ def roles(actor: ActorDep) -> list[str]:
 @router.get("/accounts", response_model=list[AccountOut])
 def list_accounts(db: DB, actor: ActorDep) -> list[AccountOut]:
     _require(actor, READERS)
-    return [_account_out(a) for a in db.scalars(select(m.Account).order_by(m.Account.id))]
+    mfa = _mfa_enabled(db)
+    return [_account_out(a, mfa) for a in db.scalars(select(m.Account).order_by(m.Account.id))]
 
 
 @router.post("/accounts", response_model=CreatedAccount, status_code=201)
@@ -283,6 +296,19 @@ def reset_password(db: DB, actor: ActorDep, directory: DirectoryDep, account_id:
     _directory(directory.reset_password, account.login, password)
     record(db, actor=actor.id, action="account.password_reset", object_type="account", object_id=account.id)
     return PasswordOut(temporary_password=password)
+
+
+@router.post("/accounts/{account_id}/mfa-reset", response_model=AccountOut)
+def reset_mfa(db: DB, actor: ActorDep, account_id: str) -> AccountOut:
+    """Téléphone perdu : la double authentification est retirée, l'utilisateur la réactive à la connexion suivante."""
+    _require(actor, ACCOUNT_MANAGERS)
+    account = _account(db, account_id)
+    row = db.get(m.AccountMfa, account.id)
+    if row is None:
+        raise Problem(409, "mfa_disabled", "Double authentification non activée pour ce compte")
+    db.delete(row)
+    record(db, actor=actor.id, action="mfa.reset", object_type="account", object_id=account.id)
+    return _account_out(account)
 
 
 # --- AMM ---------------------------------------------------------------------------------------------

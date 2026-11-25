@@ -1,3 +1,5 @@
+import { createHmac } from "node:crypto";
+
 import { type Page, expect, test } from "@playwright/test";
 
 /** Connexion réelle par Keycloak (royaume de développement). Effacer les cookies ferme aussi la session Keycloak. */
@@ -173,4 +175,48 @@ test("administration : tableau de bord pour l'administrateur, accès refusé au 
   await login(page, "cpt-01");
   await page.goto("/admin");
   await expect(page.getByRole("heading", { name: "Administration réservée" })).toBeVisible();
+});
+
+/** Code TOTP (RFC 6238, SHA-1, 6 chiffres, 30 s) calculé comme une application d'authentification. */
+function totp(secret: string, at = Date.now()): string {
+  const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567";
+  let bits = "";
+  for (const c of secret) bits += alphabet.indexOf(c).toString(2).padStart(5, "0");
+  const key = Buffer.from(bits.match(/.{8}/g)!.map((b) => parseInt(b, 2)));
+  const counter = Buffer.alloc(8);
+  counter.writeBigUInt64BE(BigInt(Math.floor(at / 1000 / 30)));
+  const digest = createHmac("sha1", key).update(counter).digest();
+  const offset = digest[digest.length - 1] & 0x0f;
+  return String((digest.readUInt32BE(offset) & 0x7fffffff) % 1_000_000).padStart(6, "0");
+}
+
+test("double authentification : activation, connexion avec code, refus d'un code faux, désactivation", async ({ page }) => {
+  test.setTimeout(90_000);
+  await login(page, "cpt-04");
+  await page.goto("/compte/securite");
+  await page.getByRole("button", { name: "Activer la double authentification" }).click();
+  const secret = (await page.locator(".mfa-secret").innerText()).trim();
+  await page.getByLabel("Code à 6 chiffres").fill(totp(secret));
+  await page.getByRole("button", { name: "Confirmer et activer" }).click();
+  await expect(page.getByText("Double authentification active", { exact: true })).toBeVisible();
+
+  // Nouvelle connexion : le mot de passe ne suffit plus.
+  await page.context().clearCookies();
+  await page.goto("/connexion?next=/compte/securite");
+  await page.getByLabel("Adresse e-mail").fill("demo04@recallpharma.example");
+  await page.getByLabel("Mot de passe", { exact: true }).fill("demo-recallpharma");
+  await page.getByRole("button", { name: "Se connecter" }).click();
+  await expect(page.getByRole("heading", { name: "Code de vérification" })).toBeVisible();
+  await page.getByLabel("Code à 6 chiffres").fill("000000");
+  await page.getByRole("button", { name: "Vérifier" }).click();
+  await expect(page.locator(".auth-error")).toContainText("Code incorrect");
+  await page.getByLabel("Code à 6 chiffres").fill(totp(secret, Date.now() + 30_000));
+  await page.getByRole("button", { name: "Vérifier" }).click();
+  await expect(page).toHaveURL(/\/compte\/securite/);
+
+  // Désactivation : un code déjà utilisé est refusé (anti-rejeu), on attend donc le pas de 30 s suivant.
+  await page.waitForTimeout(30_000 - (Date.now() % 30_000) + 500);
+  await page.getByLabel("Code à 6 chiffres").fill(totp(secret, Date.now() + 30_000));
+  await page.getByRole("button", { name: "Désactiver" }).click();
+  await expect(page.getByText("Double authentification désactivée.")).toBeVisible();
 });

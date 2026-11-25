@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 
-import { CloseIcon, KeyIcon, PlusIcon, PowerIcon, SearchIcon, UsersIcon } from "@/components/icons";
+import { CheckShieldIcon, CloseIcon, KeyIcon, PlusIcon, PowerIcon, SearchIcon, UsersIcon } from "@/components/icons";
 import type { AdminAccount } from "@/lib/admin";
 import { bff, describe } from "@/lib/bff";
 
@@ -66,6 +66,15 @@ export function AccountsManager({ initial, roles, canManage, selfId }: Props) {
       (r) => {
         replace(r);
         setMessage({ tone: "ok", text: `${r.display_name} : compte ${r.active ? "réactivé" : "désactivé (sessions fermées)"}.` });
+      },
+    );
+
+  const resetMfa = (a: AdminAccount) =>
+    run(
+      () => bff<AdminAccount>(`/v1/admin/accounts/${a.id}/mfa-reset`, { method: "POST" }),
+      (r) => {
+        replace(r);
+        setMessage({ tone: "ok", text: `Double authentification de ${r.display_name} retirée : à réactiver par l'utilisateur.` });
       },
     );
 
@@ -238,6 +247,11 @@ export function AccountsManager({ initial, roles, canManage, selfId }: Props) {
                 </td>
                 <td>
                   <span className={`admin-state ${a.active ? "on" : "off"}`}>{a.active ? "Actif" : "Désactivé"}</span>
+                  {a.mfa_enabled && (
+                    <span className="admin-state mfa" title="Double authentification active">
+                      2FA
+                    </span>
+                  )}
                 </td>
                 {canManage && (
                   <td className="right">
@@ -265,6 +279,18 @@ export function AccountsManager({ initial, roles, canManage, selfId }: Props) {
                       >
                         <KeyIcon size={16} />
                       </button>
+                      {a.mfa_enabled && (
+                        <button
+                          type="button"
+                          className="admin-icon-btn"
+                          title="Réinitialiser la double authentification (téléphone perdu)"
+                          aria-label={`Réinitialiser la double authentification de ${a.display_name}`}
+                          disabled={busy}
+                          onClick={() => resetMfa(a)}
+                        >
+                          <CheckShieldIcon size={16} />
+                        </button>
+                      )}
                       <button
                         type="button"
                         className={`admin-icon-btn ${a.active ? "danger" : "ok"}`}

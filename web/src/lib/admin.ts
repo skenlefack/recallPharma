@@ -28,6 +28,10 @@ export const ACTION_LABELS: Record<string, string> = {
   "account.password_reset": "Mot de passe réinitialisé",
   "alert.published": "Alerte publiée",
   "alert.closed": "Alerte close",
+  "mfa.enabled": "Double authentification activée",
+  "mfa.disabled": "Double authentification désactivée",
+  "mfa.locked": "Double authentification verrouillée (échecs)",
+  "mfa.reset": "Double authentification réinitialisée",
 };
 
 export const actionLabel = (action: string) =>

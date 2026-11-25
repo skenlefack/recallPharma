@@ -12,10 +12,13 @@ export const CLIENT_ID = process.env.RECALLPHARMA_OIDC_CLIENT_ID ?? "recallpharm
 const CLIENT_SECRET = process.env.RECALLPHARMA_OIDC_CLIENT_SECRET ?? "dev-only-web-secret";
 
 export const SESSION_COOKIE = "rp_session";
+/** Connexion en attente du code de double authentification (jetons scellés, 5 minutes). */
+export const MFA_COOKIE = "rp_mfa";
 /** En-tête interne posé par le middleware pour les composants serveur et le BFF ; toujours écrasé à l'entrée. */
 export const TOKEN_HEADER = "x-rp-access-token";
 
 export type Session = { at: string; rt: string; exp: number };
+export type PendingMfa = { session: Session; next: string; until: number };
 
 // Adresse de Keycloak vue du serveur (jeton, déconnexion), si elle diffère de celle du navigateur (conteneurs).
 const BACKCHANNEL = process.env.RECALLPHARMA_OIDC_BACKCHANNEL_URL ?? ISSUER;

@@ -328,6 +328,20 @@ class Account(Base):
     active: Mapped[bool] = mapped_column(Boolean, server_default="true")
 
 
+class AccountMfa(Base):
+    """Double authentification (TOTP) du compte : secret chiffré (AES-GCM), anti-rejeu, verrouillage après échecs."""
+
+    __tablename__ = "account_mfa"
+    __table_args__ = ({"schema": "core"},)
+
+    account_id: Mapped[str] = mapped_column(ForeignKey("core.account.id", ondelete="CASCADE"), primary_key=True)
+    secret: Mapped[str] = mapped_column(Text)  # chiffré
+    enabled_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))  # NULL : inscription en cours
+    last_step: Mapped[int | None] = mapped_column(BigInteger)
+    failed_attempts: Mapped[int] = mapped_column(Integer, server_default="0")
+    locked_until: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+
+
 class Proposal(Base):
     """Proposition de fiche (création ou mise à jour d'une AMM) qui suit le circuit A → B → C (M02)."""
 

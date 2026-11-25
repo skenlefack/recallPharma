@@ -41,13 +41,19 @@ export function SiteHeader({ me }: { me: Me }) {
         <div className="who">
           {me ? (
             <form method="post" action="/api/auth/logout" className="user-chip">
-              <span className="avatar" aria-hidden title={`${me.display_name} · ${me.roles.join(", ")}`}>
-                {initials(me.display_name)}
-              </span>
-              <span className="user-text">
-                <span className="user-name">{me.display_name}</span>
-                <span className="user-role">{me.roles.join(", ")}</span>
-              </span>
+              <Link
+                href="/compte/securite"
+                className="user-link"
+                title={`${me.display_name} · ${me.roles.join(", ")} — sécurité du compte`}
+              >
+                <span className="avatar" aria-hidden>
+                  {initials(me.display_name)}
+                </span>
+                <span className="user-text">
+                  <span className="user-name">{me.display_name}</span>
+                  <span className="user-role">{me.roles.join(", ")}</span>
+                </span>
+              </Link>
               <button type="submit" className="icon-button" title="Se déconnecter" aria-label="Se déconnecter">
                 <LogoutIcon size={17} />
               </button>
