@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-import { BellIcon, ChatIcon, CheckShieldIcon, SearchIcon } from "@/components/icons";
+import { BellIcon, ChatIcon, CheckShieldIcon, CogIcon, SearchIcon } from "@/components/icons";
 
 const LINKS = [
   { href: "/", label: "Recherche", icon: SearchIcon, match: (p: string) => p === "/" || p.startsWith("/amm") },
@@ -13,11 +13,14 @@ const LINKS = [
 ];
 
 /** Navigation principale : la page courante est marquée (aria-current), pas seulement colorée. */
-export function AppNav() {
+export function AppNav({ admin = false }: { admin?: boolean }) {
   const path = usePathname() ?? "/";
+  const links = admin
+    ? [...LINKS, { href: "/admin", label: "Admin", icon: CogIcon, match: (p: string) => p.startsWith("/admin") }]
+    : LINKS;
   return (
     <nav aria-label="Navigation principale" className="app-nav">
-      {LINKS.map(({ href, label, icon: Icon, match }) => (
+      {links.map(({ href, label, icon: Icon, match }) => (
         <Link key={href} href={href} aria-current={match(path) ? "page" : undefined}>
           <Icon size={17} />
           <span>{label}</span>

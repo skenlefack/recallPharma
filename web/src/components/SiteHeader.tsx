@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { AppNav } from "@/components/AppNav";
 import { LogoutIcon } from "@/components/icons";
 import { Logo } from "@/components/Logo";
+import { canAdmin } from "@/lib/admin";
 
 type Me = { display_name: string; roles: string[] } | null;
 
@@ -36,11 +37,11 @@ export function SiteHeader({ me }: { me: Me }) {
         <Link href="/" className="brand" aria-label="RecallPharma, accueil">
           <Logo variant="sombre" height={50} />
         </Link>
-        <AppNav />
+        <AppNav admin={canAdmin(me)} />
         <div className="who">
           {me ? (
             <form method="post" action="/api/auth/logout" className="user-chip">
-              <span className="avatar" aria-hidden>
+              <span className="avatar" aria-hidden title={`${me.display_name} · ${me.roles.join(", ")}`}>
                 {initials(me.display_name)}
               </span>
               <span className="user-text">

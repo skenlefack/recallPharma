@@ -68,7 +68,7 @@ pnpm install
 RECALLPHARMA_API_URL=http://127.0.0.1:8000 pnpm dev   # http://localhost:3000
 ```
 
-Keycloak importe le royaume au premier démarrage (console : http://localhost:8280, `admin` / `admin`). Tous les comptes fictifs ont le mot de passe `demo-recallpharma` ; leurs identifiants sont dans le tableau ci-dessous. Après modification de `generate_realm.py`, regénérer le royaume puis `docker compose up -d --force-recreate keycloak` (le royaume n'est importé qu'à la création du conteneur).
+Keycloak importe le royaume au premier démarrage (console : http://localhost:8280, `admin` / `admin`). Tous les comptes fictifs ont le mot de passe `demo-recallpharma` ; leurs identifiants sont dans le tableau ci-dessous. Après modification de `generate_realm.py`, regénérer le royaume puis supprimer le volume `keycloak-data` et relancer Keycloak (le royaume n'est importé que dans un volume vide).
 
 `RECALLPHARMA_REFERENCE_DATE` fige la date de consultation à celle du jeu A10. Sans elle, les statuts sont calculés à la date du jour.
 
@@ -114,6 +114,21 @@ uv run lint-imports      # le domaine ne dépend ni de FastAPI, ni de SQLAlchemy
 - **Arbitrage (RG-11)** : tout responsable réglementaire ou responsable produit peut arbitrer, à condition de n'être ni A, ni B, ni C.
 - **Mise à jour d'une AMM publiée** : les sources doivent être citées à nouveau, et B doit réafficher chaque page.
 - **Accès au texte des RCP (Q-03)** : le texte des rubriques et la recherche de passages sont ouverts comme la fiche. Le D3 propose de réserver posologie, indications et contre-indications aux professionnels vérifiés ; le filtrage par rôle s'ajoutera dès que la décision Q-03 sera prise.
+
+## Administration
+
+Espace `/admin` (lien « Admin » du menu), ouvert aux administrateurs fonctionnel (`cpt-09`) et technique (`cpt-10`), à l'auditeur (`cpt-11`, lecture seule) et à l'évaluateur de pharmacovigilance (`cpt-08`, alertes) :
+
+| Page | Contenu |
+|---|---|
+| Tableau de bord | Indicateurs (AMM, propositions, alertes, comptes, Copilot, audit), répartitions par statut, juridiction et rôle, dernières écritures |
+| Comptes et rôles | Création (mot de passe provisoire affiché une fois), rôles, désactivation (sessions fermées), réinitialisation du mot de passe ; réservé aux administrateurs |
+| AMM | Toutes les AMM, publiées ou dans le circuit, avec filtres |
+| Alertes | Publication et clôture motivée ; administrateur fonctionnel et évaluateur de pharmacovigilance |
+| Copilot | Retours des utilisateurs (utile, erreur signalée) avec la question et le modèle |
+| Journal d'audit | Écritures paginées et filtrées, intégrité de la chaîne |
+
+Les comptes vivent dans Keycloak : l'API les pilote par le compte de service `recallpharma-admin` (`RECALLPHARMA_KEYCLOAK_ADMIN_*`). Les données Keycloak sont gardées dans le volume `keycloak-data` ; pour réimporter le royaume après une modification, supprimer ce volume (`docker compose rm -sf keycloak && docker volume rm recallpharma_keycloak-data`).
 
 ## Double authentification
 

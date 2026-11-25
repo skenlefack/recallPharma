@@ -161,3 +161,16 @@ test("copilot : tableau du registre, réponse contrôlée, affinage, abstention,
   await turn.getByRole("button", { name: "Signaler une erreur" }).click();
   await expect(turn).toContainText(/Signalement reçu \(ticket QUAL-\d+\)/);
 });
+
+test("administration : tableau de bord pour l'administrateur, accès refusé au visiteur", async ({ page }) => {
+  await login(page, "cpt-09");
+  await page.goto("/admin");
+  await expect(page.getByRole("heading", { name: "Tableau de bord" })).toBeVisible();
+  await expect(page.getByText("AMM publiées", { exact: true })).toBeVisible();
+  await page.getByRole("link", { name: "Journal d'audit" }).click();
+  await expect(page.getByText("Chaîne intacte")).toBeVisible();
+
+  await login(page, "cpt-01");
+  await page.goto("/admin");
+  await expect(page.getByRole("heading", { name: "Administration réservée" })).toBeVisible();
+});
