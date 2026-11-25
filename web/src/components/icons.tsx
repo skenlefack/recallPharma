@@ -136,3 +136,40 @@ export const MapPinIcon = (p: Props) => (
     <circle cx="12" cy="9.5" r="2.5" />
   </Svg>
 );
+
+export const SendIcon = (p: Props) => (
+  <Svg {...p}>
+    <path d="M22 2 11 13M22 2l-7 20-4-9-9-4z" />
+  </Svg>
+);
+
+export const SparkIcon = (p: Props) => (
+  <Svg {...p}>
+    <path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5 18 18M6 18l2.5-2.5M15.5 8.5 18 6" />
+  </Svg>
+);
+
+export const LockIcon = (p: Props) => (
+  <Svg {...p}>
+    <rect x="4" y="11" width="16" height="10" rx="2" />
+    <path d="M8 11V7a4 4 0 0 1 8 0v4" />
+  </Svg>
+);
+
+export const TrashIcon = (p: Props) => (
+  <Svg {...p}>
+    <path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14" />
+  </Svg>
+);
+
+export const ThumbUpIcon = (p: Props) => (
+  <Svg {...p}>
+    <path d="M7 10v11H3V10zM7 10l4-8a3 3 0 0 1 3 3v4h5.5a2 2 0 0 1 2 2.3l-1.4 8A2 2 0 0 1 18.1 21H7" />
+  </Svg>
+);
+
+export const FlagIcon = (p: Props) => (
+  <Svg {...p}>
+    <path d="M4 22V4M4 4h13l-2 4 2 4H4" />
+  </Svg>
+);

@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useRef, useState } from "react";
 
+import { ArrowRightIcon, FlagIcon, SendIcon, SparkIcon, ThumbUpIcon, TrashIcon } from "@/components/icons";
 import { Banners, StatusBadge } from "@/components/regulatory";
 import type { Schemas } from "@/lib/api";
 import { bff, describe } from "@/lib/bff";
@@ -40,6 +41,12 @@ type Turn = {
   messageId?: string;
   feedback?: string;
 };
+
+const SUGGESTIONS = [
+  "Quels produits à base d'ivermectine sont autorisés pour les bovins ?",
+  "Quels médicaments à base d'oxytétracycline sont autorisés ?",
+  "Quelles AMM sont suspendues en ce moment ?",
+];
 
 const STEP_LABEL: Record<string, string> = {
   réception: "Lecture de la question…",
@@ -157,10 +164,20 @@ export function CopilotChat({ jurisdictions, defaultJurisdiction }: { jurisdicti
   const name = jurisdictions.find((j) => j.code === jurisdiction)?.name ?? jurisdiction;
 
   return (
-    <div className="stack">
-      <div className="row" style={{ alignItems: "end" }}>
-        <label className="field">
-          Juridiction
+    <div className="chat">
+      <header className="chat-head">
+        <span className="chat-avatar" aria-hidden>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/brand/symbole.png" alt="" width={34} height={34} />
+        </span>
+        <div className="chat-title">
+          <strong>Copilot RecallPharma</strong>
+          <span className="chat-status">
+            <span className="chat-dot" aria-hidden /> Modèle open source · registre de {name}
+          </span>
+        </div>
+        <label className="chat-jurisdiction">
+          <span className="sr-only">Juridiction</span>
           <select value={jurisdiction} onChange={(e) => changeJurisdiction(e.target.value)} disabled={busy}>
             {jurisdictions.map((j) => (
               <option key={j.code} value={j.code}>
@@ -170,85 +187,128 @@ export function CopilotChat({ jurisdictions, defaultJurisdiction }: { jurisdicti
           </select>
         </label>
         {turns.length > 0 && (
-          <button type="button" className="secondary" onClick={erase} disabled={busy}>
-            Effacer la conversation
+          <button type="button" className="chat-erase" onClick={erase} disabled={busy} title="Effacer la conversation">
+            <TrashIcon size={16} /> <span>Effacer</span>
           </button>
         )}
-      </div>
+      </header>
 
-      {turns.map((t, i) => (
-        <section key={i} className="stack copilot-turn" aria-live="polite">
-          <p className="copilot-question">
-            <strong>Question :</strong> {t.question}
-          </p>
-          {t.step && <p className="muted small">{STEP_LABEL[t.step] ?? t.step}</p>}
-          {t.records && <RecordsView records={t.records} />}
-          {t.answer && (
-            <div className="card stack">
-              <p style={{ margin: 0 }} className={t.answer.kind === "answer" ? "" : "muted"}>
-                {t.answer.text}
-              </p>
-              <p className="small muted" style={{ margin: 0 }}>
-                {t.answer.context.line}
-              </p>
-              {t.answer.context.sources.length > 0 && (
-                <p className="small" style={{ margin: 0 }}>
-                  Sources : {t.answer.context.sources.join(" ; ")}
-                </p>
-              )}
-              <p className="small" style={{ margin: 0 }}>
-                <em>{t.answer.mention}</em>
-              </p>
-              <div className="row small">
-                {t.answer.actions
-                  .filter((a) => a.href)
-                  .map((a) => (
-                    <Link key={a.href} href={a.href!}>
-                      {a.label}
-                      {a.href!.startsWith("/amm/") ? ` ${a.href!.slice(5)}` : ""}
-                    </Link>
-                  ))}
-                {t.messageId && !t.feedback && (
-                  <>
-                    <button type="button" className="link" onClick={() => sendFeedback(i, "utile")}>
-                      Utile
-                    </button>
-                    <button type="button" className="link" onClick={() => sendFeedback(i, "erreur signalée")}>
-                      Signaler une erreur
-                    </button>
-                  </>
+      <div className="chat-thread">
+        {turns.length === 0 && (
+          <div className="chat-empty">
+            <span className="chat-empty-icon" aria-hidden>
+              <SparkIcon size={30} />
+            </span>
+            <h2>Posez votre question au registre</h2>
+            <p>Statut des AMM, délais d&apos;attente, textes des RCP, comparaisons entre juridictions.</p>
+            <div className="chat-suggestions">
+              {SUGGESTIONS.map((q) => (
+                <button key={q} type="button" onClick={() => setQuestion(q)} disabled={busy}>
+                  {q}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {turns.map((t, i) => (
+          <section key={i} className="copilot-turn" aria-live="polite">
+            <p className="copilot-question">
+              <span className="sr-only">Question :</span>
+              {t.question}
+            </p>
+            <div className="chat-reply">
+              <span className="chat-avatar small" aria-hidden>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src="/brand/symbole.png" alt="" width={26} height={26} />
+              </span>
+              <div className="chat-reply-body">
+                {t.step && (
+                  <p className="chat-step">
+                    <span className="chat-typing" aria-hidden>
+                      <i />
+                      <i />
+                      <i />
+                    </span>
+                    {STEP_LABEL[t.step] ?? t.step}
+                  </p>
                 )}
-                {t.feedback && <span className="muted">{t.feedback}</span>}
+                {t.records && <RecordsView records={t.records} />}
+                {t.answer && (
+                  <div className={`chat-answer kind-${t.answer.kind}`}>
+                    <p className="chat-answer-text">{t.answer.text}</p>
+                    <p className="chat-answer-context">{t.answer.context.line}</p>
+                    {t.answer.context.sources.length > 0 && (
+                      <p className="chat-answer-sources">
+                        <strong>Sources</strong> {t.answer.context.sources.join(" ; ")}
+                      </p>
+                    )}
+                    <p className="chat-answer-mention">{t.answer.mention}</p>
+                    <div className="chat-actions">
+                      {t.answer.actions
+                        .filter((a) => a.href)
+                        .map((a) => (
+                          <Link key={a.href} href={a.href!} className="chat-action">
+                            {a.label}
+                            {a.href!.startsWith("/amm/") ? ` ${a.href!.slice(5)}` : ""} <ArrowRightIcon size={13} />
+                          </Link>
+                        ))}
+                      {t.messageId && !t.feedback && (
+                        <span className="chat-feedback">
+                          <button type="button" onClick={() => sendFeedback(i, "utile")}>
+                            <ThumbUpIcon size={14} /> Utile
+                          </button>
+                          <button type="button" onClick={() => sendFeedback(i, "erreur signalée")}>
+                            <FlagIcon size={14} /> Signaler une erreur
+                          </button>
+                        </span>
+                      )}
+                      {t.feedback && <span className="chat-feedback-done">{t.feedback}</span>}
+                    </div>
+                  </div>
+                )}
+                {t.error && (
+                  <div className="banner tone-gris" role="status">
+                    <div>{t.error}</div>
+                  </div>
+                )}
               </div>
             </div>
-          )}
-          {t.error && (
-            <div className="banner tone-gris" role="status">
-              <div>{t.error}</div>
-            </div>
-          )}
-        </section>
-      ))}
-      <div ref={bottom} />
+          </section>
+        ))}
+        <div ref={bottom} />
+      </div>
 
-      <form onSubmit={submit} className="card stack">
-        <label className="field">
-          Votre question (registre de {name})
+      <form onSubmit={submit} className="chat-composer">
+        <label className="chat-input">
+          <span className="sr-only">Votre question (registre de {name})</span>
           <textarea
             value={question}
             onChange={(e) => setQuestion(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" && !e.shiftKey) {
+                e.preventDefault();
+                e.currentTarget.form?.requestSubmit();
+              }
+            }}
             maxLength={2000}
-            rows={3}
+            rows={2}
             placeholder="Ex. : Quels produits à base d'ivermectine sont autorisés pour les bovins ?"
             disabled={busy}
           />
         </label>
-        <div className="row">
-          <button type="submit" disabled={busy || !question.trim()}>
-            {busy ? "En cours…" : "Envoyer"}
-          </button>
-          {problem && <span className="small">{problem}</span>}
-        </div>
+        <button type="submit" className="chat-send" disabled={busy || !question.trim()}>
+          {busy ? (
+            "En cours…"
+          ) : (
+            <>
+              Envoyer <SendIcon size={16} />
+            </>
+          )}
+        </button>
+        <p className="chat-hint">
+          Entrée pour envoyer, Maj + Entrée pour aller à la ligne{problem && <> · {problem}</>}
+        </p>
       </form>
     </div>
   );
