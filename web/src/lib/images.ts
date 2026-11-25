@@ -9,6 +9,6 @@ export const IMAGES = {
   carteDelais: "/images/carte-delais.jpg",
   carteAlertes: "/images/carte-alertes.jpg",
   fondPourquoi: "/images/fond-pourquoi.jpg",
-  fondCopilot: "/images/fond-copilot.svg",
+  fondCopilot: "/images/fond-copilot.jpg",
   bandeau: "/images/bandeau.jpg",
 } as const;
