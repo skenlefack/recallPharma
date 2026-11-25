@@ -608,37 +608,155 @@ button.icon-button:hover {
 .why-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 18px;
+  gap: 28px;
+  counter-reset: why;
 }
+/* Carte : bordure en dégradé (double fond), ombre portée en couches, numéro en filigrane. */
 .why-card {
-  background: var(--surface);
+  --lift: 0px;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  counter-increment: why;
+  background:
+    linear-gradient(var(--surface), var(--surface)) padding-box,
+    linear-gradient(135deg, rgb(255 255 255 / 60%), rgb(255 255 255 / 15%)) border-box;
+  border: 1px solid transparent;
+  border-radius: 20px;
   color: var(--text);
   text-align: center;
-  padding: 26px 22px 24px;
-  box-shadow: 0 10px 30px rgb(0 0 0 / 20%);
+  padding: 38px 28px 32px;
+  box-shadow:
+    0 1px 2px rgb(4 32 52 / 10%),
+    0 8px 16px -4px rgb(4 32 52 / 18%),
+    0 24px 48px -12px rgb(4 32 52 / 40%);
+  transform: translateY(var(--lift));
+  transition:
+    transform 0.45s cubic-bezier(0.2, 0.8, 0.2, 1),
+    box-shadow 0.45s cubic-bezier(0.2, 0.8, 0.2, 1),
+    background 0.45s ease;
 }
+/* Barre de couleur en haut, qui s'étire au survol. */
+.why-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 64px;
+  height: 4px;
+  border-radius: 0 0 4px 4px;
+  background: linear-gradient(90deg, var(--accent), var(--warm));
+  transform: translateX(-50%);
+  transition: width 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+/* Numéro en filigrane et halo coloré qui apparaît au survol. */
+.why-card::after {
+  content: counter(why, decimal-leading-zero);
+  position: absolute;
+  z-index: -1;
+  top: 10px;
+  right: 18px;
+  font-family: var(--title);
+  font-size: 4.2rem;
+  font-weight: 700;
+  line-height: 1;
+  color: transparent;
+  -webkit-text-stroke: 1.5px color-mix(in srgb, var(--accent) 22%, transparent);
+  transition: transform 0.5s ease, -webkit-text-stroke-color 0.5s ease;
+}
+.why-card:hover,
+.why-card:focus-within {
+  --lift: -12px;
+  background:
+    radial-gradient(120% 80% at 50% 0%, color-mix(in srgb, var(--warm) 10%, var(--surface)), var(--surface) 60%) padding-box,
+    linear-gradient(135deg, var(--accent), var(--warm)) border-box;
+  box-shadow:
+    0 2px 4px rgb(4 32 52 / 10%),
+    0 18px 30px -8px color-mix(in srgb, var(--accent) 45%, transparent),
+    0 40px 70px -20px rgb(4 32 52 / 60%);
+}
+.why-card:hover::before,
+.why-card:focus-within::before {
+  width: 100%;
+}
+.why-card:hover::after,
+.why-card:focus-within::after {
+  transform: scale(1.12) translate(-4px, 4px);
+  -webkit-text-stroke-color: color-mix(in srgb, var(--warm) 45%, transparent);
+}
+/* Pastille : dégradé bleu → vert, anneau lumineux, pivote au survol. */
 .why-icon {
-  width: 54px;
-  height: 54px;
-  border-radius: 50%;
+  position: relative;
+  width: 64px;
+  height: 64px;
+  border-radius: 18px;
   display: inline-grid;
   place-items: center;
-  background: var(--warm);
-  color: var(--warm-text);
-  box-shadow: 0 0 0 6px color-mix(in srgb, var(--warm) 18%, transparent);
+  background: linear-gradient(135deg, var(--accent), var(--warm));
+  color: #fff;
+  box-shadow:
+    0 10px 22px -6px color-mix(in srgb, var(--accent) 70%, transparent),
+    inset 0 1px 0 rgb(255 255 255 / 35%);
+  transform: rotate(-6deg);
+  transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.5s ease;
+}
+.why-icon::after {
+  content: "";
+  position: absolute;
+  inset: -8px;
+  border-radius: 24px;
+  border: 2px solid color-mix(in srgb, var(--warm) 35%, transparent);
+  opacity: 0;
+  transform: scale(0.85);
+  transition: opacity 0.4s ease, transform 0.5s ease;
+}
+.why-icon svg {
+  transform: rotate(6deg);
+  transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.why-card:hover .why-icon,
+.why-card:focus-within .why-icon {
+  transform: rotate(0) scale(1.1);
+  box-shadow:
+    0 16px 30px -6px color-mix(in srgb, var(--warm) 75%, transparent),
+    inset 0 1px 0 rgb(255 255 255 / 35%);
+}
+.why-card:hover .why-icon::after,
+.why-card:focus-within .why-icon::after {
+  opacity: 1;
+  transform: scale(1);
+}
+.why-card:hover .why-icon svg,
+.why-card:focus-within .why-icon svg {
+  transform: rotate(0);
 }
 .why-card h3 {
-  font-family: var(--text-font);
-  font-weight: 900;
-  font-size: 0.82rem;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  margin: 18px 0 8px;
+  font-family: var(--title);
+  font-weight: 700;
+  font-size: 1.05rem;
+  letter-spacing: 0;
+  margin: 22px 0 10px;
+  transition: color 0.3s ease;
+}
+.why-card:hover h3,
+.why-card:focus-within h3 {
+  color: var(--accent-ink);
 }
 .why-card p {
   color: var(--muted);
-  font-size: 0.875rem;
+  font-size: 0.9rem;
+  line-height: 1.6;
   margin: 0;
+}
+@media (prefers-reduced-motion: reduce) {
+  .why-card,
+  .why-card::before,
+  .why-card::after,
+  .why-icon,
+  .why-icon::after,
+  .why-icon svg {
+    transition: none;
+  }
 }
 
 .counters {
