@@ -531,58 +531,197 @@ button.icon-button:hover {
 .home-section {
   padding: 40px 0 80px;
 }
+/* Titres de section : surtitre en dégradé, titre, filet bleu → vert avec pastille, sous-titre. */
 .section-title {
   text-align: center;
-  margin-bottom: 34px;
+  margin: 0 auto 48px;
+  max-width: 680px;
+}
+.section-kicker {
+  display: inline-block;
+  font-family: var(--text-font);
+  font-size: 0.78rem;
+  font-weight: 900;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  background: linear-gradient(90deg, var(--accent), var(--warm));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  margin-bottom: 10px;
 }
 .section-title h2 {
-  font-size: 2rem;
-  font-weight: 400;
+  font-size: clamp(1.9rem, 3.6vw, 2.6rem);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
   margin: 0;
+}
+.section-title h2::after {
+  content: "";
+  display: block;
+  width: 96px;
+  height: 10px;
+  margin: 18px auto 0;
+  background:
+    radial-gradient(circle, var(--warm) 0 4px, transparent 4.5px) center / 10px 10px no-repeat,
+    linear-gradient(90deg, transparent, var(--accent) 30%, transparent 42%, transparent 58%, var(--warm) 70%, transparent) center / 100% 3px no-repeat;
 }
 .section-title p {
   color: var(--muted);
-  margin: 4px 0 0;
+  font-size: 1.02rem;
+  margin: 16px 0 0;
 }
+.section-title.on-dark h2 {
+  color: #fff;
+  text-shadow: 0 2px 16px rgb(0 0 0 / 35%);
+}
+.section-title.on-dark p {
+  color: rgb(255 255 255 / 82%);
+}
+.section-title.on-dark .section-kicker {
+  background-image: linear-gradient(90deg, #6fd3ff, #5ff0cc);
+}
+
+/* Cartes « Ce que vous trouvez » : même relief que les cartes « Pourquoi ». */
 .offer-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 22px;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 28px;
 }
 .offer {
+  position: relative;
   display: flex;
   flex-direction: column;
   text-decoration: none;
   color: inherit;
+  background:
+    linear-gradient(var(--surface), var(--surface)) padding-box,
+    linear-gradient(135deg, var(--border), var(--border)) border-box;
+  border: 1px solid transparent;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow:
+    0 1px 2px rgb(4 32 52 / 6%),
+    0 8px 16px -6px rgb(4 32 52 / 12%),
+    0 22px 44px -16px rgb(4 32 52 / 28%);
+  transition:
+    transform 0.45s cubic-bezier(0.2, 0.8, 0.2, 1),
+    box-shadow 0.45s cubic-bezier(0.2, 0.8, 0.2, 1),
+    background 0.45s ease;
+}
+.offer:hover,
+.offer:focus-visible {
+  transform: translateY(-12px);
+  background:
+    linear-gradient(var(--surface), var(--surface)) padding-box,
+    linear-gradient(135deg, var(--accent), var(--warm)) border-box;
+  box-shadow:
+    0 2px 4px rgb(4 32 52 / 8%),
+    0 18px 30px -8px color-mix(in srgb, var(--accent) 40%, transparent),
+    0 40px 70px -24px rgb(4 32 52 / 45%);
+}
+.offer-media {
+  position: relative;
+  display: block;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
 }
 .offer-img {
-  display: block;
-  aspect-ratio: 16 / 9;
-  border-radius: 4px;
+  position: absolute;
+  inset: 0;
   background-size: cover;
   background-position: center;
-  box-shadow: 0 10px 24px rgb(6 46 72 / 18%);
-  transition:
-    transform 0.25s,
-    box-shadow 0.25s;
+  transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
-.offer:hover .offer-img {
-  transform: translateY(-4px);
-  box-shadow: 0 16px 32px rgb(6 46 72 / 24%);
+/* Voile coloré sur la photo au survol. */
+.offer-media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(160deg, transparent 40%, color-mix(in srgb, var(--accent) 55%, transparent));
+  opacity: 0;
+  transition: opacity 0.45s ease;
+}
+.offer:hover .offer-img,
+.offer:focus-visible .offer-img {
+  transform: scale(1.08);
+}
+.offer:hover .offer-media::after,
+.offer:focus-visible .offer-media::after {
+  opacity: 1;
+}
+/* Pastille d'icône à cheval sur la photo. */
+.offer-icon {
+  position: relative;
+  z-index: 1;
+  width: 52px;
+  height: 52px;
+  margin: -26px 0 0 22px;
+  border-radius: 16px;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  background: linear-gradient(135deg, var(--accent), var(--warm));
+  box-shadow:
+    0 0 0 4px var(--surface),
+    0 10px 22px -6px color-mix(in srgb, var(--accent) 70%, transparent);
+  transform: rotate(-6deg);
+  transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.offer:hover .offer-icon,
+.offer:focus-visible .offer-icon {
+  transform: rotate(0) scale(1.1);
+}
+.offer-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 16px 22px 22px;
 }
 .offer-title {
   font-family: var(--title);
-  font-weight: 500;
-  font-size: 1.1rem;
-  margin: 16px 18px 0;
+  font-weight: 700;
+  font-size: 1.12rem;
+  transition: color 0.3s ease;
 }
 .offer-text {
   color: var(--muted);
-  font-size: 0.875rem;
-  margin: 2px 18px 0;
+  font-size: 0.9rem;
+  line-height: 1.55;
+  margin-top: 6px;
+  flex: 1;
 }
-.offer:hover .offer-title {
+.offer-more {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 16px;
+  font-size: 0.75rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
   color: var(--accent-ink);
+}
+.offer-more svg {
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.offer:hover .offer-title,
+.offer:focus-visible .offer-title {
+  color: var(--accent-ink);
+}
+.offer:hover .offer-more svg,
+.offer:focus-visible .offer-more svg {
+  transform: translateX(6px);
+}
+@media (prefers-reduced-motion: reduce) {
+  .offer,
+  .offer-img,
+  .offer-media::after,
+  .offer-icon,
+  .offer-more svg {
+    transition: none;
+  }
 }
 
 .why {
@@ -597,13 +736,6 @@ button.icon-button:hover {
 }
 .why .wrap {
   position: relative;
-}
-.why h2 {
-  text-align: center;
-  font-size: 2.2rem;
-  font-weight: 400;
-  margin: 0 0 36px;
-  text-shadow: 0 2px 12px rgb(0 0 0 / 30%);
 }
 .why-grid {
   display: grid;

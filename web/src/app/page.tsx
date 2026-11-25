@@ -22,10 +22,10 @@ type Props = { searchParams: Promise<{ q?: string; jurisdiction?: string; as_of?
 const EXAMPLES = ["oxytétracycline", "ivermectine", "PA-V-2023-0002", "Gamma Vet"];
 
 const DISCOVER = [
-  { href: "/?q=oxytétracycline", image: IMAGES.carteStatut, title: "Statut des AMM", text: "Valide, suspendue, retirée, expirée" },
-  { href: "/amm/amm-001#rcp", image: IMAGES.carteRcp, title: "Texte des RCP", text: "Rubriques d'origine, page et source" },
-  { href: "/amm/amm-002#rcp", image: IMAGES.carteDelais, title: "Délais d'attente", text: "Viande, lait, œufs : fin du délai calculée" },
-  { href: "/alertes", image: IMAGES.carteAlertes, title: "Alertes et rappels", text: "Suspensions, lots rappelés, falsifications" },
+  { href: "/?q=oxytétracycline", icon: CheckShieldIcon, image: IMAGES.carteStatut, title: "Statut des AMM", text: "Valide, suspendue, retirée, expirée" },
+  { href: "/amm/amm-001#rcp", icon: DocumentIcon, image: IMAGES.carteRcp, title: "Texte des RCP", text: "Rubriques d'origine, page et source" },
+  { href: "/amm/amm-002#rcp", icon: ClockIcon, image: IMAGES.carteDelais, title: "Délais d'attente", text: "Viande, lait, œufs : fin du délai calculée" },
+  { href: "/alertes", icon: BellIcon, image: IMAGES.carteAlertes, title: "Alertes et rappels", text: "Suspensions, lots rappelés, falsifications" },
 ];
 
 const WHY = [
@@ -167,15 +167,26 @@ export default async function SearchPage({ searchParams }: Props) {
         <>
           <section className="home-section">
             <div className="section-title">
+              <span className="section-kicker">Le registre</span>
               <h2>Ce que vous trouvez</h2>
               <p>Toutes les informations utiles à la prescription et à la délivrance</p>
             </div>
             <div className="offer-grid">
-              {DISCOVER.map((d) => (
+              {DISCOVER.map(({ icon: Icon, ...d }) => (
                 <Link key={d.title} href={d.href} className="offer">
-                  <span className="offer-img" style={{ backgroundImage: `url(${d.image})` }} />
-                  <span className="offer-title">{d.title}</span>
-                  <span className="offer-text">{d.text}</span>
+                  <span className="offer-media">
+                    <span className="offer-img" style={{ backgroundImage: `url(${d.image})` }} />
+                  </span>
+                  <span className="offer-icon">
+                    <Icon size={22} />
+                  </span>
+                  <span className="offer-body">
+                    <span className="offer-title">{d.title}</span>
+                    <span className="offer-text">{d.text}</span>
+                    <span className="offer-more">
+                      Découvrir <ArrowRightIcon size={14} />
+                    </span>
+                  </span>
                 </Link>
               ))}
             </div>
@@ -184,7 +195,11 @@ export default async function SearchPage({ searchParams }: Props) {
           <section className="why full-bleed" style={{ backgroundImage: `url(${IMAGES.fondPourquoi})` }}>
             <Wave flip />
             <div className="wrap">
-              <h2>Pourquoi RecallPharma</h2>
+              <div className="section-title on-dark">
+                <span className="section-kicker">Nos engagements</span>
+                <h2>Pourquoi RecallPharma</h2>
+                <p>Une information vérifiée, datée et rattachée à sa source</p>
+              </div>
               <div className="why-grid">
                 {WHY.map(({ icon: Icon, title, text }) => (
                   <div key={title} className="why-card">
