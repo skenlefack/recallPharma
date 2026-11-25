@@ -94,3 +94,45 @@ export const UsersIcon = (p: Props) => (
     <path d="M2.5 20a6.5 6.5 0 0 1 13 0M16 4.5a3.5 3.5 0 0 1 0 7M18 14a6 6 0 0 1 3.5 6" />
   </Svg>
 );
+
+export const AlertTriangleIcon = (p: Props) => (
+  <Svg {...p}>
+    <path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0" />
+    <path d="M12 9v4M12 17h.01" />
+  </Svg>
+);
+
+export const PackageIcon = (p: Props) => (
+  <Svg {...p}>
+    <path d="m21 8-9-5-9 5v8l9 5 9-5z" />
+    <path d="m3 8 9 5 9-5M12 13v8M7.5 5.5l9 5" />
+  </Svg>
+);
+
+export const BanIcon = (p: Props) => (
+  <Svg {...p}>
+    <circle cx="12" cy="12" r="9" />
+    <path d="m5.7 5.7 12.6 12.6" />
+  </Svg>
+);
+
+export const PauseIcon = (p: Props) => (
+  <Svg {...p}>
+    <circle cx="12" cy="12" r="9" />
+    <path d="M10 9v6M14 9v6" />
+  </Svg>
+);
+
+export const InfoIcon = (p: Props) => (
+  <Svg {...p}>
+    <circle cx="12" cy="12" r="9" />
+    <path d="M12 16v-5M12 8h.01" />
+  </Svg>
+);
+
+export const MapPinIcon = (p: Props) => (
+  <Svg {...p}>
+    <path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21" />
+    <circle cx="12" cy="9.5" r="2.5" />
+  </Svg>
+);
