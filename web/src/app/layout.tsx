@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import { Lato, Ubuntu } from "next/font/google";
-import Link from "next/link";
 
-import { Logo } from "@/components/Logo";
+import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
 import { currentAccount } from "@/lib/api";
 
@@ -21,7 +20,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const me = await currentAccount();
   return (
     <html lang="fr" className={`${lato.variable} ${ubuntu.variable}`}>
-      <body>
+      <body id="top">
         <SiteHeader
           me={
             me
@@ -36,40 +35,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <main>
           <div className="wrap">{children}</div>
         </main>
-        <footer className="site-footer">
-          <div className="wrap footer-grid">
-            <div>
-              <Link href="/" className="footer-brand" aria-label="RecallPharma, accueil">
-                <Logo variant="sombre" height={58} />
-              </Link>
-              <p>
-                Statut des AMM, texte des RCP, délais d&apos;attente et alertes : chaque information avec sa preuve.
-              </p>
-            </div>
-            <div>
-              <h4>Consulter</h4>
-              <Link href="/">Recherche</Link>
-              <Link href="/alertes">Alertes</Link>
-              <Link href="/copilote">Copilot</Link>
-            </div>
-            <div>
-              <h4>Équipes</h4>
-              <Link href="/validation">Validation des données</Link>
-              <Link href="/validation/documents">Documents sources</Link>
-              <Link href="/connexion">Connexion</Link>
-            </div>
-            <div>
-              <h4>Avertissement</h4>
-              <p>
-                RecallPharma ne remplace pas le jugement clinique et
-                n&apos;est pas informé systématiquement des suspensions et des rappels.
-              </p>
-            </div>
-          </div>
-          <div className="footer-bottom">
-            <div className="wrap">© {new Date().getFullYear()} RecallPharma · intégré à RecallVET</div>
-          </div>
-        </footer>
+        <SiteFooter />
       </body>
     </html>
   );
