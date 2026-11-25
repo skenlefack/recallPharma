@@ -12,6 +12,7 @@ import {
   SearchIcon,
   UsersIcon,
 } from "@/components/icons";
+import { CountUp } from "@/components/CountUp";
 import { AssessmentLine, NoticeBox, statusTone } from "@/components/regulatory";
 import { Wave } from "@/components/Wave";
 import { type Alert, ApiError, type Jurisdiction, type SearchResult, api, query } from "@/lib/api";
@@ -54,6 +55,12 @@ export default async function SearchPage({ searchParams }: Props) {
     }
   }
   const openAlerts = alerts.filter((a) => !a.closed_at);
+  const counters = [
+    { icon: GlobeIcon, value: jurisdictions.length, label: "juridictions couvertes" },
+    { icon: BellIcon, value: openAlerts.length, label: "alertes en cours" },
+    { icon: LayersIcon, value: 12, label: "rubriques de RCP indexées" },
+    { icon: DocumentIcon, value: "A–D", label: "niveaux de preuve" },
+  ];
 
   return (
     <>
@@ -215,26 +222,22 @@ export default async function SearchPage({ searchParams }: Props) {
             <Wave />
           </section>
 
-          <section className="counters">
-            <div className="counter">
-              <GlobeIcon size={42} />
-              <strong>{jurisdictions.length}</strong>
-              <span>juridictions couvertes</span>
+          <section className="home-section counters-section">
+            <div className="section-title">
+              <span className="section-kicker">En chiffres</span>
+              <h2>Le registre aujourd&apos;hui</h2>
+              <p>Ce que couvre la version de démonstration</p>
             </div>
-            <div className="counter">
-              <BellIcon size={42} />
-              <strong>{openAlerts.length}</strong>
-              <span>alertes en cours</span>
-            </div>
-            <div className="counter">
-              <LayersIcon size={42} />
-              <strong>12</strong>
-              <span>rubriques de RCP indexées</span>
-            </div>
-            <div className="counter">
-              <DocumentIcon size={42} />
-              <strong>A–D</strong>
-              <span>niveaux de preuve</span>
+            <div className="counters">
+              {counters.map(({ icon: Icon, value, label }) => (
+                <div key={label} className="counter">
+                  <span className="counter-icon">
+                    <Icon size={28} />
+                  </span>
+                  <strong>{typeof value === "number" ? <CountUp value={value} /> : value}</strong>
+                  <span className="counter-label">{label}</span>
+                </div>
+              ))}
             </div>
           </section>
 
