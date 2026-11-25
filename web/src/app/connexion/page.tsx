@@ -1,4 +1,4 @@
-import { LogoMark } from "@/components/icons";
+import { Logo } from "@/components/Logo";
 import { DEMO_ACCOUNTS, DEMO_PASSWORD } from "@/lib/accounts";
 import { currentAccount } from "@/lib/api";
 import { safeNext } from "@/lib/oidc";
@@ -11,7 +11,7 @@ export default async function LoginPage({ searchParams }: Props) {
   return (
     <div className="login-grid">
       <div className="card login-card">
-        <LogoMark size={40} />
+        <Logo variant="clair" height={46} />
         <h1>Connexion</h1>
         <p className="muted" style={{ marginTop: 0 }}>
           Accédez au registre, au Copilot et au circuit de validation selon votre rôle.

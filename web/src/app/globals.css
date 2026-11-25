@@ -16,8 +16,6 @@
   --brand-bg-2: #0a5079;
   --brand-fg: #e5f5fe;
   --brand-muted: #9ccfee;
-  --brand-mark: #00c89e;
-  --brand-mark-fg: #ffffff;
   --red-bg: #fdecea;
   --red-fg: #a3170c;
   --red-border: #f0b3ab;
@@ -73,8 +71,6 @@
     --brand-bg-2: #083b5a;
     --brand-fg: #e3eff8;
     --brand-muted: #8db4d1;
-    --brand-mark: #00c89e;
-    --brand-mark-fg: #ffffff;
     --red-bg: #3a1714;
     --red-fg: #ffb4aa;
     --red-border: #7a2c23;
@@ -196,17 +192,21 @@ header.top .brand {
   color: #fff;
   text-decoration: none;
 }
-.brand-name {
+/* Logo (image) : hauteur fixée par ses attributs, légère ombre pour le détacher des photos. */
+.logo,
+.logo img {
   display: block;
-  font-family: var(--title);
-  font-weight: 700;
-  font-size: 1.2rem;
-  line-height: 1.1;
 }
-.brand-tag {
-  display: block;
-  font-size: 0.7rem;
-  color: var(--brand-muted);
+.logo img {
+  max-width: 100%;
+  height: auto;
+}
+header.top .logo img {
+  filter: drop-shadow(0 2px 8px rgb(0 0 0 / 25%));
+  transition: transform 0.3s ease;
+}
+header.top .brand:hover .logo img {
+  transform: scale(1.03);
 }
 .app-nav {
   display: flex;
@@ -290,8 +290,7 @@ button.icon-button:hover {
   :root {
     --bar-h: 104px;
   }
-  .user-text,
-  .brand-tag {
+  .user-text {
     display: none;
   }
   header.top .wrap {

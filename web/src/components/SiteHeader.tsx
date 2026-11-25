@@ -5,7 +5,8 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
 import { AppNav } from "@/components/AppNav";
-import { LogoMark, LogoutIcon } from "@/components/icons";
+import { LogoutIcon } from "@/components/icons";
+import { Logo } from "@/components/Logo";
 
 type Me = { display_name: string; roles: string[] } | null;
 
@@ -35,12 +36,8 @@ export function SiteHeader({ me }: { me: Me }) {
         Données entièrement fictives (jeu A10) · prototype de démonstration
       </div>
       <div className="wrap">
-        <Link href="/" className="brand">
-          <LogoMark />
-          <span>
-            <span className="brand-name">RecallPharma</span>
-            <span className="brand-tag">Référentiel du médicament vétérinaire</span>
-          </span>
+        <Link href="/" className="brand" aria-label="RecallPharma, accueil">
+          <Logo variant="sombre" height={50} />
         </Link>
         <AppNav />
         <div className="who">

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Lato, Ubuntu } from "next/font/google";
 import Link from "next/link";
 
-import { LogoMark } from "@/components/icons";
+import { Logo } from "@/components/Logo";
 import { SiteHeader } from "@/components/SiteHeader";
 import { currentAccount } from "@/lib/api";
 
@@ -29,12 +29,11 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <footer className="site-footer">
           <div className="wrap footer-grid">
             <div>
-              <span className="footer-brand">
-                <LogoMark size={26} /> RecallPharma
-              </span>
+              <Link href="/" className="footer-brand" aria-label="RecallPharma, accueil">
+                <Logo variant="sombre" height={58} />
+              </Link>
               <p>
-                Référentiel du médicament vétérinaire : statut des AMM, texte des RCP, délais d&apos;attente et alertes,
-                chaque information avec sa preuve.
+                Statut des AMM, texte des RCP, délais d&apos;attente et alertes : chaque information avec sa preuve.
               </p>
             </div>
             <div>
