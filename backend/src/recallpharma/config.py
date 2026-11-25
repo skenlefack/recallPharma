@@ -21,6 +21,11 @@ class Settings(BaseSettings):
     oidc_audience: str = "recallpharma-api"
     # Vide = <issuer>/protocol/openid-connect/certs.
     oidc_jwks_url: str | None = None
+    # Administration des comptes : API d'administration de Keycloak, par le compte de service du client ci-dessous.
+    keycloak_admin_url: str = "http://localhost:8280"
+    keycloak_realm: str = "recallpharma"
+    keycloak_admin_client_id: str = "recallpharma-admin"
+    keycloak_admin_client_secret: str = "dev-only-admin-secret"
 
     # Copilot (D6). Jeton délégué : émis par l'API pour la passerelle, accepté sur les seuls outils de lecture (ADR-08).
     copilot_token_secret: str = "dev-only-copilot-delegation-secret"

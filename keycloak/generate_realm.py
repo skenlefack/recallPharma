@@ -98,8 +98,29 @@ realm = {
                 }
             ],
         },
+        {
+            # Compte de service de l'API pour l'espace d'administration (création de comptes, rôles, activation).
+            "clientId": "recallpharma-admin",
+            "name": "Administration des comptes (API RecallPharma)",
+            "enabled": True,
+            "publicClient": False,
+            "clientAuthenticatorType": "client-secret",
+            "secret": "dev-only-admin-secret",
+            "standardFlowEnabled": False,
+            "implicitFlowEnabled": False,
+            "directAccessGrantsEnabled": False,
+            "serviceAccountsEnabled": True,
+        },
     ],
-    "users": users,
+    "users": [
+        *users,
+        {
+            "username": "service-account-recallpharma-admin",
+            "enabled": True,
+            "serviceAccountClientId": "recallpharma-admin",
+            "clientRoles": {"realm-management": ["manage-users", "view-users", "query-users", "view-realm"]},
+        },
+    ],
 }
 
 out = ROOT / "keycloak" / "realm-recallpharma.json"

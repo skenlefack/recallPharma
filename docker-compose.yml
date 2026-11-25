@@ -30,6 +30,8 @@ services:
       - "8280:8080"
     volumes:
       - ./keycloak/realm-recallpharma.json:/opt/keycloak/data/import/realm-recallpharma.json:ro
+      # Comptes créés depuis l'administration conservés entre deux redémarrages (le royaume n'est importé qu'une fois).
+      - keycloak-data:/opt/keycloak/data
     healthcheck:
       test: ["CMD-SHELL", "exec 3<>/dev/tcp/127.0.0.1/9000 && printf 'GET /health/ready HTTP/1.0\r\n\r\n' >&3 && grep -q UP <&3"]
       interval: 5s
@@ -57,6 +59,7 @@ services:
       RECALLPHARMA_REFERENCE_DATE: "2027-09-07"  # date du jeu A10
       RECALLPHARMA_OIDC_ISSUER: http://localhost:8280/realms/recallpharma  # émetteur vu du navigateur
       RECALLPHARMA_OIDC_JWKS_URL: http://keycloak:8080/realms/recallpharma/protocol/openid-connect/certs
+      RECALLPHARMA_KEYCLOAK_ADMIN_URL: http://keycloak:8080
       RECALLPHARMA_GATEWAY_URL: http://gateway:8001
       RECALLPHARMA_API_URL: http://api:8000
       RECALLPHARMA_LLM_BASE_URL: http://ollama:11434/v1
@@ -103,3 +106,4 @@ volumes:
   pgdata:
   ollama:
   documents:
+  keycloak-data:

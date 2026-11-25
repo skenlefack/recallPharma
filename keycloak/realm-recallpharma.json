@@ -133,6 +133,18 @@
           }
         }
       ]
+    },
+    {
+      "clientId": "recallpharma-admin",
+      "name": "Administration des comptes (API RecallPharma)",
+      "enabled": true,
+      "publicClient": false,
+      "clientAuthenticatorType": "client-secret",
+      "secret": "dev-only-admin-secret",
+      "standardFlowEnabled": false,
+      "implicitFlowEnabled": false,
+      "directAccessGrantsEnabled": false,
+      "serviceAccountsEnabled": true
     }
   ],
   "users": [
@@ -420,6 +432,19 @@
         "default-roles-recallpharma",
         "responsable-reglementaire"
       ]
+    },
+    {
+      "username": "service-account-recallpharma-admin",
+      "enabled": true,
+      "serviceAccountClientId": "recallpharma-admin",
+      "clientRoles": {
+        "realm-management": [
+          "manage-users",
+          "view-users",
+          "query-users",
+          "view-realm"
+        ]
+      }
     }
   ]
 }

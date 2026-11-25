@@ -397,6 +397,194 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/admin/overview": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Overview */
+        get: operations["overview_v1_admin_overview_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/roles": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Roles */
+        get: operations["roles_v1_admin_roles_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/accounts": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List Accounts */
+        get: operations["list_accounts_v1_admin_accounts_get"];
+        put?: never;
+        /** Create Account */
+        post: operations["create_account_v1_admin_accounts_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/accounts/{account_id}/roles": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /** Set Roles */
+        put: operations["set_roles_v1_admin_accounts__account_id__roles_put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/accounts/{account_id}/active": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Set Active */
+        post: operations["set_active_v1_admin_accounts__account_id__active_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/accounts/{account_id}/password-reset": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Reset Password */
+        post: operations["reset_password_v1_admin_accounts__account_id__password_reset_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/authorisations": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List Authorisations */
+        get: operations["list_authorisations_v1_admin_authorisations_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/alerts": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Create Alert */
+        post: operations["create_alert_v1_admin_alerts_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/alerts/{alert_id}/close": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Close Alert */
+        post: operations["close_alert_v1_admin_alerts__alert_id__close_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/copilot/feedback": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Copilot Feedback */
+        get: operations["copilot_feedback_v1_admin_copilot_feedback_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/admin/audit": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Audit */
+        get: operations["audit_v1_admin_audit_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/copilot/conversations": {
         parameters: {
             query?: never;
@@ -694,8 +882,92 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
+        /** AccountIn */
+        AccountIn: {
+            /** Login */
+            login: string;
+            /** Display Name */
+            display_name: string;
+            /** Roles */
+            roles: string[];
+        };
+        /** AccountOut */
+        AccountOut: {
+            /** Id */
+            id: string;
+            /** Login */
+            login: string;
+            /** Display Name */
+            display_name: string;
+            /** Roles */
+            roles: string[];
+            /** Active */
+            active: boolean;
+        };
+        /** ActiveIn */
+        ActiveIn: {
+            /** Active */
+            active: boolean;
+        };
+        /** AlertIn */
+        AlertIn: {
+            /**
+             * Type
+             * @enum {string}
+             */
+            type: "suspension d'AMM" | "retrait d'AMM" | "rappel de lot" | "produit signalé falsifié ou sous-norme" | "information de sécurité";
+            /**
+             * Level
+             * @enum {string}
+             */
+            level: "rouge" | "orange" | "gris";
+            /** Jurisdictions */
+            jurisdictions: string[];
+            /**
+             * Authorisation Ids
+             * @default []
+             */
+            authorisation_ids: string[];
+            /**
+             * Batch Numbers
+             * @default []
+             */
+            batch_numbers: string[];
+            /** Unlisted Product */
+            unlisted_product?: string | null;
+            /** Text */
+            text: string;
+            /** Published At */
+            published_at?: string | null;
+        };
         /** AlertOut */
         AlertOut: {
+            /** Id */
+            id: string;
+            /** Type */
+            type: string;
+            /** Level */
+            level: string;
+            /** Jurisdictions */
+            jurisdictions: string[];
+            /** Authorisation Ids */
+            authorisation_ids: string[];
+            /** Batch Numbers */
+            batch_numbers: string[];
+            /** Unlisted Product */
+            unlisted_product: string | null;
+            /**
+             * Published At
+             * Format: date
+             */
+            published_at: string;
+            /** Closed At */
+            closed_at: string | null;
+            /** Text */
+            text: string;
+        };
+        /** AlertRow */
+        AlertRow: {
             /** Id */
             id: string;
             /** Type */
@@ -747,6 +1019,65 @@ export interface components {
             evidence: components["schemas"]["EvidenceOut"];
             /** Banners */
             banners: components["schemas"]["BannerOut"][];
+        };
+        /** AuditPage */
+        AuditPage: {
+            /** Events */
+            events: components["schemas"]["AuditRow"][];
+            /** Next Before */
+            next_before: number | null;
+        };
+        /** AuditRow */
+        AuditRow: {
+            /** Seq */
+            seq: number;
+            /** Actor */
+            actor: string;
+            /** Action */
+            action: string;
+            /** Object Type */
+            object_type: string;
+            /** Object Id */
+            object_id: string;
+            /** Before */
+            before: {
+                [key: string]: unknown;
+            } | null;
+            /** After */
+            after: {
+                [key: string]: unknown;
+            } | null;
+            /** Reason */
+            reason: string | null;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+        };
+        /** AuthorisationRow */
+        AuthorisationRow: {
+            /** Id */
+            id: string;
+            /** Ma Number */
+            ma_number: string;
+            /** Jurisdiction */
+            jurisdiction: string;
+            /** Product */
+            product: string;
+            /** Holder */
+            holder: string;
+            /** Publication State */
+            publication_state: string;
+            /** Status */
+            status: string | null;
+            /**
+             * Last Verified At
+             * Format: date
+             */
+            last_verified_at: string;
+            /** Dispute Open */
+            dispute_open: boolean;
         };
         /** BannerOut */
         BannerOut: {
@@ -823,6 +1154,13 @@ export interface components {
             description: string;
             /** Count */
             count: number;
+        };
+        /** CloseIn */
+        CloseIn: {
+            /** Reason */
+            reason: string;
+            /** Closed At */
+            closed_at?: string | null;
         };
         /** CompareIn */
         CompareIn: {
@@ -958,6 +1296,21 @@ export interface components {
             /** Withdrawal */
             withdrawal: components["schemas"]["WithdrawalOut"][];
         };
+        /** CreatedAccount */
+        CreatedAccount: {
+            /** Id */
+            id: string;
+            /** Login */
+            login: string;
+            /** Display Name */
+            display_name: string;
+            /** Roles */
+            roles: string[];
+            /** Active */
+            active: boolean;
+            /** Temporary Password */
+            temporary_password: string;
+        };
         /** DocumentOut */
         DocumentOut: {
             /** Id */
@@ -1041,6 +1394,28 @@ export interface components {
             rating: "utile" | "erreur signalée" | "autre";
             /** Comment */
             comment?: string | null;
+        };
+        /** FeedbackRow */
+        FeedbackRow: {
+            /** Message Id */
+            message_id: string;
+            /** Rating */
+            rating: string;
+            /** Comment */
+            comment: string | null;
+            /**
+             * Given At
+             * Format: date-time
+             */
+            given_at: string;
+            /** Account Id */
+            account_id: string;
+            /** Question */
+            question: string | null;
+            /** Answer */
+            answer: string;
+            /** Model Id */
+            model_id: string | null;
         };
         /** FirstValidationIn */
         FirstValidationIn: {
@@ -1163,6 +1538,54 @@ export interface components {
              */
             known_at: string;
         };
+        /** Overview */
+        Overview: {
+            /** Authorisations */
+            authorisations: {
+                [key: string]: number;
+            };
+            /** Statuses */
+            statuses: {
+                [key: string]: number;
+            };
+            /** By Jurisdiction */
+            by_jurisdiction: {
+                [key: string]: number;
+            };
+            /** Proposals */
+            proposals: {
+                [key: string]: number;
+            };
+            /** Alerts Open */
+            alerts_open: {
+                [key: string]: number;
+            };
+            /** Alerts Closed */
+            alerts_closed: number;
+            /** Documents */
+            documents: number;
+            /** Accounts */
+            accounts: {
+                [key: string]: number;
+            };
+            /** Accounts Inactive */
+            accounts_inactive: number;
+            /** Copilot */
+            copilot: {
+                [key: string]: number;
+            };
+            /** Audit Last 7 Days */
+            audit_last_7_days: number;
+            /** Audit Chain Intact */
+            audit_chain_intact: boolean;
+            /**
+             * As Of
+             * Format: date
+             */
+            as_of: string;
+            /** Permissions */
+            permissions: string[];
+        };
         /** PassageOut */
         PassageOut: {
             /** Passage Id */
@@ -1221,6 +1644,11 @@ export interface components {
             as_of: string;
             /** Passages */
             passages: components["schemas"]["PassageOut"][];
+        };
+        /** PasswordOut */
+        PasswordOut: {
+            /** Temporary Password */
+            temporary_password: string;
         };
         /** PayloadIn */
         PayloadIn: {
@@ -1427,6 +1855,11 @@ export interface components {
             /** Status */
             status?: string | null;
             withdrawal?: components["schemas"]["WithdrawalFilterIn"] | null;
+        };
+        /** RolesIn */
+        RolesIn: {
+            /** Roles */
+            roles: string[];
         };
         /** SearchHit */
         SearchHit: {
@@ -2670,6 +3103,427 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["MeOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    overview_v1_admin_overview_get: {
+        parameters: {
+            query?: never;
+            header?: {
+                authorization?: string | null;
+                "x-recallpharma-user"?: string | null;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Overview"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    roles_v1_admin_roles_get: {
+        parameters: {
+            query?: never;
+            header?: {
+                authorization?: string | null;
+                "x-recallpharma-user"?: string | null;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": string[];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_accounts_v1_admin_accounts_get: {
+        parameters: {
+            query?: never;
+            header?: {
+                authorization?: string | null;
+                "x-recallpharma-user"?: string | null;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AccountOut"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_account_v1_admin_accounts_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                authorization?: string | null;
+                "x-recallpharma-user"?: string | null;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AccountIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CreatedAccount"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    set_roles_v1_admin_accounts__account_id__roles_put: {
+        parameters: {
+            query?: never;
+            header?: {
+                authorization?: string | null;
+                "x-recallpharma-user"?: string | null;
+            };
+            path: {
+                account_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RolesIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AccountOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    set_active_v1_admin_accounts__account_id__active_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                authorization?: string | null;
+                "x-recallpharma-user"?: string | null;
+            };
+            path: {
+                account_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ActiveIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AccountOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    reset_password_v1_admin_accounts__account_id__password_reset_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                authorization?: string | null;
+                "x-recallpharma-user"?: string | null;
+            };
+            path: {
+                account_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PasswordOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_authorisations_v1_admin_authorisations_get: {
+        parameters: {
+            query?: {
+                state?: string | null;
+                jurisdiction?: string | null;
+                q?: string | null;
+            };
+            header?: {
+                authorization?: string | null;
+                "x-recallpharma-user"?: string | null;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AuthorisationRow"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_alert_v1_admin_alerts_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                authorization?: string | null;
+                "x-recallpharma-user"?: string | null;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AlertIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AlertRow"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    close_alert_v1_admin_alerts__alert_id__close_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                authorization?: string | null;
+                "x-recallpharma-user"?: string | null;
+            };
+            path: {
+                alert_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CloseIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AlertRow"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    copilot_feedback_v1_admin_copilot_feedback_get: {
+        parameters: {
+            query?: never;
+            header?: {
+                authorization?: string | null;
+                "x-recallpharma-user"?: string | null;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["FeedbackRow"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    audit_v1_admin_audit_get: {
+        parameters: {
+            query?: {
+                before?: number | null;
+                object_type?: string | null;
+                who?: string | null;
+                limit?: number;
+            };
+            header?: {
+                authorization?: string | null;
+                "x-recallpharma-user"?: string | null;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AuditPage"];
                 };
             };
             /** @description Validation Error */

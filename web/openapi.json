@@ -1825,6 +1825,995 @@
         }
       }
     },
+    "/v1/admin/overview": {
+      "get": {
+        "tags": [
+          "administration"
+        ],
+        "summary": "Overview",
+        "operationId": "overview_v1_admin_overview_get",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          },
+          {
+            "name": "x-recallpharma-user",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Recallpharma-User"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Overview"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/admin/roles": {
+      "get": {
+        "tags": [
+          "administration"
+        ],
+        "summary": "Roles",
+        "operationId": "roles_v1_admin_roles_get",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          },
+          {
+            "name": "x-recallpharma-user",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Recallpharma-User"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "title": "Response Roles V1 Admin Roles Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/admin/accounts": {
+      "get": {
+        "tags": [
+          "administration"
+        ],
+        "summary": "List Accounts",
+        "operationId": "list_accounts_v1_admin_accounts_get",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          },
+          {
+            "name": "x-recallpharma-user",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Recallpharma-User"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AccountOut"
+                  },
+                  "title": "Response List Accounts V1 Admin Accounts Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "administration"
+        ],
+        "summary": "Create Account",
+        "operationId": "create_account_v1_admin_accounts_post",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          },
+          {
+            "name": "x-recallpharma-user",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Recallpharma-User"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AccountIn"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreatedAccount"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/admin/accounts/{account_id}/roles": {
+      "put": {
+        "tags": [
+          "administration"
+        ],
+        "summary": "Set Roles",
+        "operationId": "set_roles_v1_admin_accounts__account_id__roles_put",
+        "parameters": [
+          {
+            "name": "account_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Account Id"
+            }
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          },
+          {
+            "name": "x-recallpharma-user",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Recallpharma-User"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RolesIn"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AccountOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/admin/accounts/{account_id}/active": {
+      "post": {
+        "tags": [
+          "administration"
+        ],
+        "summary": "Set Active",
+        "operationId": "set_active_v1_admin_accounts__account_id__active_post",
+        "parameters": [
+          {
+            "name": "account_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Account Id"
+            }
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          },
+          {
+            "name": "x-recallpharma-user",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Recallpharma-User"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ActiveIn"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AccountOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/admin/accounts/{account_id}/password-reset": {
+      "post": {
+        "tags": [
+          "administration"
+        ],
+        "summary": "Reset Password",
+        "operationId": "reset_password_v1_admin_accounts__account_id__password_reset_post",
+        "parameters": [
+          {
+            "name": "account_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Account Id"
+            }
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          },
+          {
+            "name": "x-recallpharma-user",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Recallpharma-User"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PasswordOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/admin/authorisations": {
+      "get": {
+        "tags": [
+          "administration"
+        ],
+        "summary": "List Authorisations",
+        "operationId": "list_authorisations_v1_admin_authorisations_get",
+        "parameters": [
+          {
+            "name": "state",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "State"
+            }
+          },
+          {
+            "name": "jurisdiction",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Jurisdiction"
+            }
+          },
+          {
+            "name": "q",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "maxLength": 100
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Q"
+            }
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          },
+          {
+            "name": "x-recallpharma-user",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Recallpharma-User"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AuthorisationRow"
+                  },
+                  "title": "Response List Authorisations V1 Admin Authorisations Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/admin/alerts": {
+      "post": {
+        "tags": [
+          "administration"
+        ],
+        "summary": "Create Alert",
+        "operationId": "create_alert_v1_admin_alerts_post",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          },
+          {
+            "name": "x-recallpharma-user",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Recallpharma-User"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AlertIn"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AlertRow"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/admin/alerts/{alert_id}/close": {
+      "post": {
+        "tags": [
+          "administration"
+        ],
+        "summary": "Close Alert",
+        "operationId": "close_alert_v1_admin_alerts__alert_id__close_post",
+        "parameters": [
+          {
+            "name": "alert_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Alert Id"
+            }
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          },
+          {
+            "name": "x-recallpharma-user",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Recallpharma-User"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CloseIn"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AlertRow"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/admin/copilot/feedback": {
+      "get": {
+        "tags": [
+          "administration"
+        ],
+        "summary": "Copilot Feedback",
+        "operationId": "copilot_feedback_v1_admin_copilot_feedback_get",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          },
+          {
+            "name": "x-recallpharma-user",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Recallpharma-User"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FeedbackRow"
+                  },
+                  "title": "Response Copilot Feedback V1 Admin Copilot Feedback Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/admin/audit": {
+      "get": {
+        "tags": [
+          "administration"
+        ],
+        "summary": "Audit",
+        "operationId": "audit_v1_admin_audit_get",
+        "parameters": [
+          {
+            "name": "before",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Before"
+            }
+          },
+          {
+            "name": "object_type",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Object Type"
+            }
+          },
+          {
+            "name": "who",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Who"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 200,
+              "minimum": 1,
+              "default": 50,
+              "title": "Limit"
+            }
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Authorization"
+            }
+          },
+          {
+            "name": "x-recallpharma-user",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Recallpharma-User"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuditPage"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/v1/copilot/conversations": {
       "post": {
         "tags": [
@@ -3146,6 +4135,171 @@
   },
   "components": {
     "schemas": {
+      "AccountIn": {
+        "properties": {
+          "login": {
+            "type": "string",
+            "maxLength": 200,
+            "pattern": "^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$",
+            "title": "Login"
+          },
+          "display_name": {
+            "type": "string",
+            "maxLength": 120,
+            "minLength": 2,
+            "title": "Display Name"
+          },
+          "roles": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "minItems": 1,
+            "title": "Roles"
+          }
+        },
+        "type": "object",
+        "required": [
+          "login",
+          "display_name",
+          "roles"
+        ],
+        "title": "AccountIn"
+      },
+      "AccountOut": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "login": {
+            "type": "string",
+            "title": "Login"
+          },
+          "display_name": {
+            "type": "string",
+            "title": "Display Name"
+          },
+          "roles": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Roles"
+          },
+          "active": {
+            "type": "boolean",
+            "title": "Active"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "login",
+          "display_name",
+          "roles",
+          "active"
+        ],
+        "title": "AccountOut"
+      },
+      "ActiveIn": {
+        "properties": {
+          "active": {
+            "type": "boolean",
+            "title": "Active"
+          }
+        },
+        "type": "object",
+        "required": [
+          "active"
+        ],
+        "title": "ActiveIn"
+      },
+      "AlertIn": {
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "suspension d'AMM",
+              "retrait d'AMM",
+              "rappel de lot",
+              "produit signalé falsifié ou sous-norme",
+              "information de sécurité"
+            ],
+            "title": "Type"
+          },
+          "level": {
+            "type": "string",
+            "enum": [
+              "rouge",
+              "orange",
+              "gris"
+            ],
+            "title": "Level"
+          },
+          "jurisdictions": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "minItems": 1,
+            "title": "Jurisdictions"
+          },
+          "authorisation_ids": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Authorisation Ids",
+            "default": []
+          },
+          "batch_numbers": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Batch Numbers",
+            "default": []
+          },
+          "unlisted_product": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Unlisted Product"
+          },
+          "text": {
+            "type": "string",
+            "maxLength": 2000,
+            "minLength": 10,
+            "title": "Text"
+          },
+          "published_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Published At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "type",
+          "level",
+          "jurisdictions",
+          "text"
+        ],
+        "title": "AlertIn"
+      },
       "AlertOut": {
         "properties": {
           "id": {
@@ -3229,6 +4383,89 @@
         ],
         "title": "AlertOut"
       },
+      "AlertRow": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "type": {
+            "type": "string",
+            "title": "Type"
+          },
+          "level": {
+            "type": "string",
+            "title": "Level"
+          },
+          "jurisdictions": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Jurisdictions"
+          },
+          "authorisation_ids": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Authorisation Ids"
+          },
+          "batch_numbers": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Batch Numbers"
+          },
+          "unlisted_product": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Unlisted Product"
+          },
+          "published_at": {
+            "type": "string",
+            "format": "date",
+            "title": "Published At"
+          },
+          "closed_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Closed At"
+          },
+          "text": {
+            "type": "string",
+            "title": "Text"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "type",
+          "level",
+          "jurisdictions",
+          "authorisation_ids",
+          "batch_numbers",
+          "unlisted_product",
+          "published_at",
+          "closed_at",
+          "text"
+        ],
+        "title": "AlertRow"
+      },
       "ArbitrationDecision": {
         "type": "string",
         "enum": [
@@ -3307,6 +4544,172 @@
         ],
         "title": "AssessmentOut",
         "description": "Ce que tout canal doit afficher avec une AMM : statut calculé, preuve, bandeaux (RG-03, RG-14, RG-15)."
+      },
+      "AuditPage": {
+        "properties": {
+          "events": {
+            "items": {
+              "$ref": "#/components/schemas/AuditRow"
+            },
+            "type": "array",
+            "title": "Events"
+          },
+          "next_before": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Next Before"
+          }
+        },
+        "type": "object",
+        "required": [
+          "events",
+          "next_before"
+        ],
+        "title": "AuditPage"
+      },
+      "AuditRow": {
+        "properties": {
+          "seq": {
+            "type": "integer",
+            "title": "Seq"
+          },
+          "actor": {
+            "type": "string",
+            "title": "Actor"
+          },
+          "action": {
+            "type": "string",
+            "title": "Action"
+          },
+          "object_type": {
+            "type": "string",
+            "title": "Object Type"
+          },
+          "object_id": {
+            "type": "string",
+            "title": "Object Id"
+          },
+          "before": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Before"
+          },
+          "after": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "After"
+          },
+          "reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reason"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Created At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "seq",
+          "actor",
+          "action",
+          "object_type",
+          "object_id",
+          "before",
+          "after",
+          "reason",
+          "created_at"
+        ],
+        "title": "AuditRow"
+      },
+      "AuthorisationRow": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "ma_number": {
+            "type": "string",
+            "title": "Ma Number"
+          },
+          "jurisdiction": {
+            "type": "string",
+            "title": "Jurisdiction"
+          },
+          "product": {
+            "type": "string",
+            "title": "Product"
+          },
+          "holder": {
+            "type": "string",
+            "title": "Holder"
+          },
+          "publication_state": {
+            "type": "string",
+            "title": "Publication State"
+          },
+          "status": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Status"
+          },
+          "last_verified_at": {
+            "type": "string",
+            "format": "date",
+            "title": "Last Verified At"
+          },
+          "dispute_open": {
+            "type": "boolean",
+            "title": "Dispute Open"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "ma_number",
+          "jurisdiction",
+          "product",
+          "holder",
+          "publication_state",
+          "status",
+          "last_verified_at",
+          "dispute_open"
+        ],
+        "title": "AuthorisationRow"
       },
       "BannerOut": {
         "properties": {
@@ -3497,6 +4900,33 @@
           "count"
         ],
         "title": "CategoryOut"
+      },
+      "CloseIn": {
+        "properties": {
+          "reason": {
+            "type": "string",
+            "maxLength": 500,
+            "minLength": 5,
+            "title": "Reason"
+          },
+          "closed_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Closed At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "reason"
+        ],
+        "title": "CloseIn"
       },
       "CompareIn": {
         "properties": {
@@ -3934,6 +5364,47 @@
         ],
         "title": "CopilotRow"
       },
+      "CreatedAccount": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "login": {
+            "type": "string",
+            "title": "Login"
+          },
+          "display_name": {
+            "type": "string",
+            "title": "Display Name"
+          },
+          "roles": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Roles"
+          },
+          "active": {
+            "type": "boolean",
+            "title": "Active"
+          },
+          "temporary_password": {
+            "type": "string",
+            "title": "Temporary Password"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "login",
+          "display_name",
+          "roles",
+          "active",
+          "temporary_password"
+        ],
+        "title": "CreatedAccount"
+      },
       "DocumentOut": {
         "properties": {
           "id": {
@@ -4186,6 +5657,76 @@
           "rating"
         ],
         "title": "FeedbackIn"
+      },
+      "FeedbackRow": {
+        "properties": {
+          "message_id": {
+            "type": "string",
+            "title": "Message Id"
+          },
+          "rating": {
+            "type": "string",
+            "title": "Rating"
+          },
+          "comment": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Comment"
+          },
+          "given_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Given At"
+          },
+          "account_id": {
+            "type": "string",
+            "title": "Account Id"
+          },
+          "question": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Question"
+          },
+          "answer": {
+            "type": "string",
+            "title": "Answer"
+          },
+          "model_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Model Id"
+          }
+        },
+        "type": "object",
+        "required": [
+          "message_id",
+          "rating",
+          "comment",
+          "given_at",
+          "account_id",
+          "question",
+          "answer",
+          "model_id"
+        ],
+        "title": "FeedbackRow"
       },
       "FirstValidationIn": {
         "properties": {
@@ -4545,6 +6086,109 @@
         ],
         "title": "MessageOut"
       },
+      "Overview": {
+        "properties": {
+          "authorisations": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "type": "object",
+            "title": "Authorisations"
+          },
+          "statuses": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "type": "object",
+            "title": "Statuses"
+          },
+          "by_jurisdiction": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "type": "object",
+            "title": "By Jurisdiction"
+          },
+          "proposals": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "type": "object",
+            "title": "Proposals"
+          },
+          "alerts_open": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "type": "object",
+            "title": "Alerts Open"
+          },
+          "alerts_closed": {
+            "type": "integer",
+            "title": "Alerts Closed"
+          },
+          "documents": {
+            "type": "integer",
+            "title": "Documents"
+          },
+          "accounts": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "type": "object",
+            "title": "Accounts"
+          },
+          "accounts_inactive": {
+            "type": "integer",
+            "title": "Accounts Inactive"
+          },
+          "copilot": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "type": "object",
+            "title": "Copilot"
+          },
+          "audit_last_7_days": {
+            "type": "integer",
+            "title": "Audit Last 7 Days"
+          },
+          "audit_chain_intact": {
+            "type": "boolean",
+            "title": "Audit Chain Intact"
+          },
+          "as_of": {
+            "type": "string",
+            "format": "date",
+            "title": "As Of"
+          },
+          "permissions": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Permissions"
+          }
+        },
+        "type": "object",
+        "required": [
+          "authorisations",
+          "statuses",
+          "by_jurisdiction",
+          "proposals",
+          "alerts_open",
+          "alerts_closed",
+          "documents",
+          "accounts",
+          "accounts_inactive",
+          "copilot",
+          "audit_last_7_days",
+          "audit_chain_intact",
+          "as_of",
+          "permissions"
+        ],
+        "title": "Overview"
+      },
       "PassageOut": {
         "properties": {
           "passage_id": {
@@ -4735,6 +6379,19 @@
           "passages"
         ],
         "title": "PassagesOut"
+      },
+      "PasswordOut": {
+        "properties": {
+          "temporary_password": {
+            "type": "string",
+            "title": "Temporary Password"
+          }
+        },
+        "type": "object",
+        "required": [
+          "temporary_password"
+        ],
+        "title": "PasswordOut"
       },
       "PayloadIn": {
         "properties": {
@@ -5386,6 +7043,23 @@
         },
         "type": "object",
         "title": "RefineIn"
+      },
+      "RolesIn": {
+        "properties": {
+          "roles": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "minItems": 1,
+            "title": "Roles"
+          }
+        },
+        "type": "object",
+        "required": [
+          "roles"
+        ],
+        "title": "RolesIn"
       },
       "SearchHit": {
         "properties": {
