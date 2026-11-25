@@ -1,5 +1,7 @@
 /**
- * Client OIDC confidentiel du BFF (code d'autorisation + PKCE S256) et session chiffrée.
+ * Client OIDC confidentiel du BFF et session chiffrée. La page de connexion est celle du site : le serveur transmet
+ * l'identifiant et le mot de passe à Keycloak (flux « mot de passe », canal serveur authentifié par le secret client) ;
+ * l'utilisateur ne voit jamais Keycloak, qui reste l'annuaire (comptes, rôles, verrouillage après échecs).
  * Utilisable depuis le middleware (Edge) comme depuis les routes : Web Crypto et fetch seulement.
  * Les jetons ne quittent jamais le serveur en clair : le navigateur ne détient qu'un cookie HttpOnly scellé (AES-GCM).
  */
@@ -10,22 +12,19 @@ export const CLIENT_ID = process.env.RECALLPHARMA_OIDC_CLIENT_ID ?? "recallpharm
 const CLIENT_SECRET = process.env.RECALLPHARMA_OIDC_CLIENT_SECRET ?? "dev-only-web-secret";
 
 export const SESSION_COOKIE = "rp_session";
-export const LOGIN_COOKIE = "rp_oidc";
 /** En-tête interne posé par le middleware pour les composants serveur et le BFF ; toujours écrasé à l'entrée. */
 export const TOKEN_HEADER = "x-rp-access-token";
 
 export type Session = { at: string; rt: string; exp: number };
-export type PendingLogin = { state: string; verifier: string; nonce: string; next: string };
 
 // Adresse de Keycloak vue du serveur (jeton, déconnexion), si elle diffère de celle du navigateur (conteneurs).
 const BACKCHANNEL = process.env.RECALLPHARMA_OIDC_BACKCHANNEL_URL ?? ISSUER;
 
-const endpoint = (name: "auth" | "token" | "logout") =>
-  `${name === "auth" ? ISSUER : BACKCHANNEL}/protocol/openid-connect/${name}`;
+const endpoint = (name: "token" | "logout") => `${BACKCHANNEL}/protocol/openid-connect/${name}`;
 
 export const cookieOptions = (maxAge: number) => ({
   httpOnly: true,
-  sameSite: "lax" as const, // « strict » ferait perdre le cookie au retour de Keycloak (navigation inter-sites)
+  sameSite: "lax" as const,
   secure: process.env.NODE_ENV === "production" && !ISSUER.startsWith("http://localhost"),
   path: "/",
   maxAge,
@@ -74,25 +73,10 @@ export async function unseal<T>(sealed: string | undefined): Promise<T | null> {
 
 // --- Flux ----------------------------------------------------------------------------------------
 
-const random = () => b64url(crypto.getRandomValues(new Uint8Array(32)));
-
-export async function startLogin(redirectUri: string, next: string): Promise<{ url: string; pending: PendingLogin }> {
-  const pending: PendingLogin = { state: random(), verifier: random(), nonce: random(), next };
-  const challenge = b64url(new Uint8Array(await crypto.subtle.digest("SHA-256", new TextEncoder().encode(pending.verifier))));
-  const params = new URLSearchParams({
-    client_id: CLIENT_ID,
-    response_type: "code",
-    scope: "openid",
-    redirect_uri: redirectUri,
-    state: pending.state,
-    nonce: pending.nonce,
-    code_challenge: challenge,
-    code_challenge_method: "S256",
-  });
-  return { url: `${endpoint("auth")}?${params}`, pending };
-}
-
 type TokenResponse = { access_token: string; refresh_token: string; expires_in: number; id_token?: string };
+
+/** Refus de connexion, avec un message destiné à l'utilisateur. */
+export class LoginError extends Error {}
 
 async function tokenRequest(params: Record<string, string>): Promise<TokenResponse> {
   const res = await fetch(endpoint("token"), {
@@ -101,7 +85,18 @@ async function tokenRequest(params: Record<string, string>): Promise<TokenRespon
     body: new URLSearchParams({ client_id: CLIENT_ID, client_secret: CLIENT_SECRET, ...params }),
     cache: "no-store",
   });
-  if (!res.ok) throw new Error(`Keycloak a refusé la demande de jeton (${res.status})`);
+  if (!res.ok) {
+    const error = (await res.json().catch(() => ({}))) as { error?: string; error_description?: string };
+    const detail = error.error_description ?? "";
+    if (/disabled|locked/i.test(detail)) {
+      throw new LoginError("Compte désactivé ou verrouillé après plusieurs échecs. Réessayer plus tard ou contacter l'administrateur.");
+    }
+    if (/not fully set up/i.test(detail)) {
+      throw new LoginError("Compte à finaliser (mot de passe ou double authentification) : contacter l'administrateur.");
+    }
+    if (error.error === "invalid_grant") throw new LoginError("Adresse e-mail ou mot de passe incorrect.");
+    throw new Error(`Keycloak a refusé la demande de jeton (${res.status})`);
+  }
   return (await res.json()) as TokenResponse;
 }
 
@@ -109,15 +104,9 @@ function toSession(t: TokenResponse): Session {
   return { at: t.access_token, rt: t.refresh_token, exp: Math.floor(Date.now() / 1000) + t.expires_in };
 }
 
-function claims(jwt: string): Record<string, unknown> {
-  return JSON.parse(new TextDecoder().decode(fromB64url(jwt.split(".")[1] ?? ""))) as Record<string, unknown>;
-}
-
-export async function finishLogin(code: string, redirectUri: string, pending: PendingLogin): Promise<Session> {
-  const t = await tokenRequest({ grant_type: "authorization_code", code, redirect_uri: redirectUri, code_verifier: pending.verifier });
-  // Jetons reçus directement de Keycloak (canal serveur authentifié) : le nonce suffit à lier la réponse à la demande.
-  if (!t.id_token || claims(t.id_token).nonce !== pending.nonce) throw new Error("Nonce OIDC invalide");
-  return toSession(t);
+/** Connexion par identifiant et mot de passe, vérifiés par Keycloak côté serveur. */
+export async function passwordLogin(username: string, password: string): Promise<Session> {
+  return toSession(await tokenRequest({ grant_type: "password", username, password, scope: "openid" }));
 }
 
 export async function refresh(session: Session): Promise<Session> {
@@ -136,7 +125,7 @@ export async function endSession(session: Session): Promise<void> {
 
 /**
  * Adresse absolue d'un chemin du site, vue du navigateur. Derrière un conteneur, l'URL de la requête porte l'adresse
- * d'écoute interne (0.0.0.0:3000) : RECALLPHARMA_PUBLIC_URL donne alors l'adresse publique, déclarée dans le royaume.
+ * d'écoute interne (0.0.0.0:3000) : RECALLPHARMA_PUBLIC_URL donne alors l'adresse publique.
  */
 export function siteUrl(path: string, req: { url: string }): URL {
   return new URL(path, process.env.RECALLPHARMA_PUBLIC_URL ?? req.url);

@@ -94,9 +94,9 @@
       "publicClient": false,
       "clientAuthenticatorType": "client-secret",
       "secret": "dev-only-web-secret",
-      "standardFlowEnabled": true,
+      "standardFlowEnabled": false,
       "implicitFlowEnabled": false,
-      "directAccessGrantsEnabled": false,
+      "directAccessGrantsEnabled": true,
       "serviceAccountsEnabled": false,
       "frontchannelLogout": true,
       "redirectUris": [

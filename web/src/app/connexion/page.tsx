@@ -1,77 +1,99 @@
+import Link from "next/link";
+
+import { AlertTriangleIcon, ArrowRightIcon, BellIcon, ChatIcon, CheckShieldIcon, MailIcon } from "@/components/icons";
 import { Logo } from "@/components/Logo";
-import { DEMO_ACCOUNTS, DEMO_PASSWORD } from "@/lib/accounts";
+import { PasswordField } from "@/components/PasswordField";
 import { currentAccount } from "@/lib/api";
+import { IMAGES } from "@/lib/images";
 import { safeNext } from "@/lib/oidc";
 
-type Props = { searchParams: Promise<{ next?: string; erreur?: string }> };
+type Props = { searchParams: Promise<{ next?: string; erreur?: string; identifiant?: string }> };
+
+const POINTS = [
+  { icon: CheckShieldIcon, text: "Chaque information avec son niveau de preuve et sa source" },
+  { icon: BellIcon, text: "Alertes, suspensions et rappels de lots suivis" },
+  { icon: ChatIcon, text: "Copilot contrôlé pour les professionnels vérifiés" },
+];
 
 export default async function LoginPage({ searchParams }: Props) {
-  const { next, erreur } = await searchParams;
+  const { next, erreur, identifiant } = await searchParams;
   const me = await currentAccount();
   return (
-    <div className="login-grid">
-      <div className="card login-card">
-        <Logo variant="clair" height={46} />
-        <h1>Connexion</h1>
-        <p className="muted" style={{ marginTop: 0 }}>
-          Accédez au registre, au Copilot et au circuit de validation selon votre rôle.
-        </p>
-        {erreur && (
-          <div className="banner tone-rouge" role="alert" style={{ marginBottom: 14 }}>
-            <div>{erreur}</div>
-          </div>
-        )}
-        {me && (
-          <p>
-            Connecté : <strong>{me.display_name}</strong>. Pour changer de compte, se déconnecter d&apos;abord.
-          </p>
-        )}
-        <div className="stack">
-          <a className="button" href={`/api/auth/login?next=${encodeURIComponent(safeNext(next))}`}>
-            Se connecter avec Keycloak
-          </a>
-          {me && (
+    <div className="auth">
+      <aside className="auth-visual" style={{ backgroundImage: `url(${IMAGES.hero})` }}>
+        <div className="auth-visual-inner">
+          <Logo variant="sombre" height={56} />
+          <h2>Le référentiel du médicament vétérinaire, avec sa preuve.</h2>
+          <ul>
+            {POINTS.map(({ icon: Icon, text }) => (
+              <li key={text}>
+                <span aria-hidden>
+                  <Icon size={18} />
+                </span>
+                {text}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </aside>
+
+      <section className="auth-panel">
+        {me ? (
+          <div className="auth-signed">
+            <span className="auth-avatar" aria-hidden>
+              {me.display_name.slice(0, 1)}
+            </span>
+            <h1>Vous êtes connecté</h1>
+            <p className="muted">
+              {me.display_name} · {me.roles.join(", ")}
+            </p>
+            <Link href={safeNext(next)} className="auth-submit">
+              Continuer <ArrowRightIcon size={16} />
+            </Link>
             <form method="post" action="/api/auth/logout">
-              <button type="submit" className="secondary" style={{ width: "100%" }}>
-                Se déconnecter
+              <button type="submit" className="auth-secondary">
+                Changer de compte
               </button>
             </form>
-          )}
-        </div>
-        <ul className="steps">
-          <li>Authentification Keycloak (OIDC, code d&apos;autorisation avec PKCE).</li>
-          <li>Jetons gardés côté serveur, dans un cookie chiffré.</li>
-          <li>Rôles contrôlés par l&apos;API à chaque requête.</li>
-        </ul>
-      </div>
-      <div>
-        <div className="eyebrow">Démonstration</div>
-        <h2 style={{ marginTop: 0 }}>Comptes de démonstration</h2>
-        <p className="muted small">
-          Royaume de développement, données fictives du jeu A10. Mot de passe commun :{" "}
-          <span className="mono">{DEMO_PASSWORD}</span>. Pour essayer le Copilot, prendre le professionnel vérifié.
-        </p>
-        <div className="table-scroll card" style={{ padding: 0 }}>
-          <table>
-            <thead>
-              <tr>
-                <th>Identifiant</th>
-                <th>Rôle</th>
-                <th>Usage</th>
-              </tr>
-            </thead>
-            <tbody>
-              {DEMO_ACCOUNTS.map((a) => (
-                <tr key={a.id} className={a.id === "cpt-03" ? "highlight" : undefined}>
-                  <td className="mono small">{a.login}</td>
-                  <td>{a.role}</td>
-                  <td className="small">{a.hint}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
+          </div>
+        ) : (
+          <form method="post" action="/api/auth/login" className="auth-form">
+            <span className="section-kicker">Espace professionnel</span>
+            <h1>Connexion</h1>
+            <p className="muted">Accédez au registre, au Copilot et au circuit de validation selon votre rôle.</p>
+            {erreur && (
+              <div className="auth-error" role="alert">
+                <AlertTriangleIcon size={18} />
+                <span>{erreur}</span>
+              </div>
+            )}
+            <input type="hidden" name="next" value={safeNext(next)} />
+            <label htmlFor="username">Adresse e-mail</label>
+            <div className="auth-input">
+              <MailIcon size={18} />
+              <input
+                id="username"
+                name="username"
+                type="email"
+                autoComplete="username"
+                placeholder="nom@exemple.fr"
+                defaultValue={identifiant}
+                autoFocus={!identifiant}
+                required
+              />
+            </div>
+            <label htmlFor="password">Mot de passe</label>
+            <PasswordField />
+            <button type="submit" className="auth-submit">
+              Se connecter <ArrowRightIcon size={16} />
+            </button>
+            <p className="auth-help">
+              Mot de passe oublié ou compte bloqué ? Contactez l&apos;administrateur de votre organisation. Après plusieurs
+              échecs, le compte est verrouillé temporairement.
+            </p>
+          </form>
+        )}
+      </section>
     </div>
   );
 }

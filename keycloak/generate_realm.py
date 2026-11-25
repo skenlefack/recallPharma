@@ -69,9 +69,11 @@ realm = {
             "publicClient": False,
             "clientAuthenticatorType": "client-secret",
             "secret": "dev-only-web-secret",
-            "standardFlowEnabled": True,
+            # Page de connexion du site : le BFF transmet identifiant et mot de passe à Keycloak (canal serveur,
+            # secret client). Pas de redirection vers Keycloak, donc pas de flux « code d'autorisation ».
+            "standardFlowEnabled": False,
             "implicitFlowEnabled": False,
-            "directAccessGrantsEnabled": False,
+            "directAccessGrantsEnabled": True,
             "serviceAccountsEnabled": False,
             "frontchannelLogout": True,
             "redirectUris": [f"{o}/api/auth/callback" for o in WEB_ORIGINS],

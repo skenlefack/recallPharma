@@ -4,10 +4,9 @@ import { type Page, expect, test } from "@playwright/test";
 async function login(page: Page, account: string) {
   await page.context().clearCookies();
   await page.goto("/connexion?next=/validation");
-  await page.getByRole("link", { name: "Se connecter avec Keycloak" }).click();
-  await page.locator("#username").fill(`demo${account.slice(-2)}@recallpharma.example`);
-  await page.locator("#password").fill("demo-recallpharma");
-  await page.locator("#kc-login").click();
+  await page.getByLabel("Adresse e-mail").fill(`demo${account.slice(-2)}@recallpharma.example`);
+  await page.getByLabel("Mot de passe", { exact: true }).fill("demo-recallpharma");
+  await page.getByRole("button", { name: "Se connecter" }).click();
   await expect(page).toHaveURL(/localhost:3100\/validation/);
 }
 

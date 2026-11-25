@@ -17,7 +17,7 @@ Chaque réponse est accompagnée de sa preuve. Le dossier de conception unifié 
 | API (`backend/src/recallpharma/api`) | `/v1/search`, `/v1/authorisations/{id}` (fiche, `as_of` et `known_at`), `/v1/authorisations/{id}/withdrawal-end`, `/v1/alerts`, `/v1/batch-check`, erreurs RFC 9457 | RG-05, RG-06, RG-16, RG-18, RG-21, RG-22 |
 | Circuit de validation (`domain/curation.py`, `curation/`, `/v1/curation/*`) | Dépôt de documents sources (SHA-256, doublon refusé, versions chaînées) ; proposition → première validation champ par champ (page source affichée obligatoire) → ressaisie à l'aveugle → publication atomique, ou litige → arbitrage motivé ; toute modification après signature remet la revue à zéro ; historique et audit en ajout seul | RG-01, RG-07, RG-09 à RG-12, RG-32, RG-33 |
 | Interface web (`web/`) | Next.js, qui sert aussi de BFF : recherche, fiche en cinq vues avec calcul du délai d'attente et vérification de lot, alertes ; back-office de validation (documents, saisie, première validation, ressaisie à l'aveugle, arbitrage) ; parcours Playwright de bout en bout | Toutes celles ci-dessus, à l'écran |
-| Comptes et rôles (`keycloak/`, `api/auth.py`, `web/src/lib/oidc.ts`) | Keycloak 26 : royaume `recallpharma` (13 rôles, 15 comptes fictifs) ; le BFF se connecte en code d'autorisation avec PKCE et garde les jetons dans un cookie chiffré (AES-GCM), renouvelés par le middleware ; l'API vérifie chaque jeton (signature, émetteur, audience, expiration) et applique les rôles du jeton, recopiés et audités dans le compte ; double authentification TOTP imposable aux comptes du back-office | RG-32, RG-33 |
+| Comptes et rôles (`keycloak/`, `api/auth.py`, `web/src/lib/oidc.ts`) | Keycloak 26 : royaume `recallpharma` (13 rôles, 15 comptes fictifs) ; la page de connexion est celle du site : le BFF transmet identifiant et mot de passe à Keycloak côté serveur (flux « mot de passe », secret client) et garde les jetons dans un cookie chiffré (AES-GCM), renouvelés par le middleware ; l'API vérifie chaque jeton (signature, émetteur, audience, expiration) et applique les rôles du jeton, recopiés et audités dans le compte ; double authentification TOTP imposable aux comptes du back-office | RG-32, RG-33 |
 | Copilot (`domain/copilot.py`, `domain/selection.py`, `gateway/`, `api/copilot*.py`, `web/…/copilote`) | Passerelle d'IA séparée, sans accès à la base : le modèle open source choisit les outils, puis rédige des phrases de liaison faites de références `[[enregistrement:champ]]` ; la passerelle insère les valeurs, compose les bandeaux et le tableau, puis contrôle la réponse (aucun chiffre ni terme réservé hors référence), avec repli sur le tableau seul en cas d'échec. Les outils sont des points d'accès de lecture servis à un jeton délégué de 5 minutes, refusé partout ailleurs. Flux d'événements (le tableau arrive avant le texte), quotas, journal reconstituable, masquage, signalement d'erreur, effacement | RG-15, RG-16, RG-23 à RG-27 |
 | Texte des RCP (`domain/passages.py`, `domain/comparison.py`, `retrieval/`, `api/spc.py`) | Rubriques du RCP (modèle QRD vétérinaire) dans leurs langues, avec page et source ; passages de 300 mots au plus ; recherche hybride (plein texte français et anglais, plongements bge-m3 servis à part, fusion des rangs), filtrée sur la juridiction et la version publiée, avec repli annoncé sur le plein texte ; outils `search_spc_passages`, `get_spc_section` et `compare_jurisdictions` ; extraits cités tels quels, jamais traduits ; une instruction trouvée dans un passage est notée au journal | RG-05, RG-06, RG-15, RG-23, CT-COP-02, CT-COP-08 |
 | Entraînement du modèle (`backend/src/recallpharma/training`) | Scénarios tirés du registre, joués par le vrai parcours du Copilot (invites, outils et contrôle du service) ; jeu SFT et paires DPO, plus le journal relu (« utile » seulement) ; ajustement LoRA/QLoRA puis DPO d'un modèle open source ; jeu d'évaluation de 310 questions sans fuite ; règle de promotion et registre des modèles | RG-23 à RG-26, CT-IA-01 |
@@ -38,7 +38,7 @@ docker compose exec ollama ollama pull bge-m3
 docker compose --profile app restart init                     # indexe les passages de RCP une fois bge-m3 présent
 ```
 
-- **Web :** http://localhost:3100. Les comptes fictifs sont listés sur `/connexion`, mot de passe `demo-recallpharma`.
+- **Web :** http://localhost:3100. Connexion sur `/connexion` avec un compte fictif (tableau ci-dessous), mot de passe `demo-recallpharma`.
 - **API :** http://localhost:8100/docs.
 - **Passerelle d'IA :** http://localhost:8101/docs.
 - **Keycloak :** http://localhost:8280.
@@ -68,7 +68,7 @@ pnpm install
 RECALLPHARMA_API_URL=http://127.0.0.1:8000 pnpm dev   # http://localhost:3000
 ```
 
-Keycloak importe le royaume au premier démarrage (console : http://localhost:8280, `admin` / `admin`). Tous les comptes fictifs ont le mot de passe `demo-recallpharma` ; leurs identifiants sont listés sur la page `/connexion`.
+Keycloak importe le royaume au premier démarrage (console : http://localhost:8280, `admin` / `admin`). Tous les comptes fictifs ont le mot de passe `demo-recallpharma` ; leurs identifiants sont dans le tableau ci-dessous. Après modification de `generate_realm.py`, regénérer le royaume puis `docker compose up -d --force-recreate keycloak` (le royaume n'est importé qu'à la création du conteneur).
 
 `RECALLPHARMA_REFERENCE_DATE` fige la date de consultation à celle du jeu A10. Sans elle, les statuts sont calculés à la date du jour.
 
@@ -76,7 +76,7 @@ La documentation interactive de l'API est servie sur http://localhost:8000/docs.
 
 ## Circuit de validation
 
-On se connecte par Keycloak. L'API attend un jeton `Authorization: Bearer` émis par le royaume `recallpharma` pour l'audience `recallpharma-api` ; les rôles du jeton font foi, et les contrôles restent ceux du domaine. Le mode `RECALLPHARMA_AUTH_MODE=dev` (compte désigné par l'en-tête `X-RecallPharma-User`) ne sert qu'aux tests automatiques. Comptes du jeu A10 :
+On se connecte sur la page `/connexion` du site ; Keycloak reste l'annuaire (comptes, rôles, verrouillage après 5 échecs) sans jamais être affiché. L'API attend un jeton `Authorization: Bearer` émis par le royaume `recallpharma` pour l'audience `recallpharma-api` ; les rôles du jeton font foi, et les contrôles restent ceux du domaine. Le mode `RECALLPHARMA_AUTH_MODE=dev` (compte désigné par l'en-tête `X-RecallPharma-User`) ne sert qu'aux tests automatiques. Comptes du jeu A10 :
 
 | Rôle dans le circuit | Compte | Rôle du compte |
 |---|---|---|
@@ -122,6 +122,8 @@ Le royaume de développement ne l'impose pas, pour que les démonstrations et le
 ```sh
 sh keycloak/enforce-mfa.sh   # chaque compte configure son TOTP à la connexion suivante
 ```
+
+Attention : la page de connexion du site ne gère pas encore le code TOTP. Un compte soumis à la double authentification y reçoit le message « Compte à finaliser » ; ajouter le champ de code avant d'activer cette règle.
 
 Le royaume est généré à partir du jeu A10 par `keycloak/generate_realm.py`. Il n'est destiné qu'au développement : mot de passe commun, secret client connu, administrateur `admin`. En production, le secret client (`RECALLPHARMA_OIDC_CLIENT_SECRET`) et la clé de session (`RECALLPHARMA_SESSION_SECRET`) sont obligatoires.
 
