@@ -12,6 +12,9 @@ const STATUS_TONE: Record<string, string> = {
   "non vérifiable": "gris",
 };
 
+/** Couleur du statut, pour les liserés ; toujours doublée du badge qui porte le libellé. */
+export const statusTone = (status: string) => STATUS_TONE[status] ?? "gris";
+
 const LEVEL_ICON: Record<string, string> = { rouge: "⛔", orange: "⚠", gris: "ⓘ" };
 const LEVEL_LABEL: Record<string, string> = { rouge: "Alerte", orange: "Attention", gris: "Information" };
 

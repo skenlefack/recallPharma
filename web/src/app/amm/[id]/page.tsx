@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
-import { AssessmentLine, Banners, NoticeBox } from "@/components/regulatory";
+import { AssessmentLine, Banners, NoticeBox, statusTone } from "@/components/regulatory";
 import { BatchCheckForm, ProposeUpdateButton, WithdrawalCalculator } from "@/components/SheetTools";
 import { ApiError, type ProductSheet, type Schemas, api, query } from "@/lib/api";
 
@@ -39,19 +39,44 @@ export default async function SheetPage({ params, searchParams }: Props) {
 
   return (
     <>
-      <p className="small">
-        <Link href="/">← Recherche</Link>
+      <p className="breadcrumb">
+        <Link href="/">Recherche</Link> / {String(identity.name)}
       </p>
-      <h1>
-        {String(identity.name)} — {String(identity.designation)}
-      </h1>
-      <p className="muted">
-        AMM <span className="mono">{String(regulation.ma_number)}</span> · {sheet.jurisdiction.name} · consultée au {sheet.as_of}
-        {sheet.known_at && <> · telle que connue le {sheet.known_at}</>}
-      </p>
-      <div className="stack">
-        <AssessmentLine assessment={assessment} />
-        <Banners banners={assessment.banners} />
+      <div className={`card sheet-head status-${statusTone(assessment.status)}`}>
+        <div className="eyebrow">Fiche produit · AMM {String(regulation.ma_number)}</div>
+        <h1>
+          {String(identity.name)} — {String(identity.designation)}
+        </h1>
+        <p className="muted" style={{ margin: "0 0 14px" }}>
+          {sheet.jurisdiction.name} · consultée au {sheet.as_of}
+          {sheet.known_at && <> · telle que connue le {sheet.known_at}</>}
+        </p>
+        <div className="stack">
+          <AssessmentLine assessment={assessment} />
+          <Banners banners={assessment.banners} />
+        </div>
+        <dl className="facts">
+          <div>
+            <dt>Titulaire</dt>
+            <dd>{String(regulation.holder)}</dd>
+          </div>
+          <div>
+            <dt>Forme</dt>
+            <dd>{String(identity.pharmaceutical_form)}</dd>
+          </div>
+          <div>
+            <dt>Espèces cibles</dt>
+            <dd>{(identity.target_species as string[]).join(", ")}</dd>
+          </div>
+          <div>
+            <dt>Échéance</dt>
+            <dd>{assessment.expiry_date ?? "illimitée"}</dd>
+          </div>
+          <div>
+            <dt>Alertes</dt>
+            <dd>{sheet.alerts.length === 0 ? "aucune" : sheet.alerts.length}</dd>
+          </div>
+        </dl>
       </div>
 
       <nav className="tabs" aria-label="Vues de la fiche">

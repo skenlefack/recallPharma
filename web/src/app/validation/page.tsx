@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import { PageBanner } from "@/components/PageBanner";
 
 import { type Proposal, api, currentAccount } from "@/lib/api";
 import { CRITICAL_READERS, STATE_TONE, display } from "@/lib/proposal";
@@ -13,11 +14,10 @@ export default async function ValidationPage() {
   const proposals = await api<Proposal[]>("/v1/curation/proposals");
   return (
     <>
-      <h1>Validation des données</h1>
-      <p className="muted">
+      <PageBanner eyebrow="Back-office" title="Validation des données">
         Circuit A → B → C : préparation, validation champ par champ, ressaisie à l&apos;aveugle. Connecté :{" "}
         {me.display_name} ({me.roles.join(", ")}).
-      </p>
+      </PageBanner>
       {!me.can_curate && (
         <div className="banner tone-orange" role="status">
           <div>

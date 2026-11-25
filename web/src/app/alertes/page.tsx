@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { PageBanner } from "@/components/PageBanner";
 
 import { type Alert, type Jurisdiction, api, query } from "@/lib/api";
 
@@ -12,9 +13,10 @@ export default async function AlertsPage({ searchParams }: Props) {
   ]);
   return (
     <>
-      <h1>Alertes</h1>
-      <p className="muted">Suspensions, retraits, rappels de lots, produits falsifiés et informations de sécurité publiés.</p>
-      <form className="row" action="/alertes">
+      <PageBanner eyebrow="Pharmacovigilance" title="Alertes">
+        Suspensions, retraits, rappels de lots, produits falsifiés et informations de sécurité publiés.
+      </PageBanner>
+      <form className="card row" action="/alertes" style={{ width: "fit-content" }}>
         <label className="field">
           Juridiction
           <select name="jurisdiction" defaultValue={jurisdiction}>
@@ -33,6 +35,9 @@ export default async function AlertsPage({ searchParams }: Props) {
       <div className="stack" style={{ marginTop: 16 }}>
         {alerts.map((a) => (
           <div key={a.id} className={`banner tone-${a.level}`}>
+            <span className="icon" aria-hidden>
+              {a.level === "rouge" ? "⛔" : a.level === "orange" ? "⚠" : "ⓘ"}
+            </span>
             <div>
               <strong>{a.type}</strong> <span className="small">· {a.jurisdictions.join(", ")} · publiée le {a.published_at}</span>
               {a.closed_at && <span className="small"> · close le {a.closed_at}</span>}
