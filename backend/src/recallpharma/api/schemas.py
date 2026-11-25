@@ -60,8 +60,16 @@ class SearchHit(BaseModel):
     assessment: AssessmentOut
 
 
+class CategoryOut(BaseModel):
+    code: str
+    label: str
+    description: str
+    count: int  # AMM publiées dont au moins une substance relève de la catégorie
+
+
 class SearchResult(BaseModel):
     query: str
+    category: str | None = None
     jurisdiction: str | None
     as_of: date
     hits: list[SearchHit]

@@ -56,6 +56,31 @@
         }
       }
     },
+    "/v1/categories": {
+      "get": {
+        "tags": [
+          "registre"
+        ],
+        "summary": "List Categories",
+        "operationId": "list_categories_v1_categories_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/CategoryOut"
+                  },
+                  "type": "array",
+                  "title": "Response List Categories V1 Categories Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/v1/search": {
       "get": {
         "tags": [
@@ -67,15 +92,40 @@
           {
             "name": "q",
             "in": "query",
-            "required": true,
+            "required": false,
             "schema": {
-              "type": "string",
-              "minLength": 2,
-              "maxLength": 100,
+              "anyOf": [
+                {
+                  "type": "string",
+                  "minLength": 2,
+                  "maxLength": 100
+                },
+                {
+                  "type": "null"
+                }
+              ],
               "description": "Nom, substance, n° d'AMM ou titulaire",
               "title": "Q"
             },
             "description": "Nom, substance, n° d'AMM ou titulaire"
+          },
+          {
+            "name": "category",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Catégorie de médicament (voir /v1/categories)",
+              "title": "Category"
+            },
+            "description": "Catégorie de médicament (voir /v1/categories)"
           },
           {
             "name": "jurisdiction",
@@ -3420,6 +3470,34 @@
         ],
         "title": "Body_upload_document_v1_curation_documents_post"
       },
+      "CategoryOut": {
+        "properties": {
+          "code": {
+            "type": "string",
+            "title": "Code"
+          },
+          "label": {
+            "type": "string",
+            "title": "Label"
+          },
+          "description": {
+            "type": "string",
+            "title": "Description"
+          },
+          "count": {
+            "type": "integer",
+            "title": "Count"
+          }
+        },
+        "type": "object",
+        "required": [
+          "code",
+          "label",
+          "description",
+          "count"
+        ],
+        "title": "CategoryOut"
+      },
       "CompareIn": {
         "properties": {
           "product_name": {
@@ -5454,6 +5532,17 @@
           "query": {
             "type": "string",
             "title": "Query"
+          },
+          "category": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Category"
           },
           "jurisdiction": {
             "anyOf": [

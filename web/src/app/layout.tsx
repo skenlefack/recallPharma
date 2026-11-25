@@ -51,7 +51,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             <div>
               <h4>Avertissement</h4>
               <p>
-                Prototype sur données entièrement fictives (jeu A10). RecallPharma ne remplace pas le jugement clinique et
+                RecallPharma ne remplace pas le jugement clinique et
                 n&apos;est pas informé systématiquement des suspensions et des rappels.
               </p>
             </div>

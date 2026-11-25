@@ -173,3 +173,51 @@ export const FlagIcon = (p: Props) => (
     <path d="M4 22V4M4 4h13l-2 4 2 4H4" />
   </Svg>
 );
+
+export const PillIcon = (p: Props) => (
+  <Svg {...p}>
+    <path d="M10.5 20.5a5 5 0 0 1-7-7l10-10a5 5 0 0 1 7 7z" />
+    <path d="m8.5 8.5 7 7" />
+  </Svg>
+);
+
+export const WormIcon = (p: Props) => (
+  <Svg {...p}>
+    <path d="M4 18c2.5 0 2.5-4 5-4s2.5 4 5 4 2.5-4 5-4" />
+    <path d="M4 10c2.5 0 2.5-4 5-4s2.5 4 5 4 2.5-4 5-4" />
+  </Svg>
+);
+
+export const BugIcon = (p: Props) => (
+  <Svg {...p}>
+    <rect x="8" y="7" width="8" height="13" rx="4" />
+    <path d="M12 7V4M9 4l1.5 2M15 4l-1.5 2M3 13h5M16 13h5M4 8l4 2M20 8l-4 2M4 19l4-2M20 19l-4-2" />
+  </Svg>
+);
+
+export const MicroscopeIcon = (p: Props) => (
+  <Svg {...p}>
+    <path d="M6 21h12M9 17h6M12 17v4M10 3l4 2-4 8-4-2z" />
+    <path d="M13.5 9.5A5 5 0 0 1 17 17" />
+  </Svg>
+);
+
+export const ThermometerIcon = (p: Props) => (
+  <Svg {...p}>
+    <path d="M14 14.8V4a2 2 0 0 0-4 0v10.8a4 4 0 1 0 4 0" />
+    <path d="M12 10v7" />
+  </Svg>
+);
+
+export const CalendarIcon = (p: Props) => (
+  <Svg {...p}>
+    <rect x="3" y="5" width="18" height="16" rx="2" />
+    <path d="M3 10h18M8 3v4M16 3v4" />
+  </Svg>
+);
+
+export const CloseIcon = (p: Props) => (
+  <Svg {...p}>
+    <path d="M6 6l12 12M18 6 6 18" />
+  </Svg>
+);

@@ -38,6 +38,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/categories": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List Categories */
+        get: operations["list_categories_v1_categories_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/search": {
         parameters: {
             query?: never;
@@ -796,6 +813,17 @@ export interface components {
             /** Replaces Document Id */
             replaces_document_id?: number | null;
         };
+        /** CategoryOut */
+        CategoryOut: {
+            /** Code */
+            code: string;
+            /** Label */
+            label: string;
+            /** Description */
+            description: string;
+            /** Count */
+            count: number;
+        };
         /** CompareIn */
         CompareIn: {
             /** Product Name */
@@ -1443,6 +1471,8 @@ export interface components {
         SearchResult: {
             /** Query */
             query: string;
+            /** Category */
+            category?: string | null;
             /** Jurisdiction */
             jurisdiction: string | null;
             /**
@@ -1822,11 +1852,33 @@ export interface operations {
             };
         };
     };
+    list_categories_v1_categories_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CategoryOut"][];
+                };
+            };
+        };
+    };
     search_v1_search_get: {
         parameters: {
-            query: {
+            query?: {
                 /** @description Nom, substance, n° d'AMM ou titulaire */
-                q: string;
+                q?: string | null;
+                /** @description Catégorie de médicament (voir /v1/categories) */
+                category?: string | null;
                 jurisdiction?: string | null;
                 /** @description Date d'effet (défaut : aujourd'hui) */
                 as_of?: string | null;

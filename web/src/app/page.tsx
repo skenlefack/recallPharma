@@ -3,24 +3,37 @@ import Link from "next/link";
 import {
   ArrowRightIcon,
   BellIcon,
+  BugIcon,
+  CalendarIcon,
   ChatIcon,
   CheckShieldIcon,
   ClockIcon,
+  CloseIcon,
   DocumentIcon,
   GlobeIcon,
   LayersIcon,
+  MicroscopeIcon,
+  PillIcon,
   SearchIcon,
+  ThermometerIcon,
   UsersIcon,
+  WormIcon,
 } from "@/components/icons";
 import { CountUp } from "@/components/CountUp";
 import { AssessmentLine, NoticeBox, statusTone } from "@/components/regulatory";
 import { Wave } from "@/components/Wave";
-import { type Alert, ApiError, type Jurisdiction, type SearchResult, api, query } from "@/lib/api";
+import { type Alert, ApiError, type Category, type Jurisdiction, type SearchResult, api, query } from "@/lib/api";
 import { IMAGES } from "@/lib/images";
 
-type Props = { searchParams: Promise<{ q?: string; jurisdiction?: string; as_of?: string }> };
+type Props = { searchParams: Promise<{ q?: string; category?: string; jurisdiction?: string; as_of?: string }> };
 
-const EXAMPLES = ["oxytétracycline", "ivermectine", "PA-V-2023-0002", "Gamma Vet"];
+const CATEGORY_ICONS: Record<string, (p: { size?: number }) => React.ReactNode> = {
+  antibiotiques: PillIcon,
+  vermifuges: WormIcon,
+  endectocides: BugIcon,
+  antiprotozoaires: MicroscopeIcon,
+  "anti-inflammatoires": ThermometerIcon,
+};
 
 const DISCOVER = [
   { href: "/?q=oxytétracycline", icon: CheckShieldIcon, image: IMAGES.carteStatut, title: "Statut des AMM", text: "Valide, suspendue, retirée, expirée" },
@@ -39,17 +52,19 @@ const WHY = [
 ];
 
 export default async function SearchPage({ searchParams }: Props) {
-  const { q = "", jurisdiction = "", as_of = "" } = await searchParams;
-  const searching = q.trim().length >= 2;
-  const [jurisdictions, alerts] = await Promise.all([
+  const { q = "", category = "", jurisdiction = "", as_of = "" } = await searchParams;
+  const [jurisdictions, categories] = await Promise.all([
     api<Jurisdiction[]>("/v1/jurisdictions"),
-    searching ? Promise.resolve([] as Alert[]) : api<Alert[]>("/v1/alerts").catch(() => [] as Alert[]),
+    api<Category[]>("/v1/categories").catch(() => [] as Category[]),
   ]);
+  const active = categories.find((c) => c.code === category);
+  const searching = q.trim().length >= 2 || active !== undefined;
+  const alerts = searching ? [] : await api<Alert[]>("/v1/alerts").catch(() => [] as Alert[]);
   let result: SearchResult | null = null;
   let error: string | null = null;
   if (searching) {
     try {
-      result = await api<SearchResult>(`/v1/search${query({ q, jurisdiction, as_of })}`);
+      result = await api<SearchResult>(`/v1/search${query({ q: q.trim().length >= 2 ? q : "", category: active?.code, jurisdiction, as_of, limit: "100" })}`);
     } catch (e) {
       error = e instanceof ApiError ? e.message : "Recherche indisponible";
     }
@@ -69,53 +84,80 @@ export default async function SearchPage({ searchParams }: Props) {
         style={{ backgroundImage: `url(${IMAGES.hero})` }}
       >
         <div className="home-hero-inner">
-          <h1>{searching ? "Rechercher un médicament vétérinaire" : "Le bon médicament vétérinaire, avec sa preuve"}</h1>
+          <h1>{searching ? (active ? active.label : "Rechercher un médicament vétérinaire") : "Le bon médicament vétérinaire, avec sa preuve"}</h1>
           {!searching && (
             <p className="lead">
               Statut de l&apos;AMM, texte du RCP, délais d&apos;attente et alertes, pour un pays et une date.
             </p>
           )}
           <form className="hero-search" role="search" action="/">
-            <label className="hero-search-main">
+            <label className="hero-field hero-field-main">
+              <SearchIcon size={20} />
               <span className="sr-only">Recherche</span>
+              {active && (
+                <span className="hero-chip">
+                  <input type="hidden" name="category" value={active.code} />
+                  {active.label}
+                  <Link href={`/${query({ q, jurisdiction, as_of })}`} aria-label={`Retirer la catégorie ${active.label}`}>
+                    <CloseIcon size={12} />
+                  </Link>
+                </span>
+              )}
               <input
                 name="q"
                 defaultValue={q}
-                placeholder="Nom, substance, numéro d'AMM ou titulaire"
+                placeholder={active ? "Affiner…" : "Médicament, substance, n° d'AMM…"}
                 aria-label="Recherche"
                 minLength={2}
-                required
+                required={!active}
               />
             </label>
-            <label>
+            <label className="hero-field">
+              <GlobeIcon size={18} />
               <span className="sr-only">Juridiction</span>
               <select name="jurisdiction" defaultValue={jurisdiction} aria-label="Juridiction">
                 <option value="">Toutes les juridictions</option>
                 {jurisdictions.map((j) => (
                   <option key={j.code} value={j.code}>
-                    {j.name} ({j.code})
+                    {j.name}
                   </option>
                 ))}
               </select>
             </label>
-            <label>
+            <label className="hero-field hero-field-date">
+              <CalendarIcon size={18} />
               <span className="sr-only">À la date du</span>
               <input type="date" name="as_of" defaultValue={as_of} aria-label="À la date du" />
             </label>
-            <button type="submit" aria-label="Rechercher" title="Rechercher">
-              <SearchIcon size={20} />
+            <button type="submit" className="hero-submit" aria-label="Rechercher" title="Rechercher">
+              <SearchIcon size={18} />
+              <span>Rechercher</span>
             </button>
           </form>
-          {!searching && (
-            <div className="suggestions">
-              Essayer :
-              {EXAMPLES.map((e) => (
-                <Link key={e} href={`/?q=${encodeURIComponent(e)}`}>
-                  {e}
+          <nav className="hero-categories" aria-label="Catégories de médicaments">
+            {categories.map((c) => {
+              const Icon = CATEGORY_ICONS[c.code] ?? PillIcon;
+              const current = c.code === category;
+              return (
+                <Link
+                  key={c.code}
+                  href={`/${query({ category: current ? "" : c.code, jurisdiction, as_of })}`}
+                  className="hero-category"
+                  aria-current={current ? "true" : undefined}
+                >
+                  <span className="hero-category-icon">
+                    <Icon size={22} />
+                  </span>
+                  <span className="hero-category-text">
+                    <strong>{c.label}</strong>
+                    <span>
+                      {c.count} AMM · {c.description}
+                    </span>
+                  </span>
                 </Link>
-              ))}
-            </div>
-          )}
+              );
+            })}
+          </nav>
         </div>
         <Wave />
       </section>
@@ -127,7 +169,10 @@ export default async function SearchPage({ searchParams }: Props) {
             <h2>
               {result.hits.length} résultat{result.hits.length > 1 ? "s" : ""}
             </h2>
-            <span className="muted small">pour « {q} » · situation au {result.as_of}</span>
+            <span className="muted small">
+              {q && <>pour « {q} » </>}
+              {active && <>dans {active.label.toLowerCase()} </>}· situation au {result.as_of}
+            </span>
           </div>
           {result.notice && <NoticeBox>{result.notice}</NoticeBox>}
           {result.hits.length === 0 && !result.notice && (
@@ -226,7 +271,7 @@ export default async function SearchPage({ searchParams }: Props) {
             <div className="section-title">
               <span className="section-kicker">En chiffres</span>
               <h2>Le registre aujourd&apos;hui</h2>
-              <p>Ce que couvre la version de démonstration</p>
+              <p>Couverture actuelle du référentiel</p>
             </div>
             <div className="counters">
               {counters.map(({ icon: Icon, value, label }) => (

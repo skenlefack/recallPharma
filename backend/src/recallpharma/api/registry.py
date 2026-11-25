@@ -6,7 +6,7 @@ from datetime import date
 from typing import Annotated
 
 from fastapi import APIRouter, Depends, Query
-from sqlalchemy import func, or_, select
+from sqlalchemy import Select, func, or_, select
 from sqlalchemy.orm import Session
 
 from recallpharma.api import schemas as s
@@ -17,6 +17,7 @@ from recallpharma.db import models as m
 from recallpharma.db.session import get_session
 from recallpharma.domain.banners import NOT_AUTHORISED_HERE
 from recallpharma.domain.batch import BatchRecall, check_batch
+from recallpharma.domain.categories import BY_CODE, CATEGORIES, Category
 from recallpharma.domain.evaluation import Assessment, applies_in, assess
 from recallpharma.domain.identifiers import normalise_ma_number
 from recallpharma.domain.withdrawal import compute_withdrawal_end
@@ -92,31 +93,68 @@ def list_substances(db: DB) -> list[s.SubstanceOut]:
     ]
 
 
+def _in_category(category: Category) -> Select[str]:
+    """AMM dont au moins une substance a un code ATCvet de la catégorie."""
+    return (
+        select(m.ProductComponent.product_id)
+        .join(m.Substance, m.Substance.id == m.ProductComponent.substance_id)
+        .where(or_(*(m.Substance.atcvet_code.startswith(p) for p in category.atcvet_prefixes)))
+    )
+
+
+@router.get("/categories", response_model=list[s.CategoryOut])
+def list_categories(db: DB) -> list[s.CategoryOut]:
+    out = []
+    for c in CATEGORIES:
+        count = db.scalar(
+            select(func.count(m.Authorisation.id))
+            .where(m.Authorisation.publication_state == "publiée")
+            .where(m.Authorisation.product_id.in_(_in_category(c)))
+        )
+        out.append(s.CategoryOut(code=c.code, label=c.label, description=c.description, count=count or 0))
+    return out
+
+
 @router.get("/search", response_model=s.SearchResult)
 def search(
     db: DB,
-    q: Annotated[str, Query(min_length=2, max_length=100, description="Nom, substance, n° d'AMM ou titulaire")],
+    q: Annotated[
+        str | None, Query(min_length=2, max_length=100, description="Nom, substance, n° d'AMM ou titulaire")
+    ] = None,
+    category: Annotated[str | None, Query(description="Catégorie de médicament (voir /v1/categories)")] = None,
     jurisdiction: str | None = None,
     as_of: AsOf = None,
     limit: Annotated[int, Query(ge=1, le=100)] = 25,
 ) -> s.SearchResult:
+    if q is None and category is None:
+        raise Problem(422, "validation", "Indiquer un texte à rechercher ou une catégorie")
+    if category is not None and category not in BY_CODE:
+        raise Problem(422, "validation", "Catégorie inconnue")
     day = resolve_as_of(as_of)
     unaccent = func.reg.f_unaccent
-    term = unaccent(func.lower(q))
-    pattern = func.concat("%", term, "%")
-    number = f"%{normalise_ma_number(q)}%"
-    score = func.greatest(
-        func.similarity(unaccent(func.lower(m.Product.designation)), term),
-        func.similarity(unaccent(func.lower(m.Product.name)), term),
-        func.coalesce(func.max(func.similarity(unaccent(func.lower(m.Substance.inn_name)), term)), 0),
-    )
     stmt = (
-        select(m.Authorisation.id, score.label("score"))
+        select(m.Authorisation.id)
         .join(m.Product, m.Authorisation.product_id == m.Product.id)
         .join(m.ProductComponent, m.ProductComponent.product_id == m.Product.id)
         .join(m.Substance, m.Substance.id == m.ProductComponent.substance_id)
         .where(m.Authorisation.publication_state == "publiée")
-        .where(
+        .group_by(m.Authorisation.id, m.Product.id)
+        .limit(limit * 3)
+    )
+    if category is not None:
+        stmt = stmt.where(m.Authorisation.product_id.in_(_in_category(BY_CODE[category])))
+    if q is None:
+        stmt = stmt.order_by(m.Product.name, m.Authorisation.id)
+    else:
+        term = unaccent(func.lower(q))
+        pattern = func.concat("%", term, "%")
+        number = f"%{normalise_ma_number(q)}%"
+        score = func.greatest(
+            func.similarity(unaccent(func.lower(m.Product.designation)), term),
+            func.similarity(unaccent(func.lower(m.Product.name)), term),
+            func.coalesce(func.max(func.similarity(unaccent(func.lower(m.Substance.inn_name)), term)), 0),
+        )
+        stmt = stmt.where(
             or_(
                 unaccent(func.lower(m.Product.designation)).like(pattern),
                 unaccent(func.lower(m.Product.name)).like(pattern),
@@ -126,12 +164,8 @@ def search(
                 func.similarity(unaccent(func.lower(m.Substance.inn_name)), term) > 0.4,  # fautes de frappe
                 func.similarity(unaccent(func.lower(m.Product.name)), term) > 0.4,
             )
-        )
-        .group_by(m.Authorisation.id, m.Product.id)
-        .order_by(score.desc(), m.Authorisation.id)
-        .limit(limit * 3)
-    )
-    ranked = [ma_id for ma_id, _score in db.execute(stmt)]
+        ).order_by(score.desc(), m.Authorisation.id)
+    ranked = list(db.scalars(stmt))
     rows = {r.id: r for r in db.scalars(select(m.Authorisation).where(m.Authorisation.id.in_(ranked)))}
     hits: list[s.SearchHit] = []
     for row in (rows[i] for i in ranked):
@@ -156,7 +190,9 @@ def search(
     notice = None
     if jurisdiction is not None and not any(h.applies_to_requested for h in hits):
         notice = NOT_AUTHORISED_HERE  # RG-16 : jamais « interdit »
-    return s.SearchResult(query=q, jurisdiction=jurisdiction, as_of=day, hits=hits, notice=notice)
+    return s.SearchResult(
+        query=q or "", category=category, jurisdiction=jurisdiction, as_of=day, hits=hits, notice=notice
+    )
 
 
 def _alert_out(a: m.SafetyNotice) -> s.AlertOut:

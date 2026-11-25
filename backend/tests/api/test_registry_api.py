@@ -25,6 +25,19 @@ def test_search_by_ma_number(client: TestClient) -> None:
     assert hits[0]["authorisation_id"] == "amm-002"
 
 
+def test_categories_count_and_filter_search(client: TestClient) -> None:
+    categories = {c["code"]: c for c in client.get("/v1/categories").json()}
+    assert categories["antibiotiques"]["count"] > 0
+    res = client.get("/v1/search", params={"category": "endectocides", **AS_OF}).json()
+    assert res["category"] == "endectocides"
+    assert len(res["hits"]) == min(categories["endectocides"]["count"], 25)
+    assert all("ivermectine" in h["substances"] for h in res["hits"])
+    both = client.get("/v1/search", params={"q": "ivermectine", "category": "antibiotiques", **AS_OF}).json()
+    assert both["hits"] == []
+    assert client.get("/v1/search", params=AS_OF).status_code == 422
+    assert client.get("/v1/search", params={"category": "inconnue", **AS_OF}).status_code == 422
+
+
 def test_unpublished_never_visible(client: TestClient) -> None:
     assert client.get("/v1/authorisations/amm-024", params=AS_OF).status_code == 404
     hits = client.get("/v1/search", params={"q": "albendazole", **AS_OF}).json()["hits"]

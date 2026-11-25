@@ -11,6 +11,7 @@ export type ProductSheet = Schemas["ProductSheet"];
 export type SearchResult = Schemas["SearchResult"];
 export type Alert = Schemas["AlertOut"];
 export type Jurisdiction = Schemas["JurisdictionOut"];
+export type Category = Schemas["CategoryOut"];
 export type Substance = Schemas["SubstanceOut"];
 export type Proposal = Schemas["ProposalOut"];
 export type Me = Schemas["MeOut"];

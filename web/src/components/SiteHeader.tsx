@@ -32,9 +32,6 @@ export function SiteHeader({ me }: { me: Me }) {
   const overlay = path === "/" && !scrolled;
   return (
     <header className={`top${overlay ? " overlay" : ""}`}>
-      <div className="demo-ribbon" role="note">
-        Données entièrement fictives (jeu A10) · prototype de démonstration
-      </div>
       <div className="wrap">
         <Link href="/" className="brand" aria-label="RecallPharma, accueil">
           <Logo variant="sombre" height={50} />
