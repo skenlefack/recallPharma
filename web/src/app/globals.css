@@ -416,7 +416,7 @@ button.icon-button:hover {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgb(3 28 46 / 35%), rgb(3 28 46 / 55%));
+  background: linear-gradient(180deg, rgb(3 28 46 / 50%), rgb(3 28 46 / 65%));
 }
 .home-hero-inner {
   position: relative;

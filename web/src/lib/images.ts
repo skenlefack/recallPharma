@@ -3,12 +3,12 @@
  * déposer la photo (par exemple hero.jpg) et changer l'extension ici.
  */
 export const IMAGES = {
-  hero: "/images/hero.svg",
-  carteStatut: "/images/carte-statut.svg",
-  carteRcp: "/images/carte-rcp.svg",
-  carteDelais: "/images/carte-delais.svg",
-  carteAlertes: "/images/carte-alertes.svg",
-  fondPourquoi: "/images/fond-pourquoi.svg",
+  hero: "/images/hero.jpg",
+  carteStatut: "/images/carte-statut.jpg",
+  carteRcp: "/images/carte-rcp.jpg",
+  carteDelais: "/images/carte-delais.jpg",
+  carteAlertes: "/images/carte-alertes.jpg",
+  fondPourquoi: "/images/fond-pourquoi.jpg",
   fondCopilot: "/images/fond-copilot.svg",
-  bandeau: "/images/bandeau.svg",
+  bandeau: "/images/bandeau.jpg",
 } as const;
