@@ -786,7 +786,8 @@ button.icon-button:hover {
   font-size: 0.82rem;
   font-weight: 700;
   color: #fff;
-  background: linear-gradient(135deg, var(--accent), var(--warm));
+  background: var(--cat, var(--accent));
+  box-shadow: 0 6px 14px -8px var(--cat, var(--accent));
 }
 .hero-chip a {
   display: grid;
@@ -846,6 +847,7 @@ button.icon-button:hover {
   color: rgb(255 255 255 / 72%);
 }
 .hero-category {
+  --cat: var(--accent);
   display: inline-flex;
   align-items: center;
   gap: 8px;
@@ -855,12 +857,14 @@ button.icon-button:hover {
   font-size: 0.86rem;
   font-weight: 600;
   text-decoration: none;
-  background: rgb(255 255 255 / 9%);
-  border: 1px solid rgb(255 255 255 / 20%);
+  background: color-mix(in srgb, var(--cat) 58%, rgb(4 30 48 / 45%));
+  border: 1px solid color-mix(in srgb, var(--cat) 70%, #fff 20%);
+  box-shadow: 0 8px 20px -12px color-mix(in srgb, var(--cat) 90%, transparent);
   backdrop-filter: blur(8px);
   transition:
     background 0.25s ease,
     border-color 0.25s ease,
+    box-shadow 0.25s ease,
     color 0.25s ease,
     transform 0.25s ease;
 }
@@ -870,9 +874,11 @@ button.icon-button:hover {
   width: 26px;
   height: 26px;
   border-radius: 50%;
-  color: #fff;
-  background: rgb(255 255 255 / 14%);
-  transition: background 0.25s ease;
+  color: var(--cat);
+  background: #fff;
+  transition:
+    background 0.25s ease,
+    color 0.25s ease;
 }
 .hero-category-count {
   min-width: 22px;
@@ -881,35 +887,37 @@ button.icon-button:hover {
   font-size: 0.72rem;
   font-weight: 700;
   text-align: center;
-  background: rgb(255 255 255 / 16%);
+  background: rgb(255 255 255 / 22%);
   transition:
     background 0.25s ease,
     color 0.25s ease;
 }
 .hero-category:hover {
   color: #fff;
-  transform: translateY(-1px);
-  background: rgb(255 255 255 / 18%);
-  border-color: rgb(255 255 255 / 42%);
-}
-.hero-category:hover .hero-category-icon {
-  background: linear-gradient(135deg, var(--accent), var(--warm));
+  transform: translateY(-2px);
+  background: var(--cat);
+  border-color: color-mix(in srgb, var(--cat) 60%, #fff 40%);
+  box-shadow: 0 14px 26px -12px var(--cat);
 }
 .hero-category:focus-visible {
   outline: 2px solid #fff;
   outline-offset: 2px;
 }
 .hero-category[aria-current="true"] {
-  color: #04324a;
+  color: color-mix(in srgb, var(--cat) 70%, #000 30%);
   background: #fff;
   border-color: #fff;
+  box-shadow:
+    0 0 0 3px color-mix(in srgb, var(--cat) 55%, transparent),
+    0 14px 26px -12px var(--cat);
 }
 .hero-category[aria-current="true"] .hero-category-icon {
-  background: linear-gradient(135deg, var(--accent), var(--warm));
+  color: #fff;
+  background: var(--cat);
 }
 .hero-category[aria-current="true"] .hero-category-count {
   color: #fff;
-  background: var(--accent-ink);
+  background: var(--cat);
 }
 @media (max-width: 900px) {
   .hero-search {

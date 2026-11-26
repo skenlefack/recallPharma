@@ -35,6 +35,15 @@ const CATEGORY_ICONS: Record<string, (p: { size?: number }) => React.ReactNode> 
   "anti-inflammatoires": ThermometerIcon,
 };
 
+/** Couleur propre à chaque catégorie (pastilles sous la recherche). */
+const CATEGORY_COLORS: Record<string, string> = {
+  antibiotiques: "#1e88e5",
+  vermifuges: "#00a884",
+  endectocides: "#7e57c2",
+  antiprotozoaires: "#f29900",
+  "anti-inflammatoires": "#e5486a",
+};
+
 const DISCOVER = [
   { href: "/?q=oxytétracycline", icon: CheckShieldIcon, image: IMAGES.carteStatut, title: "Statut des AMM", text: "Valide, suspendue, retirée, expirée" },
   { href: "/amm/amm-001#rcp", icon: DocumentIcon, image: IMAGES.carteRcp, title: "Texte des RCP", text: "Rubriques d'origine, page et source" },
@@ -95,7 +104,10 @@ export default async function SearchPage({ searchParams }: Props) {
               <SearchIcon size={20} />
               <span className="sr-only">Recherche</span>
               {active && (
-                <span className="hero-chip">
+                <span
+                  className="hero-chip"
+                  style={{ "--cat": CATEGORY_COLORS[active.code] ?? "var(--accent)" } as React.CSSProperties}
+                >
                   <input type="hidden" name="category" value={active.code} />
                   {active.label}
                   <Link href={`/${query({ q, jurisdiction, as_of })}`} aria-label={`Retirer la catégorie ${active.label}`}>
@@ -145,6 +157,7 @@ export default async function SearchPage({ searchParams }: Props) {
                   href={`/${query({ category: current ? "" : c.code, jurisdiction, as_of })}`}
                   className="hero-category"
                   title={c.description}
+                  style={{ "--cat": CATEGORY_COLORS[c.code] ?? "var(--accent)" } as React.CSSProperties}
                   aria-current={current ? "true" : undefined}
                 >
                   <span className="hero-category-icon" aria-hidden>
