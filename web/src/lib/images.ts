@@ -10,5 +10,6 @@ export const IMAGES = {
   carteAlertes: "/images/carte-alertes.jpg",
   fondPourquoi: "/images/fond-pourquoi.jpg",
   fondCopilot: "/images/fond-copilot.jpg",
+  fondFooter: "/images/fond-footer.jpg",
   bandeau: "/images/bandeau.jpg",
 } as const;

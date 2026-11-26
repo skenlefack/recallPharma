@@ -11,6 +11,7 @@ import {
   UsersIcon,
 } from "@/components/icons";
 import { Logo } from "@/components/Logo";
+import { IMAGES } from "@/lib/images";
 
 const PROMISES = [
   { icon: DocumentIcon, title: "Preuve sourcée", text: "Chaque donnée renvoie au document officiel qui l'établit." },
@@ -51,7 +52,7 @@ const COLUMNS = [
 /** Pied de page : engagements, navigation, avertissement d'usage et retour en haut. */
 export function SiteFooter() {
   return (
-    <footer className="site-footer">
+    <footer className="site-footer" style={{ "--footer-img": `url(${IMAGES.fondFooter})` } as React.CSSProperties}>
       <div className="wrap">
         <ul className="footer-promises">
           {PROMISES.map(({ icon: Icon, title, text }) => (
