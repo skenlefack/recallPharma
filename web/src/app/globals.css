@@ -308,12 +308,12 @@ button.icon-button:hover {
 .site-footer {
   position: relative;
   overflow: hidden;
-  color: #a9bdcf;
+  color: rgb(255 255 255 / 82%);
   font-size: 0.9rem;
+  /* Voile vert transparent (teinte des boutons, assombrie pour la lisibilité du texte blanc) sur l'image. */
   background:
-    radial-gradient(900px 380px at 8% 0%, color-mix(in srgb, var(--accent) 22%, transparent), transparent 70%),
-    radial-gradient(700px 360px at 100% 100%, color-mix(in srgb, var(--warm) 16%, transparent), transparent 70%),
-    linear-gradient(180deg, rgb(5 50 77 / 55%) 0%, rgb(3 31 49 / 70%) 55%, rgb(3 31 49 / 86%) 100%),
+    radial-gradient(900px 380px at 8% 0%, color-mix(in srgb, var(--warm) 28%, transparent), transparent 70%),
+    linear-gradient(180deg, rgb(0 130 104 / 72%) 0%, rgb(0 96 78 / 82%) 55%, rgb(0 70 58 / 90%) 100%),
     var(--footer-img, none) center / cover no-repeat,
     #031f31;
 }
@@ -402,7 +402,7 @@ button.icon-button:hover {
   margin-top: 3px;
   font-size: 0.82rem;
   line-height: 1.45;
-  color: #93a9bd;
+  color: rgb(255 255 255 / 72%);
 }
 
 .footer-grid {
@@ -431,9 +431,9 @@ button.icon-button:hover {
   border-radius: 999px;
   font-size: 0.78rem;
   font-weight: 700;
-  color: var(--warm);
-  background: color-mix(in srgb, var(--warm) 12%, transparent);
-  border: 1px solid color-mix(in srgb, var(--warm) 30%, transparent);
+  color: #fff;
+  background: rgb(255 255 255 / 14%);
+  border: 1px solid rgb(255 255 255 / 30%);
 }
 .footer-col h4 {
   position: relative;
@@ -465,7 +465,7 @@ button.icon-button:hover {
   display: inline-flex;
   align-items: center;
   padding: 4px 0;
-  color: #a9bdcf;
+  color: rgb(255 255 255 / 80%);
   text-decoration: none;
   transition: color 0.25s ease;
 }
@@ -474,7 +474,7 @@ button.icon-button:hover {
   width: 0;
   margin-right: 0;
   opacity: 0;
-  color: var(--warm);
+  color: #fff;
   transition:
     width 0.25s ease,
     margin 0.25s ease,
@@ -524,10 +524,10 @@ button.icon-button:hover {
 }
 
 .footer-bottom {
-  border-top: 1px solid rgb(255 255 255 / 8%);
-  background: rgb(0 0 0 / 18%);
+  background: var(--warm);
   font-size: 0.8rem;
-  color: #7e93a6;
+  font-weight: 700;
+  color: var(--warm-text);
 }
 .footer-bottom-inner {
   display: flex;
@@ -543,10 +543,10 @@ button.icon-button:hover {
   gap: 8px;
   padding: 7px 14px;
   border-radius: 999px;
-  color: #fff;
+  color: var(--warm-text);
   font-weight: 700;
   text-decoration: none;
-  border: 1px solid rgb(255 255 255 / 16%);
+  border: 1px solid color-mix(in srgb, var(--warm-text) 35%, transparent);
   transition:
     background 0.3s ease,
     border-color 0.3s ease,
@@ -555,7 +555,7 @@ button.icon-button:hover {
 .footer-top:hover {
   color: #fff;
   border-color: transparent;
-  background: linear-gradient(135deg, var(--accent), var(--warm));
+  background: var(--warm-text);
   transform: translateY(-2px);
 }
 .footer-top svg {
