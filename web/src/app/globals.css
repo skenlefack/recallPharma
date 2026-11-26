@@ -313,7 +313,7 @@ button.icon-button:hover {
   background:
     radial-gradient(900px 380px at 8% 0%, color-mix(in srgb, var(--accent) 22%, transparent), transparent 70%),
     radial-gradient(700px 360px at 100% 100%, color-mix(in srgb, var(--warm) 16%, transparent), transparent 70%),
-    linear-gradient(180deg, rgb(5 50 77 / 70%) 0%, rgb(3 31 49 / 84%) 55%, rgb(3 31 49 / 94%) 100%),
+    linear-gradient(180deg, rgb(5 50 77 / 55%) 0%, rgb(3 31 49 / 70%) 55%, rgb(3 31 49 / 86%) 100%),
     var(--footer-img, none) center / cover no-repeat,
     #031f31;
 }
@@ -503,13 +503,15 @@ button.icon-button:hover {
   margin-bottom: 36px;
   padding: 16px 20px;
   border-radius: 16px;
-  background: rgb(255 255 255 / 4%);
-  border: 1px solid rgb(255 255 255 / 8%);
-  border-left: 3px solid #f2b54a;
+  color: #5c3d00;
+  background: linear-gradient(135deg, #fff5de 0%, #fbe4b2 100%);
+  border: 1px solid #f3d08a;
+  border-left: 4px solid #e0a526;
+  box-shadow: 0 16px 34px -22px rgb(0 0 0 / 70%);
 }
 .footer-warning-icon {
   flex: none;
-  color: #f2b54a;
+  color: #c27f00;
   margin-top: 1px;
 }
 .footer-warning p {
@@ -518,7 +520,7 @@ button.icon-button:hover {
   line-height: 1.6;
 }
 .footer-warning strong {
-  color: #fff;
+  color: #3d2800;
 }
 
 .footer-bottom {
